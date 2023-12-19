@@ -22,7 +22,7 @@ jobs:
       - uses: dart-lang/setup-dart@v1.3
 
       - name: Check formatting
-        run: dart format . --line-length=120
+        run: dart format . --line-length=120 --set-exit-if-changed
 
       - name: Check linting
         run: |
