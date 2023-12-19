@@ -46,6 +46,12 @@ void main() {
       });
     });
 
+    test('should get all users', () async {
+      final users = await DB.query('users').all<User>();
+
+      await (await app.tester).get('/api/users').expectStatus(200).expectJsonBody(hasLength(users.length)).test();
+    });
+
     group('when `show user`', () {
       test('should error when invalid params', () async {
         await (await app.tester)
