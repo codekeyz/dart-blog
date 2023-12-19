@@ -46,7 +46,7 @@ jobs:
       - name: Setup Test Database
         run: dart run ./bin/tools/migrator.dart migrate
 
-      - name: Run Unit tests
+      - name: Run API Tests
         run: |
           dart test --coverage=coverage
           dart pub global run coverage:format_coverage --check-ignore --report-on=lib --lcov -o lcov.info -i ./coverage
