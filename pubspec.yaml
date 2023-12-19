@@ -1,0 +1,24 @@
+name: zomato
+description: A sample command-line application.
+version: 1.0.0
+
+publish_to: none
+
+environment:
+  sdk: ^3.2.2
+
+dependencies:
+  uuid: ^4.2.1
+  path: ^1.9.0
+  yaroo:
+    git:
+      url: https://github.com/codekeyz/yaroo.git
+      path: yaroo
+
+  # data
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.0
+  json_serializable: ^6.7.1

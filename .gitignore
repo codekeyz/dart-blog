@@ -1,0 +1,12 @@
+# https://dart.dev/guides/libraries/private-files
+# Created by `dart pub`
+.dart_tool/
+.env
+*.g.dart
+*.sqlite
+
+.idea
+.vscode
+
+_yoorm_tool/
+*.reflectable.dart
