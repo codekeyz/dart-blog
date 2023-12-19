@@ -42,7 +42,7 @@ class UserController extends BaseController {
     final userId = req.params['userId']!;
 
     /// doing some validations. Hopefully someone writes a package to simplify this
-    final updateData = Map<String, dynamic>.from(req.body);
+    final updateData = Map<String, dynamic>.from(req.body ?? {});
     if (updateData.isEmpty) {
       return res.json(
         {'error': 'User Id & Update data is required'},

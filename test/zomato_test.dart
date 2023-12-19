@@ -76,11 +76,21 @@ void main() {
     });
 
     group('when `update user`', () {
-      test('should error when invalid params', () async {
+      test('should error when invalid userId', () async {
         await (await app.tester)
             .put('/api/users/asdf')
             .expectStatus(422)
             .expectJsonBody({'error': "Invalid argument: Invalid parameter value: \"asdf\""}).test();
+      });
+
+      test('should error when no body', () async {
+        final user = await DB.query('users').get<User>();
+        expect(user, isA<User>());
+
+        await (await app.tester)
+            .put('/api/users/${user!.id.value}')
+            .expectStatus(422)
+            .expectJsonBody({'error': 'User Id & Update data is required'}).test();
       });
 
       test('should error when user not found', () async {
