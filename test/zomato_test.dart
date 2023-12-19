@@ -1,6 +1,6 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:yaroo/orm/orm.dart';
+import 'package:yaroo/db/db.dart';
 import 'package:zomato/app/app.dart';
 import 'package:zomato/src/models/models.dart';
 

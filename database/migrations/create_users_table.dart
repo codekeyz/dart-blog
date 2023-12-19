@@ -1,4 +1,4 @@
-import 'package:yaroo/orm/orm.dart';
+import 'package:yaroo/db/migration/migrator.dart';
 
 class CreateUsersTable extends Migration {
   const CreateUsersTable();
