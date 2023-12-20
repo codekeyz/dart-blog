@@ -1,10 +1,10 @@
-import 'package:yaroo/orm/orm.dart';
+import 'package:yaroo/db/db.dart';
 
 class CreateUsersTable extends Migration {
   const CreateUsersTable();
 
   @override
-  void up(List $actions) {
+  void up(List actions) {
     final userSchema = Schema.create('users', ($table) {
       return $table
         ..id()
@@ -14,11 +14,11 @@ class CreateUsersTable extends Migration {
         ..timestamps();
     });
 
-    $actions.add(userSchema);
+    actions.add(userSchema);
   }
 
   @override
-  void down(List $actions) {
-    $actions.add(Schema.dropIfExists('users'));
+  void down(List actions) {
+    actions.add(Schema.dropIfExists('users'));
   }
 }
