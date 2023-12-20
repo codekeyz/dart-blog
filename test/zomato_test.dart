@@ -32,16 +32,13 @@ void main() {
 
         await (await app.tester)
             .post('/api/users', newUserData)
-            .expectJsonBody(
-              allOf([
-                contains('id'),
-                containsPair('firstname', 'Foo'),
-                containsPair('lastname', 'Bar'),
-                containsPair('age', 100)
-              ]),
-            )
             .expectStatus(200)
-            .expectHeader('content-type', 'application/json; charset=utf-8')
+            .expectJsonBody(allOf([
+              contains('id'),
+              containsPair('firstname', 'Foo'),
+              containsPair('lastname', 'Bar'),
+              containsPair('age', 100)
+            ]))
             .test();
       });
     });

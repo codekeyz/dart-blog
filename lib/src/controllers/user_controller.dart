@@ -16,10 +16,7 @@ class UserController extends BaseController {
   Future<Response> create(Request req, Response res) async {
     final reqBody = Map<String, dynamic>.from(req.body ?? {});
     if (reqBody.isEmpty) {
-      return res.json(
-        {'error': 'Request body cannot be empty'},
-        statusCode: 422,
-      );
+      return res.json({'error': 'Request body cannot be empty'}, statusCode: 422);
     }
 
     final result = await DB.query('users').insert<User>(User(
@@ -66,9 +63,7 @@ class UserController extends BaseController {
     final userId = req.params['userId']!;
 
     final query = DB.query('users').where('id', '=', userId);
-    if (await query.findOne() == null) {
-      return res.notFound();
-    }
+    if (await query.findOne() == null) return res.notFound();
 
     await query.delete();
 
