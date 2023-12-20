@@ -19,11 +19,11 @@ dart run bin/tools/migrator.dart migrate
 ### Start
 
 ```shell
-$ dart run
+dart run
 ```
 
 ### Tests
 
 ```shell
-$ dart test
+dart test
 ```
