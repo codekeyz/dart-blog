@@ -3,8 +3,8 @@ import 'package:yaroo/http/http.dart';
 import 'package:yaroo/yaroo.dart';
 import 'package:zomato/app/app.dart';
 
-ConfigResolver config = () => {
-      /*
+final config = AppConfig.fromJson({
+  /*
     |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
@@ -14,9 +14,9 @@ ConfigResolver config = () => {
     | any other location as required by the application or its packages.
     |
     */
-      'name': env('APP_NAME', 'Laravel'),
+  'name': env('APP_NAME', 'Zomato'),
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
@@ -27,9 +27,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'env': env<String>('APP_ENV', 'production'),
+  'env': env<String>('APP_ENV', 'production'),
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
@@ -40,9 +40,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'debug': env<bool>('APP_DEBUG', false),
+  'debug': env<bool>('APP_DEBUG', false),
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
@@ -53,9 +53,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'url': env<String>('APP_URL', 'http://localhost'),
+  'url': env<String>('APP_URL', 'http://localhost'),
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Application Port
     |--------------------------------------------------------------------------
@@ -65,9 +65,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'port': env<int>('APP_PORT', 3000),
+  'port': env<int>('APP_PORT', 3000),
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
@@ -78,9 +78,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'timezone': 'UTC',
+  'timezone': 'UTC',
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
@@ -91,9 +91,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'locale': 'en',
+  'locale': 'en',
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
@@ -104,9 +104,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'key': env('APP_KEY', UuidV4().generate()),
+  'key': env('APP_KEY', UuidV4().generate()),
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
@@ -117,9 +117,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'providers': ServiceProvider.defaultProviders
-        ..addAll([
-          RouteServiceProvider,
-          CustomerServiceProvider,
-        ]),
-    };
+  'providers': ServiceProvider.defaultProviders
+    ..addAll([
+      RouteServiceProvider,
+      CustomerServiceProvider,
+    ]),
+});
