@@ -3,7 +3,7 @@ import 'package:yaroo/http/http.dart';
 import 'package:zomato/src/models/models.dart';
 import 'package:zomato/src/services/services.dart';
 
-class UserController extends ApplicationController {
+class UserController extends HTTPController {
   final UserService userSvc;
 
   UserController(this.userSvc);
