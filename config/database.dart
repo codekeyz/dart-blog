@@ -1,4 +1,4 @@
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as path;
 import 'package:yaroo/yaroo.dart';
 
 import '../database/migrations/create_users_table.dart';
@@ -36,7 +36,7 @@ final config = DatabaseConfig.from({
   'connections': {
     'sqlite': {
       'driver': 'sqlite',
-      'database': env('DB_DATABASE', p.absolute('database', 'db.sqlite')),
+      'database': env('DB_DATABASE', path.absolute('database', 'db.sqlite')),
       'foreign_key_constraints': env('DB_FOREIGN_KEYS', true),
     }
   },
