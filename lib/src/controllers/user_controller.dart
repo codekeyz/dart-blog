@@ -39,8 +39,8 @@ class UserController extends HTTPController {
 
     final query = DB.query('users').where('id', '=', params['userId']!);
 
-    final exists = await query.findOne();
-    if (exists == null) return notFound('User not found');
+    /// check if user exists
+    if (await query.findOne() == null) return notFound('User not found');
 
     /// update the record
     await query.update(updateData);
