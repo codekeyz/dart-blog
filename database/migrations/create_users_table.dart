@@ -5,8 +5,8 @@ class CreateUsersTable extends Migration {
 
   @override
   void up(List actions) {
-    final userSchema = Schema.create('users', ($table) {
-      return $table
+    final userSchema = Schema.create('users', (table) {
+      return table
         ..id()
         ..string('firstname')
         ..string('lastname')
