@@ -3,21 +3,19 @@ import 'package:yaroo/http/http.dart';
 import 'package:zomato/src/models/models.dart';
 import 'package:zomato/src/services/services.dart';
 
-class UserController extends BaseController {
+class UserController extends HTTPController {
   final UserService userSvc;
 
   UserController(this.userSvc);
 
-  Future<Response> index(Request req, Response res) async {
+  Future<Response> index() async {
     final result = await DB.query('users').all<User>();
-    return res.json(result);
+    return jsonResponse(result);
   }
 
-  Future<Response> create(Request req, Response res) async {
-    final reqBody = Map<String, dynamic>.from(req.body ?? {});
-    if (reqBody.isEmpty) {
-      return res.json({'error': 'Request body cannot be empty'}, statusCode: 422);
-    }
+  Future<Response> create() async {
+    final reqBody = Map.from(body ?? {});
+    if (reqBody.isEmpty) return badRequest('Request body cannot be empty');
 
     final result = await DB.query('users').insert<User>(User(
           reqBody['firstname'],
@@ -25,48 +23,41 @@ class UserController extends BaseController {
           reqBody['age'],
         ));
 
-    return res.json(result);
+    return jsonResponse(result);
   }
 
-  Future<Response> show(Request req, Response res) async {
-    final user = await DB.query('users').where('id', '=', req.params['userId']!).findOne<User>();
-    if (user == null) return res.notFound();
+  Future<Response> show() async {
+    final user = await DB.query('users').where('id', '=', params['userId']!).findOne<User>();
+    if (user == null) return notFound();
 
-    return res.json(user);
+    return jsonResponse(user);
   }
 
-  Future<Response> update(Request req, Response res) async {
-    final userId = req.params['userId']!;
+  Future<Response> update() async {
+    final updateData = Map<String, dynamic>.from(body ?? {});
+    if (updateData.isEmpty) return badRequest('User Id & Update data is required');
 
-    /// doing some validations. Hopefully someone writes a package to simplify this
-    final updateData = Map<String, dynamic>.from(req.body ?? {});
-    if (updateData.isEmpty) {
-      return res.json(
-        {'error': 'User Id & Update data is required'},
-        statusCode: 422,
-      );
-    }
+    final query = DB.query('users').where('id', '=', params['userId']!);
 
-    final query = DB.query('users').where('id', '=', userId);
+    /// check if user exists
+    if (await query.findOne() == null) return notFound('User not found');
 
     /// update the record
     await query.update(updateData);
 
-    /// fetch the updated record
+    /// fetch the updated user
     final updatedUser = await query.findOne<User>();
-
-    /// send the response
-    return res.json(updatedUser);
+    return jsonResponse(updatedUser);
   }
 
-  Future<Response> delete(Request req, Response res) async {
-    final userId = req.params['userId']!;
+  Future<Response> delete() async {
+    final userId = params['userId']!;
 
     final query = DB.query('users').where('id', '=', userId);
-    if (await query.findOne() == null) return res.notFound();
+    if (await query.findOne() == null) return notFound('User not found');
 
     await query.delete();
 
-    return res.json('User $userId deleted successfully');
+    return jsonResponse('User $userId deleted successfully');
   }
 }

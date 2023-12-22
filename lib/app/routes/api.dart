@@ -1,5 +1,5 @@
 import 'package:yaroo/yaroo.dart';
-import 'package:zomato/app/app.dart';
+import 'package:zomato/src/controllers/controllers.dart';
 
 List<RouteDefinition> routes = [
   Route.group('users').routes([

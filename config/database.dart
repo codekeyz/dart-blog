@@ -1,10 +1,10 @@
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as path;
 import 'package:yaroo/yaroo.dart';
 
 import '../database/migrations/create_users_table.dart';
 
-ConfigResolver config = () => {
-      /*
+final config = DatabaseConfig.from({
+  /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
     |--------------------------------------------------------------------------
@@ -15,9 +15,9 @@ ConfigResolver config = () => {
     |
     */
 
-      'default': env('DB_CONNECTION', 'sqlite'),
+  'default': env('DB_CONNECTION', 'sqlite'),
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Database Connections
     |--------------------------------------------------------------------------
@@ -33,15 +33,15 @@ ConfigResolver config = () => {
     |
     */
 
-      'connections': {
-        'sqlite': {
-          'driver': 'sqlite',
-          'database': env('DB_DATABASE', p.absolute('database', 'db.sqlite')),
-          'foreign_key_constraints': env('DB_FOREIGN_KEYS', true),
-        }
-      },
+  'connections': {
+    'sqlite': {
+      'driver': 'sqlite',
+      'database': env('DB_DATABASE', path.absolute('database', 'db.sqlite')),
+      'foreign_key_constraints': env('DB_FOREIGN_KEYS', true),
+    }
+  },
 
-      /*
+  /*
     |--------------------------------------------------------------------------
     | Migration Repository Table
     |--------------------------------------------------------------------------
@@ -52,6 +52,6 @@ ConfigResolver config = () => {
     |
     */
 
-      'migrationsTableName': 'migrations',
-      'migrations': [CreateUsersTable()]
-    };
+  'migrations_table': 'migrations',
+  'migrations': [CreateUsersTable()]
+});

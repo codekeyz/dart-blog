@@ -382,7 +382,7 @@ packages:
     description:
       path: "packages/pharaoh"
       ref: HEAD
-      resolved-ref: "73526cbe4dab4f64df5c8cd5ae8bb886b429b145"
+      resolved-ref: eaa8bc08a3d235d73ea48460a08cca9aca4aa4ee
       url: "https://github.com/codekeyz/pharaoh.git"
     source: git
     version: "0.0.5+7"
@@ -503,10 +503,10 @@ packages:
     dependency: transitive
     description:
       name: spanner
-      sha256: "89e86b91f38a42a51dd7f4f9961162801cbf64a3bce4bca6c6f3a7d04ac96d9d"
+      sha256: "5b1836859aeae93c670f2109ad479953479f9f82a385ee7b0df095ceaa235e8a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1+1"
+    version: "1.0.1+2"
   spookie:
     dependency: transitive
     description:
@@ -543,10 +543,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3
-      sha256: "8922805564b78eb7aa9386c10056d377a541ac7270dc6a1589176277ebb4d15d"
+      sha256: c4a4c5a4b2a32e2d0f6837b33d7c91a67903891a5b7dbe706cf4b1f6b0c798c5
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.3.0"
   stack_trace:
     dependency: transitive
     description:
@@ -712,7 +712,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: bf1d2dd7c0eb0f165f0625b089e89e303b9320da
+      resolved-ref: c05d45995516508ce08e991415b96ff968671f66
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -721,7 +721,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: bf1d2dd7c0eb0f165f0625b089e89e303b9320da
+      resolved-ref: c05d45995516508ce08e991415b96ff968671f66
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"
