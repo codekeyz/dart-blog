@@ -28,7 +28,7 @@ class UserController extends HTTPController {
 
   Future<Response> show() async {
     final user = await DB.query('users').where('id', '=', params['userId']!).findOne<User>();
-    if (user == null) return notFound();
+    if (user == null) return notFound('User not found');
 
     return jsonResponse(user);
   }

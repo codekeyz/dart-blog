@@ -57,6 +57,13 @@ void main() {
             .expectJsonBody({'error': "Invalid argument: Invalid parameter value: \"asdf\""}).test();
       });
 
+      test('should error when user not found', () async {
+        await (await zomato.tester)
+            .get('/api/users/245')
+            .expectStatus(404)
+            .expectJsonBody({'error': "User not found"}).test();
+      });
+
       test('should return valid user', () async {
         final user = await DB.query('users').get<User>();
         expect(user, isA<User>());
