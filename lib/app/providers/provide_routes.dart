@@ -23,7 +23,6 @@ class RouteServiceProvider extends ServiceProvider {
     | Web Routes
     |--------------------------------------------------------------------------
     */
-
         Route.group('/', middlewares: []).routes(web.routes),
       ],
     );

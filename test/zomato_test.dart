@@ -149,5 +149,13 @@ void main() {
     test('should show homepage', () async {
       await (await zomato.tester).get('/').expectStatus(200).expectBody(contains('Welcome to Yaroo 🚀')).test();
     });
+
+    test('should show 404 page', () async {
+      await (await zomato.tester)
+          .get('/some-random-page')
+          .expectStatus(200)
+          .expectBody(allOf(contains('Oops! 😟'), contains('looks like you\'re lost')))
+          .test();
+    });
   });
 }
