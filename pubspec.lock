@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  buffer:
+    dependency: transitive
+    description:
+      name: buffer
+      sha256: "94f60815065a8f0fd4f05be51faf86cf86519327e039d5c2aac72e1d1cc1dad4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.2"
   build:
     dependency: transitive
     description:
@@ -353,6 +361,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  mysql_client:
+    dependency: transitive
+    description:
+      name: mysql_client
+      sha256: "6a0fdcbe3e0721c637f97ad24649be2f70dbce2b21ede8f962910e640f753fc2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.27"
   node_preamble:
     dependency: transitive
     description:
@@ -382,7 +398,7 @@ packages:
     description:
       path: "packages/pharaoh"
       ref: HEAD
-      resolved-ref: eaa8bc08a3d235d73ea48460a08cca9aca4aa4ee
+      resolved-ref: "99edf6c0c47e81e76ae7af5cfa1690aa85c5e186"
       url: "https://github.com/codekeyz/pharaoh.git"
     source: git
     version: "0.0.5+7"
@@ -643,6 +659,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -712,7 +736,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: c05d45995516508ce08e991415b96ff968671f66
+      resolved-ref: ddf453e7c1e3a1ca793d7fe8d0cbad2af6fc2c48
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -721,7 +745,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: c05d45995516508ce08e991415b96ff968671f66
+      resolved-ref: ddf453e7c1e3a1ca793d7fe8d0cbad2af6fc2c48
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"

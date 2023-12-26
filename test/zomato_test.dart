@@ -44,7 +44,7 @@ void main() {
     });
 
     test('should get all users', () async {
-      final users = await DB.query('users').all<User>();
+      final users = await DB.query<User>().all();
 
       await (await zomato.tester).get('/api/users').expectStatus(200).expectJsonBody(hasLength(users.length)).test();
     });
@@ -65,7 +65,7 @@ void main() {
       });
 
       test('should return valid user', () async {
-        final user = await DB.query('users').get<User>();
+        final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
         await (await zomato.tester).get('/api/users/${user!.id.value}').expectStatus(200).expectJsonBody({
@@ -88,7 +88,7 @@ void main() {
       });
 
       test('should error when no body', () async {
-        final user = await DB.query('users').get<User>();
+        final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
         await (await zomato.tester)
@@ -106,7 +106,7 @@ void main() {
       });
 
       test('should return valid user', () async {
-        final user = await DB.query('users').get<User>();
+        final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
         await (await zomato.tester)
@@ -118,7 +118,7 @@ void main() {
               'updated_at': user.updatedAt.toIso8601String(),
               'firstname': 'Yango',
               'lastname': user.lastname,
-              'age': user.age,
+              'age': user.age
             })
             .test();
       });
@@ -140,7 +140,7 @@ void main() {
       });
 
       test('should delete user', () async {
-        final user = await DB.query('users').get<User>();
+        final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
         await (await zomato.tester)
