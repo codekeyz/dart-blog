@@ -1,8 +1,6 @@
-import 'package:yaroo/db/db.dart';
+import 'package:yaroorm/migration.dart';
 
 class CreateUsersTable extends Migration {
-  const CreateUsersTable();
-
   @override
   void up(List actions) {
     final userSchema = Schema.create('users', (table) {
