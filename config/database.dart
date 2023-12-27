@@ -3,7 +3,7 @@ import 'package:yaroorm/config.dart';
 
 import '../database/migrations/create_users_table.dart';
 
-final config = DatabaseConfig.from({
+final config = YaroormConfig.from({
   /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name

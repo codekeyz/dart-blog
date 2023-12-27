@@ -2,19 +2,20 @@ import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
 import 'package:yaroorm/yaroorm.dart';
 import 'package:zomato/app/app.dart';
-import 'package:zomato/src/models/models.dart';
 
-import '../bin/zomato.reflectable.dart';
 import '../config/app.dart' as app;
+import '../config/database.dart' as db;
+
+import 'zomato_test.reflectable.dart';
+
+final zomato = App(app.config);
 
 void main() {
-  final zomato = App(app.config);
+  initializeReflectable();
 
-  setUpAll(() async {
-    initializeReflectable();
+  DB.init(db.config);
 
-    await zomato.bootstrap(listen: false);
-  });
+  setUpAll(() => zomato.bootstrap(listen: false));
 
   group('Zomato API Tests', () {
     group('when `create user`', () {
