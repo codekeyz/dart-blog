@@ -1,15 +1,14 @@
 import 'package:test/expect.dart';
 import 'package:test/scaffolding.dart';
-import 'package:yaroo/db/db.dart';
+import 'package:yaroorm/yaroorm.dart';
 import 'package:zomato/app/app.dart';
 import 'package:zomato/src/models/models.dart';
 
 import '../bin/zomato.reflectable.dart';
 import '../config/app.dart' as app;
-import '../config/database.dart' as db;
 
 void main() {
-  late final App zomato = App(app.config, dbConfig: db.config);
+  final zomato = App(app.config);
 
   setUpAll(() async {
     initializeReflectable();

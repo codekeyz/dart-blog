@@ -1,5 +1,5 @@
 import 'package:path/path.dart' as path;
-import 'package:yaroo/yaroo.dart';
+import 'package:yaroorm/config.dart';
 
 import '../database/migrations/create_users_table.dart';
 
