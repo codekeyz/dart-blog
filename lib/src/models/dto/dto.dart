@@ -1,1 +1,1 @@
-export 'create_user_dto.dart';
+export 'user_dto.dart';

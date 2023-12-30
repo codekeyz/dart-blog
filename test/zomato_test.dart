@@ -23,13 +23,16 @@ void main() {
         await (await zomato.tester)
             .post('/api/users', {})
             .expectStatus(400)
-            .expectJsonBody({
-              'errors': {
-                'firstname': 'The field is required',
-                'lastname': 'The field is required',
-                'age': 'The field is required'
-              }
-            })
+            .expectJsonBody(
+              {
+                'location': 'body',
+                'errors': [
+                  'firstname: The field is required',
+                  'lastname: The field is required',
+                  'age: The field is required'
+                ]
+              },
+            )
             .test();
       });
 
@@ -57,10 +60,12 @@ void main() {
 
     group('when `show user`', () {
       test('should error when invalid params', () async {
-        await (await zomato.tester)
-            .get('/api/users/asdf')
-            .expectStatus(400)
-            .expectJsonBody({'error': "Request Param: userId is invalid"}).test();
+        await (await zomato.tester).get('/api/users/asdf').expectStatus(400).expectJsonBody(
+          {
+            'location': 'param',
+            'errors': ['userId must be a int type']
+          },
+        ).test();
       });
 
       test('should error when user not found', () async {
@@ -87,20 +92,24 @@ void main() {
 
     group('when `update user`', () {
       test('should error when invalid userId', () async {
-        await (await zomato.tester)
-            .put('/api/users/asdf')
-            .expectStatus(400)
-            .expectJsonBody({'error': 'Request Param: userId is invalid'}).test();
+        await (await zomato.tester).put('/api/users/asdf').expectStatus(400).expectJsonBody(
+          {
+            'location': 'param',
+            'errors': ['userId must be a int type']
+          },
+        ).test();
       });
 
       test('should error when no body', () async {
         final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
-        await (await zomato.tester)
-            .put('/api/users/${user!.id.value}')
-            .expectStatus(400)
-            .expectJsonBody({'error': 'Request Body is required'}).test();
+        await (await zomato.tester).put('/api/users/${user!.id.value}').expectStatus(400).expectJsonBody(
+          {
+            'location': 'body',
+            'errors': ['body is required']
+          },
+        ).test();
       });
 
       test('should error when user not found', () async {
@@ -132,10 +141,12 @@ void main() {
 
     group('when `delete user`', () {
       test('should error when invalid params', () async {
-        await (await zomato.tester)
-            .delete('/api/users/asdf')
-            .expectStatus(400)
-            .expectJsonBody({'error': 'Request Param: userId is invalid'}).test();
+        await (await zomato.tester).delete('/api/users/asdf').expectStatus(400).expectJsonBody(
+          {
+            'location': 'param',
+            'errors': ['userId must be a int type']
+          },
+        ).test();
       });
 
       test('should error when user not found', () async {

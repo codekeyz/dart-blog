@@ -4,7 +4,7 @@ import 'package:yaroorm/yaroorm.dart';
 import 'package:zomato/src/models/models.dart';
 import 'package:zomato/src/services/services.dart';
 
-import '../models/dto/create_user_dto.dart';
+import '../models/dto/user_dto.dart';
 
 class UserController extends HTTPController {
   final UserService userSvc;
@@ -16,7 +16,7 @@ class UserController extends HTTPController {
     return jsonResponse(result);
   }
 
-  Future<Response> create(@dto CreateUserDTO userDTO) async {
+  Future<Response> create(@body CreateUserDTO userDTO) async {
     final userTable = DB.query<User>();
 
     final userData = User(userDTO.firstname, userDTO.lastname, userDTO.age);
@@ -33,14 +33,14 @@ class UserController extends HTTPController {
     return jsonResponse(user);
   }
 
-  Future<Response> update(@param int userId, @body Map<String, dynamic> reqBody) async {
+  Future<Response> update(@param int userId, @body UpdateUserDTO reqBody) async {
     final query = DB.query<User>().whereEqual('id', userId);
 
     /// check if user exists
     if (await query.findOne() == null) return notFound('User not found');
 
     /// update the record
-    await query.update(reqBody);
+    await query.update(reqBody.data);
 
     /// fetch the updated user
     final updatedUser = await query.findOne();
