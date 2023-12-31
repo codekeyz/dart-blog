@@ -4,7 +4,7 @@ import 'package:yaroorm/yaroorm.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
-class User extends Entity<int> {
+class User extends Entity<int, User> {
   final String firstname;
   final String lastname;
   final int age;
