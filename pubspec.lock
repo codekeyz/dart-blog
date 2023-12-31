@@ -745,7 +745,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: "86c1496f8138e6b77f001395207f0df5c1277f58"
+      resolved-ref: d7ecbbfdb51c224ae1138dfa9e028b6bea2edeae
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -754,7 +754,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: "86c1496f8138e6b77f001395207f0df5c1277f58"
+      resolved-ref: d7ecbbfdb51c224ae1138dfa9e028b6bea2edeae
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"
