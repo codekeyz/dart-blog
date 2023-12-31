@@ -79,10 +79,10 @@ void main() {
         final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
-        await (await zomato.tester).get('/api/users/${user!.id.value}').expectStatus(200).expectJsonBody({
-          'id': user.id.value,
-          'created_at': user.createdAt.toIso8601String(),
-          'updated_at': user.updatedAt.toIso8601String(),
+        await (await zomato.tester).get('/api/users/${user!.id}').expectStatus(200).expectJsonBody({
+          'id': user.id,
+          'created_at': user.createdAt!.toIso8601String(),
+          'updated_at': user.updatedAt!.toIso8601String(),
           'firstname': user.firstname,
           'lastname': user.lastname,
           'age': user.age,
@@ -104,7 +104,7 @@ void main() {
         final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
-        await (await zomato.tester).put('/api/users/${user!.id.value}').expectStatus(400).expectJsonBody(
+        await (await zomato.tester).put('/api/users/${user!.id}').expectStatus(400).expectJsonBody(
           {
             'location': 'body',
             'errors': ['body is required']
@@ -125,12 +125,12 @@ void main() {
         expect(user, isA<User>());
 
         await (await zomato.tester)
-            .put('/api/users/${user!.id.value}', body: {'firstname': 'Yango'})
+            .put('/api/users/${user!.id}', body: {'firstname': 'Yango'})
             .expectStatus(200)
             .expectJsonBody({
-              'id': user.id.value,
-              'created_at': user.createdAt.toIso8601String(),
-              'updated_at': user.updatedAt.toIso8601String(),
+              'id': user.id,
+              'created_at': user.createdAt!.toIso8601String(),
+              'updated_at': user.updatedAt!.toIso8601String(),
               'firstname': 'Yango',
               'lastname': user.lastname,
               'age': user.age
@@ -161,9 +161,9 @@ void main() {
         expect(user, isA<User>());
 
         await (await zomato.tester)
-            .delete('/api/users/${user!.id.value}')
+            .delete('/api/users/${user!.id}')
             .expectStatus(200)
-            .expectBody('"User ${user.id.value} deleted successfully"')
+            .expectBody('"User ${user.id} deleted successfully"')
             .test();
       });
     });
