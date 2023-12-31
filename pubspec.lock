@@ -185,6 +185,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
+  ez_validator:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: b45e6606f5e57b5ad087006896737701e8c752c4
+      url: "https://github.com/codekeyz/ez-validator-yaroo.git"
+    source: git
+    version: "0.3.1"
   ffi:
     dependency: transitive
     description:
@@ -687,10 +696,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: a2662fb1f114f4296cf3f5a50786a2d888268d7776cf681aa17d660ffa23b246
+      sha256: b3d56ff4341b8f182b96aceb2fa20e3dcb336b9f867bc0eafc0de10f1048e957
       url: "https://pub.dev"
     source: hosted
-    version: "14.0.0"
+    version: "13.0.0"
   watcher:
     dependency: transitive
     description:
@@ -736,7 +745,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: "2685540fc4ff6b5a450634da9d914618528e3896"
+      resolved-ref: d0a4ae65aaae5b7401e5d69f954386bd5e31982e
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -745,7 +754,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: "2685540fc4ff6b5a450634da9d914618528e3896"
+      resolved-ref: d0a4ae65aaae5b7401e5d69f954386bd5e31982e
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"

@@ -5,8 +5,8 @@ List<RouteDefinition> routes = [
   Route.group('users').routes([
     Route.get('/', (UserController, #index)),
     Route.post('/', (UserController, #create)),
-    Route.get('/<userId|number>', (UserController, #show)),
-    Route.put('/<userId|number>', (UserController, #update)),
-    Route.delete('/<userId|number>', (UserController, #delete)),
+    Route.get('/<userId>', (UserController, #show)),
+    Route.put('/<userId>', (UserController, #update)),
+    Route.delete('/<userId>', (UserController, #delete)),
   ]),
 ];

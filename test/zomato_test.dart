@@ -22,8 +22,17 @@ void main() {
       test('should error when invalid params', () async {
         await (await zomato.tester)
             .post('/api/users', {})
-            .expectStatus(422)
-            .expectJsonBody({'error': 'Request body cannot be empty'})
+            .expectStatus(400)
+            .expectJsonBody(
+              {
+                'location': 'body',
+                'errors': [
+                  'firstname: The field is required',
+                  'lastname: The field is required',
+                  'age: The field is required'
+                ]
+              },
+            )
             .test();
       });
 
@@ -51,10 +60,12 @@ void main() {
 
     group('when `show user`', () {
       test('should error when invalid params', () async {
-        await (await zomato.tester)
-            .get('/api/users/asdf')
-            .expectStatus(422)
-            .expectJsonBody({'error': "Invalid argument: Invalid parameter value: \"asdf\""}).test();
+        await (await zomato.tester).get('/api/users/asdf').expectStatus(400).expectJsonBody(
+          {
+            'location': 'param',
+            'errors': ['userId must be a int type']
+          },
+        ).test();
       });
 
       test('should error when user not found', () async {
@@ -81,20 +92,24 @@ void main() {
 
     group('when `update user`', () {
       test('should error when invalid userId', () async {
-        await (await zomato.tester)
-            .put('/api/users/asdf')
-            .expectStatus(422)
-            .expectJsonBody({'error': "Invalid argument: Invalid parameter value: \"asdf\""}).test();
+        await (await zomato.tester).put('/api/users/asdf').expectStatus(400).expectJsonBody(
+          {
+            'location': 'param',
+            'errors': ['userId must be a int type']
+          },
+        ).test();
       });
 
       test('should error when no body', () async {
         final user = await DB.query<User>().get();
         expect(user, isA<User>());
 
-        await (await zomato.tester)
-            .put('/api/users/${user!.id.value}')
-            .expectStatus(422)
-            .expectJsonBody({'error': 'User Id & Update data is required'}).test();
+        await (await zomato.tester).put('/api/users/${user!.id.value}').expectStatus(400).expectJsonBody(
+          {
+            'location': 'body',
+            'errors': ['body is required']
+          },
+        ).test();
       });
 
       test('should error when user not found', () async {
@@ -126,10 +141,12 @@ void main() {
 
     group('when `delete user`', () {
       test('should error when invalid params', () async {
-        await (await zomato.tester)
-            .delete('/api/users/asdf')
-            .expectStatus(422)
-            .expectJsonBody({'error': "Invalid argument: Invalid parameter value: \"asdf\""}).test();
+        await (await zomato.tester).delete('/api/users/asdf').expectStatus(400).expectJsonBody(
+          {
+            'location': 'param',
+            'errors': ['userId must be a int type']
+          },
+        ).test();
       });
 
       test('should error when user not found', () async {

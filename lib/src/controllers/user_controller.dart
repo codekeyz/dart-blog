@@ -1,7 +1,10 @@
 import 'package:yaroo/http/http.dart';
+import 'package:yaroo/http/meta.dart';
 import 'package:yaroorm/yaroorm.dart';
 import 'package:zomato/src/models/models.dart';
 import 'package:zomato/src/services/services.dart';
+
+import '../models/dto/user_dto.dart';
 
 class UserController extends HTTPController {
   final UserService userSvc;
@@ -13,45 +16,38 @@ class UserController extends HTTPController {
     return jsonResponse(result);
   }
 
-  Future<Response> create() async {
-    final reqBody = Map.from(body ?? {});
-    if (reqBody.isEmpty) return badRequest('Request body cannot be empty');
-
+  Future<Response> create(@body CreateUserDTO userDTO) async {
     final userTable = DB.query<User>();
 
-    final userData = User(reqBody['firstname'], reqBody['lastname'], reqBody['age']);
+    final userData = User(userDTO.firstname, userDTO.lastname, userDTO.age);
+
     final user = await userTable.insert<User>(userData);
 
     return jsonResponse(user);
   }
 
-  Future<Response> show() async {
-    final user = await DB.query<User>().whereEqual('id', params['userId']!).findOne();
+  Future<Response> show(@param int userId) async {
+    final user = await DB.query<User>().get(userId);
     if (user == null) return notFound('User not found');
 
     return jsonResponse(user);
   }
 
-  Future<Response> update() async {
-    final updateData = Map<String, dynamic>.from(body ?? {});
-    if (updateData.isEmpty) return badRequest('User Id & Update data is required');
-
-    final query = DB.query<User>().where('id', '=', params['userId']!);
+  Future<Response> update(@param int userId, @body UpdateUserDTO reqBody) async {
+    final query = DB.query<User>().whereEqual('id', userId);
 
     /// check if user exists
     if (await query.findOne() == null) return notFound('User not found');
 
     /// update the record
-    await query.update(updateData);
+    await query.update(reqBody.data);
 
     /// fetch the updated user
     final updatedUser = await query.findOne();
     return jsonResponse(updatedUser);
   }
 
-  Future<Response> delete() async {
-    final userId = params['userId']!;
-
+  Future<Response> delete(@param int userId) async {
     final query = DB.query<User>().whereEqual('id', userId);
     if (await query.findOne() == null) return notFound('User not found');
 
