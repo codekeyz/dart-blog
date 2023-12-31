@@ -13,15 +13,12 @@ class UserController extends HTTPController {
 
   Future<Response> index() async {
     final result = await DB.query<User>().all();
+
     return jsonResponse(result);
   }
 
   Future<Response> create(@body CreateUserDTO userDTO) async {
-    final userTable = DB.query<User>();
-
-    final userData = User(userDTO.firstname, userDTO.lastname, userDTO.age);
-
-    final user = await userTable.insert<User>(userData);
+    final user = await User(userDTO.firstname, userDTO.lastname, userDTO.age).save();
 
     return jsonResponse(user);
   }
@@ -34,24 +31,19 @@ class UserController extends HTTPController {
   }
 
   Future<Response> update(@param int userId, @body UpdateUserDTO reqBody) async {
-    final query = DB.query<User>().whereEqual('id', userId);
+    var user = await DB.query<User>().get(userId);
+    if (user == null) return notFound('User not found');
 
-    /// check if user exists
-    if (await query.findOne() == null) return notFound('User not found');
+    user = await user.update(reqBody.data);
 
-    /// update the record
-    await query.update(reqBody.data);
-
-    /// fetch the updated user
-    final updatedUser = await query.findOne();
-    return jsonResponse(updatedUser);
+    return jsonResponse(user);
   }
 
   Future<Response> delete(@param int userId) async {
-    final query = DB.query<User>().whereEqual('id', userId);
-    if (await query.findOne() == null) return notFound('User not found');
+    final user = await DB.query<User>().get(userId);
+    if (user == null) return notFound('User not found');
 
-    await query.delete();
+    await user.delete();
 
     return jsonResponse('User $userId deleted successfully');
   }

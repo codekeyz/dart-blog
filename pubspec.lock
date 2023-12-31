@@ -696,10 +696,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: b3d56ff4341b8f182b96aceb2fa20e3dcb336b9f867bc0eafc0de10f1048e957
+      sha256: a2662fb1f114f4296cf3f5a50786a2d888268d7776cf681aa17d660ffa23b246
       url: "https://pub.dev"
     source: hosted
-    version: "13.0.0"
+    version: "14.0.0"
   watcher:
     dependency: transitive
     description:
@@ -745,7 +745,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: d0a4ae65aaae5b7401e5d69f954386bd5e31982e
+      resolved-ref: "86c1496f8138e6b77f001395207f0df5c1277f58"
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -754,7 +754,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: d0a4ae65aaae5b7401e5d69f954386bd5e31982e
+      resolved-ref: "86c1496f8138e6b77f001395207f0df5c1277f58"
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"
