@@ -2,4 +2,4 @@ library providers;
 
 export 'provide_routes.dart';
 export 'provide_database.dart';
-export 'provide_customers.dart';
+export 'provide_user_service.dart';
