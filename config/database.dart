@@ -41,11 +41,11 @@ final config = YaroormConfig.from({
     },
     'mariadb': {
       'driver': 'mariadb',
-      'host': env<String>('DB_HOST'),
+      'host': env<String>('DB_HOST', ''),
       'port': env<int>('DB_PORT'),
-      'database': env<String>('DB_DATABASE'),
-      'username': env<String>('DB_USERNAME'),
-      'password': env<String>('DB_PASSWORD'),
+      'database': env<String>('DB_DATABASE', ''),
+      'username': env<String>('DB_USERNAME', ''),
+      'password': env<String>('DB_PASSWORD', ''),
     }
   },
 
