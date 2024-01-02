@@ -22,6 +22,6 @@ class JinJaViewProvider extends ServiceProvider {
 extension ViewRender on Response {
   Response view(String name, [Map<String, dynamic> data = const {}]) {
     final filePath = name.split('.').map((e) => JinJaViewProvider.pathAlias[e] ?? e).join('/');
-    return render(filePath);
+    return render(filePath, data);
   }
 }
