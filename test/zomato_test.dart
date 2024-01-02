@@ -81,8 +81,8 @@ void main() {
 
         await (await zomato.tester).get('/api/users/${user!.id}').expectStatus(200).expectJsonBody({
           'id': user.id,
-          'created_at': user.createdAt!.toIso8601String(),
-          'updated_at': user.updatedAt!.toIso8601String(),
+          'createdAt': user.createdAt!.toIso8601String(),
+          'updatedAt': user.updatedAt!.toIso8601String(),
           'firstname': user.firstname,
           'lastname': user.lastname,
           'age': user.age,
@@ -129,8 +129,8 @@ void main() {
             .expectStatus(200)
             .expectJsonBody({
               'id': user.id,
-              'created_at': user.createdAt!.toIso8601String(),
-              'updated_at': user.updatedAt!.toIso8601String(),
+              'createdAt': user.createdAt!.toIso8601String(),
+              'updatedAt': user.updatedAt!.toIso8601String(),
               'firstname': 'Yango',
               'lastname': user.lastname,
               'age': user.age
