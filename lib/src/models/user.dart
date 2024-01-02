@@ -5,11 +5,13 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User extends Entity<int, User> {
-  final String firstname;
-  final String lastname;
-  final int age;
+  final String name;
 
-  User(this.firstname, this.lastname, this.age);
+  final String email;
+
+  final String password;
+
+  User(this.name, this.email, this.password);
 
   @override
   Map<String, dynamic> toMap() => _$UserToJson(this);
