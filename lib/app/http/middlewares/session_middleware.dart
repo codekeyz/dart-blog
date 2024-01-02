@@ -5,9 +5,9 @@ class SessionMiddleware extends Middleware {
     final cookieOpts = CookieOpts(secret: app.config.key, signed: true);
 
     final cookieParserMdw = cookieParser(opts: cookieOpts);
-    final sessionMdw = session(cookie: cookieOpts, saveUninitialized: false);
+    final session = sessionMdw(cookie: cookieOpts, saveUninitialized: false);
 
-    return cookieParserMdw.chain(sessionMdw);
+    return cookieParserMdw.chain(session);
   }
 
   @override

@@ -119,6 +119,7 @@ final config = AppConfig.fromJson({
 
   'providers': ServiceProvider.defaultProviders
     ..addAll([
+      JinJaViewProvider,
       RouteServiceProvider,
       DatabaseServiceProvider,
       UserServiceProvider,

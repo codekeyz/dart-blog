@@ -407,10 +407,10 @@ packages:
     description:
       path: "packages/pharaoh"
       ref: HEAD
-      resolved-ref: "99edf6c0c47e81e76ae7af5cfa1690aa85c5e186"
+      resolved-ref: d30cf117f216adabf20a69098288524efa075e09
       url: "https://github.com/codekeyz/pharaoh.git"
     source: git
-    version: "0.0.5+7"
+    version: "0.0.5+8"
   pool:
     dependency: transitive
     description:
@@ -536,10 +536,10 @@ packages:
     dependency: transitive
     description:
       name: spookie
-      sha256: "0fd547292f52994ccddebef25f8453e223e8cdc7389f5c9430cc9ed4b0f6e91e"
+      sha256: "2f5729c815b802182f7323fbb88a930d32825067b0e7aca8da58f51e430a90d3"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2+1"
+    version: "1.0.2+2"
   sprintf:
     dependency: transitive
     description:
@@ -745,7 +745,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: "8800313d8e796e8be0d830c0a5eff5cb15c9cdd0"
+      resolved-ref: f04dca7563205240988fc868494837071510697c
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -754,7 +754,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: "8800313d8e796e8be0d830c0a5eff5cb15c9cdd0"
+      resolved-ref: f04dca7563205240988fc868494837071510697c
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"
