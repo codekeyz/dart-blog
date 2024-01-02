@@ -14,7 +14,7 @@ final config = AppConfig.fromJson({
     | any other location as required by the application or its packages.
     |
     */
-  'name': env('APP_NAME', 'Zomato'),
+  'name': env('APP_NAME', 'The Yaroo blog'),
 
   /*
     |--------------------------------------------------------------------------

@@ -5,13 +5,13 @@
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img class="mx-auto h-14 w-auto" src="assets/logo.png" alt="Yaroo">
+        <img class="mx-auto h-24 w-auto" src="assets/image.png" alt="Yaroo">
         <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account
         </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
+        <form class="space-y-6" action="/api/auth/login" method="POST">
             <div>
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                 <div class="mt-2">
@@ -39,7 +39,7 @@
 
         <p class="mt-10 text-center text-sm text-gray-500">
             Not a member?
-            <a href="#" class="font-semibold leading-6 text-zinc-800 hover:text-zinc-500">Create Account Now</a>
+            <a href="/register" class="font-semibold leading-6 text-zinc-800 hover:text-zinc-500">Create Account Now</a>
         </p>
     </div>
 </div>

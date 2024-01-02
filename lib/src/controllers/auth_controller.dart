@@ -17,8 +17,8 @@ class AuthController extends HTTPController {
     final user = await DB.query<User>().whereEqual('email', data.email).findOne();
     if (user == null) return unauthorized;
 
-    final compare = BCrypt.checkpw(data.password, user.password);
-    if (!compare) return unauthorized;
+    final match = BCrypt.checkpw(data.password, user.password);
+    if (!match) return unauthorized;
 
     if (!expectsJson) return redirectTo('/dashboard');
     return jsonResponse(_userResponse(user));
@@ -35,7 +35,10 @@ class AuthController extends HTTPController {
     return response.status(HttpStatus.ok);
   }
 
-  Response get unauthorized => response.status(HttpStatus.unauthorized).end();
-
   Map<String, dynamic> _userResponse(User user) => {'user': user.toJson()..remove('password')};
+
+  Response get unauthorized {
+    if (!expectsJson) return response.redirect('/login');
+    return response.status(HttpStatus.unauthorized).end();
+  }
 }

@@ -5,7 +5,8 @@ import 'package:zomato/app/providers/provide_views.dart';
 final routes = <RouteDefinition>[
   /// Home Page
   Route.handler(HTTPMethod.GET, '/', (req, res) {
-    return res.view('index', {'app_name': 'Yaroo', 'app_version': '1.0.0'});
+    final config = Application.instance.config;
+    return res.view('index', {'app_name': config.name, 'app_env': config.environment});
   }),
 
   /// Auth Routes
