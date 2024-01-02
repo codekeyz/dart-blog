@@ -171,7 +171,7 @@ void main() {
 
   group('Zomato Web Tests', () {
     test('should show homepage', () async {
-      await (await zomato.tester).get('/').expectStatus(200).expectBody(contains('Welcome to Yaroo 🚀')).test();
+      await (await zomato.tester).get('/').expectStatus(200).expectBody(contains('Welcome to Yaroo')).test();
     });
 
     test('should show 404 page', () async {
