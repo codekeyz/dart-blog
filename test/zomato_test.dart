@@ -81,8 +81,8 @@ void main() {
 
         await (await zomato.tester).get('/api/users/${user!.id}').expectStatus(200).expectJsonBody({
           'id': user.id,
-          'created_at': user.createdAt!.toIso8601String(),
-          'updated_at': user.updatedAt!.toIso8601String(),
+          'createdAt': user.createdAt!.toIso8601String(),
+          'updatedAt': user.updatedAt!.toIso8601String(),
           'firstname': user.firstname,
           'lastname': user.lastname,
           'age': user.age,
@@ -129,8 +129,8 @@ void main() {
             .expectStatus(200)
             .expectJsonBody({
               'id': user.id,
-              'created_at': user.createdAt!.toIso8601String(),
-              'updated_at': user.updatedAt!.toIso8601String(),
+              'createdAt': user.createdAt!.toIso8601String(),
+              'updatedAt': user.updatedAt!.toIso8601String(),
               'firstname': 'Yango',
               'lastname': user.lastname,
               'age': user.age
@@ -171,7 +171,7 @@ void main() {
 
   group('Zomato Web Tests', () {
     test('should show homepage', () async {
-      await (await zomato.tester).get('/').expectStatus(200).expectBody(contains('Welcome to Yaroo 🚀')).test();
+      await (await zomato.tester).get('/').expectStatus(200).expectBody(contains('Welcome to Yaroo')).test();
     });
 
     test('should show 404 page', () async {

@@ -121,6 +121,6 @@ final config = AppConfig.fromJson({
     ..addAll([
       RouteServiceProvider,
       DatabaseServiceProvider,
-      CustomerServiceProvider,
+      UserServiceProvider,
     ]),
 });

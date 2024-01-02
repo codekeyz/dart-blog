@@ -4,7 +4,7 @@ import 'package:yaroo/yaroo.dart';
 final routes = <RouteDefinition>[
   /// Home Page
   Route.handler(HTTPMethod.GET, '/', (req, res) {
-    return res.render('welcome', {'app_name': 'Yaroo', 'app_version': '1.0.0'});
+    return res.render('index', {'app_name': 'Yaroo', 'app_version': '1.0.0'});
   }),
 
   /// Not Found Page
