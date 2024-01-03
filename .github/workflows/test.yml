@@ -48,7 +48,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          dart test --coverage=coverage" --fail-fast
+          dart test --coverage=coverage --fail-fast
           dart pub global run coverage:format_coverage --check-ignore --report-on=lib --lcov -o lcov.info -i ./coverage
 
       - name: Upload Coverage
