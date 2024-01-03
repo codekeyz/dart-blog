@@ -31,7 +31,7 @@ jobs:
 
       - name: Check linting
         run: |
-          dart pub get --directory=frontend
+          flutter pub get --directory=frontend
           dart run build_runner build
           dart analyze . --fatal-infos
 
