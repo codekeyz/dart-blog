@@ -11,7 +11,9 @@ command:
 scripts:
   build:frontend:
     run: |
-      melos exec -c 1  -- "dart test" --fail-fast
+      melos exec -c 1  -- "flutter build web --output=../public --release"
+    packageFilters:
+      flutter: true
 
   format: melos exec -- "dart format . --line-length=120"
 
