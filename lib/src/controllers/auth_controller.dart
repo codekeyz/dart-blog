@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
 import 'package:yaroorm/yaroorm.dart';
-import 'package:zomato/src/models/dto/dto.dart';
-import 'package:zomato/src/models/models.dart';
-import 'package:zomato/src/services/services.dart';
+import 'package:backend/src/models/dto/dto.dart';
+import 'package:backend/src/models/models.dart';
+import 'package:backend/src/services/services.dart';
 import 'package:bcrypt/bcrypt.dart';
 
 class AuthController extends HTTPController {
@@ -15,12 +13,11 @@ class AuthController extends HTTPController {
 
   Future<Response> login(@body LoginUserDTO data) async {
     final user = await DB.query<User>().whereEqual('email', data.email).findOne();
-    if (user == null) return unauthorized;
+    if (user == null) return invalidLogin;
 
     final match = BCrypt.checkpw(data.password, user.password);
-    if (!match) return unauthorized;
+    if (!match) return invalidLogin;
 
-    if (!expectsJson) return redirectTo('/dashboard');
     return jsonResponse(_userResponse(user));
   }
 
@@ -29,16 +26,12 @@ class AuthController extends HTTPController {
     if (existing != null) return badRequest('Email already taken');
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());
-    await userSvc.newUser(data.name, data.email, hashedPass);
+    final newUser = await userSvc.newUser(data.name, data.email, hashedPass);
 
-    if (!expectsJson) return redirectTo('/login');
-    return response.status(HttpStatus.ok);
+    return response.json(_userResponse(newUser));
   }
 
-  Map<String, dynamic> _userResponse(User user) => {'user': user.toJson()..remove('password')};
+  Map<String, dynamic> _userResponse(User user) => {'user': user.toPublic};
 
-  Response get unauthorized {
-    if (!expectsJson) return response.redirect('/login');
-    return response.status(HttpStatus.unauthorized).end();
-  }
+  Response get invalidLogin => response.unauthorized(data: {'error': 'Email or Password not valid'});
 }

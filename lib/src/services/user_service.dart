@@ -1,5 +1,5 @@
 import 'package:yaroorm/yaroorm.dart';
-import 'package:zomato/src/models/models.dart';
+import 'package:backend/src/models/models.dart';
 
 class UserService {
   Future<User> newUser(String name, String email, String password) async {

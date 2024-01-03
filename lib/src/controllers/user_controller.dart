@@ -1,8 +1,8 @@
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
 import 'package:yaroorm/yaroorm.dart';
-import 'package:zomato/src/models/models.dart';
-import 'package:zomato/src/services/services.dart';
+import 'package:backend/src/models/models.dart';
+import 'package:backend/src/services/services.dart';
 
 class UserController extends HTTPController {
   final UserService userSvc;

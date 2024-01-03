@@ -20,4 +20,6 @@ class User extends Entity<int, User> {
 
   @override
   bool get enableTimestamps => true;
+
+  Map<String, dynamic> get toPublic => toJson()..remove('password');
 }
