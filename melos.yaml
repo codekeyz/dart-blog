@@ -2,7 +2,7 @@ name: blogdev
 
 packages:
   - ./
-  - frontend
+  - .frontend
 
 command:
   bootstrap:
