@@ -27,7 +27,7 @@ jobs:
       - uses: bluefireteam/melos-action@v3
 
       - name: Bootstrap
-        run: melos build:backend
+        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Check formatting
         run: melos format
@@ -51,8 +51,8 @@ jobs:
 
       - name: Bootstrap
         run: |
-          melos build:backend
           dart pub global activate coverage
+          dart run build_runner build --delete-conflicting-outputs
 
       - name: Setup Test Database
         run: dart run ./bin/tools/migrator.dart migrate
