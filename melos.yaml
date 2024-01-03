@@ -15,6 +15,13 @@ scripts:
     packageFilters:
       flutter: true
 
+  build:backend:
+    run: |
+      dart run build_runner build --delete-conflicting-outputs
+      melos build:frontend
+    packageFilters:
+      flutter: false
+
   tests:
     run: |
       melos exec -c 1  -- "dart test" --fail-fast
