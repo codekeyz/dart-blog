@@ -28,12 +28,6 @@ scripts:
     packageFilters:
       flutter: false
 
-  tests:ci:
-    run: |
-      melos exec -c 1  -- "dart test --coverage=coverage" --fail-fast
-    packageFilters:
-      flutter: false
-
   format: melos exec -- "find . -name *.dart -not -name *.g.dart -exec "dart format {} --line-length=120 --set-exit-if-changed" \;"
 
   analyze: melos exec -- "dart analyze . --fatal-infos"
