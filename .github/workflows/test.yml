@@ -21,14 +21,13 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1.3
 
-      - name: Bootstrap
-        run: dart run build_runner build --delete-conflicting-outputs
-
       - name: Check formatting
         run: dart format . --line-length=120 --set-exit-if-changed
 
       - name: Check linting
-        run: dart analyze . --fatal-infos
+        run: |
+          dart run build_runner build
+          dart analyze . --fatal-infos
 
   test:
     name: Run Tests
