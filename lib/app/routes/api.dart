@@ -6,10 +6,4 @@ List<RouteDefinition> routes = [
     Route.get('/', (UserController, #index)),
     Route.get('/<userId>', (UserController, #show)),
   ]),
-
-  /// auth routes
-  Route.group('auth').routes([
-    Route.post('/login', (AuthController, #login)),
-    Route.post('/register', (AuthController, #register)),
-  ])
 ];
