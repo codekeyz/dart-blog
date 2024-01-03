@@ -37,6 +37,7 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: dart-lang/setup-dart@v1.3
+      - uses: bluefireteam/melos-action@v3
 
       - name: Bootstrap
         run: |
@@ -46,9 +47,9 @@ jobs:
       - name: Setup Test Database
         run: dart run ./bin/tools/migrator.dart migrate
 
-      - name: Run API Tests
+      - name: Run Tests
         run: |
-          melos tests
+          melos tests:ci
           dart pub global run coverage:format_coverage --check-ignore --report-on=lib --lcov -o lcov.info -i ./coverage
 
       - name: Upload Coverage

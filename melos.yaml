@@ -21,6 +21,10 @@ scripts:
     packageFilters:
       flutter: false
 
+  tests:ci:
+    run: |
+      melos exec -c 1  -- "dart test --coverage=coverage" --fail-fast
+
   format: melos exec -- "dart format . --line-length=120"
 
   analyze: melos exec -- "dart analyze . --fatal-infos"
