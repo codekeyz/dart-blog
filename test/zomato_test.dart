@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:test/test.dart';
 import 'package:yaroorm/yaroorm.dart';
@@ -76,6 +77,8 @@ void main() {
           final apiResult = await (await server.tester)
               .post(path, {'name': 'Foo User', 'email': newUserEmail, 'password': 'foo-bar-mee-moo'}).actual;
 
+          expect(apiResult.statusCode, HttpStatus.ok);
+
           // expect json response
           expect(apiResult.headers[HttpHeaders.contentTypeHeader], 'application/json; charset=utf-8');
 
@@ -88,6 +91,8 @@ void main() {
       });
 
       group('/login', () {
+        final path = '$authPath/login';
+
         test('should error on invalid body', () async {
           attemptLogin(Map<String, dynamic> body, {dynamic errors}) async {
             return (await server.tester)
@@ -107,6 +112,43 @@ void main() {
             {'email': 'foo-bar'},
             errors: ['email: The field is not a valid email address', 'password: The field is required'],
           );
+        });
+
+        test('should error on in-valid credentials', () async {
+          final randomUser = await DB.query<User>().get();
+          expect(randomUser, isA<User>());
+
+          final email = randomUser!.email;
+
+          await (await server.tester)
+              .post(path, {'email': email, 'password': 'wap wap wap'})
+              .expectStatus(HttpStatus.unauthorized)
+              .expectJsonBody({'error': 'Email or Password not valid'})
+              .test();
+
+          await (await server.tester)
+              .post(path, {'email': 'holy@bar.com', 'password': 'wap wap wap'})
+              .expectStatus(HttpStatus.unauthorized)
+              .expectJsonBody({'error': 'Email or Password not valid'})
+              .test();
+        });
+
+        test('should success on valid credentials', () async {
+          final randomUser = await DB.query<User>().get();
+          expect(randomUser, isA<User>());
+
+          final email = randomUser!.email;
+
+          final apiResult =
+              await (await server.tester).post(path, {'email': email, 'password': 'foo-bar-mee-moo'}).actual;
+          expect(apiResult.statusCode, HttpStatus.ok);
+
+          // validate api result
+          final user = jsonDecode(apiResult.body)['user'];
+          expect(user['id'], randomUser.id!);
+          expect(user['email'], email);
+          expect(user['name'], randomUser.name);
+          expect(randomUser.toPublic, user);
         });
       });
     });
