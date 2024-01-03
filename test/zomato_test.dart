@@ -25,7 +25,7 @@ void main() {
 
     group('Auth', () {
       const authPath = '$baseAPIPath/auth';
-      group('/register', () {
+      group('.register', () {
         final path = '$authPath/register';
         test('should error on invalid body', () async {
           attemptRegister(Map<String, dynamic> body, {dynamic errors}) async {
@@ -90,7 +90,7 @@ void main() {
         });
       });
 
-      group('/login', () {
+      group('.login', () {
         final path = '$authPath/login';
 
         test('should error on invalid body', () async {
