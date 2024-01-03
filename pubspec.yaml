@@ -20,6 +20,8 @@ dependencies:
     git:
       url: https://github.com/codekeyz/yaroo.git
       path: yaroorm
+
+  # jwt auth
   pharaoh_jwt_auth: ^1.0.0+2
 
   # data
