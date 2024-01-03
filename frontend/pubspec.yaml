@@ -1,6 +1,6 @@
 name: frontend
 description: "A new Flutter project."
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  go_router: ^13.0.0
+  fluent_ui: ^4.8.3
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
