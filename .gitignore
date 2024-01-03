@@ -4,8 +4,6 @@
 *.g.dart
 *.sqlite
 
-.idea
-.vscode
 
 _yoorm_tool/
 *.reflectable.dart
