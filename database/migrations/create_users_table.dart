@@ -6,9 +6,9 @@ class CreateUsersTable extends Migration {
     final userSchema = Schema.create('users', (table) {
       return table
         ..id()
-        ..string('firstname')
-        ..string('lastname')
-        ..integer('age')
+        ..string('name')
+        ..string('email')
+        ..string('password')
         ..timestamps();
     });
 

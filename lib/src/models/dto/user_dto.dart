@@ -1,26 +1,18 @@
 import 'package:yaroo/foundation/validation.dart';
 
 class CreateUserDTO extends BaseDTO {
-  String get firstname;
+  @ezMinLength(3)
+  String get name;
 
-  String get lastname;
+  @ezEmail()
+  String get email;
 
-  int get age;
+  @ezMinLength(8)
+  String get password;
 }
 
-class UpdateUserDTO extends BaseDTO {
-  @ezOptional(String)
-  String? get firstname;
+class LoginUserDTO extends BaseDTO {
+  String get email;
 
-  @ezOptional(String)
-  String? get lastname;
-
-  @ezOptional(int)
-  int? get age;
-
-  Map<String, dynamic> get data => {
-        if (firstname != null) 'firstname': firstname,
-        if (lastname != null) 'lastname': lastname,
-        if (age != null) 'age': age,
-      };
+  String get password;
 }

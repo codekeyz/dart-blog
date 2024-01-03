@@ -1,0 +1,20 @@
+name: blogdev
+
+packages:
+  - ./
+  - frontend
+
+command:
+  bootstrap:
+    runPubGetInParallel: false
+
+scripts:
+  build:frontend:
+    run: |
+      melos exec -c 1  -- "flutter build web --output=../public --release"
+    packageFilters:
+      flutter: true
+
+  format: melos exec -- "dart format . --line-length=120"
+
+  analyze: melos exec -- "dart analyze . --fatal-infos"

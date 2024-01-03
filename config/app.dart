@@ -1,7 +1,7 @@
 import 'package:uuid/v4.dart';
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/yaroo.dart';
-import 'package:zomato/app/app.dart';
+import 'package:backend/app/app.dart';
 
 final config = AppConfig.fromJson({
   /*
@@ -14,7 +14,7 @@ final config = AppConfig.fromJson({
     | any other location as required by the application or its packages.
     |
     */
-  'name': env('APP_NAME', 'Zomato'),
+  'name': env('APP_NAME', 'The Yaroo blog'),
 
   /*
     |--------------------------------------------------------------------------
@@ -119,6 +119,7 @@ final config = AppConfig.fromJson({
 
   'providers': ServiceProvider.defaultProviders
     ..addAll([
+      FrontendProvider,
       RouteServiceProvider,
       DatabaseServiceProvider,
       UserServiceProvider,

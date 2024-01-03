@@ -1,6 +1,6 @@
 ## Yaroo Backend Example 🚀
 
-![dart](https://github.com/codekeyz/yaroo-example/actions/workflows/test.yml/badge.svg) [![codecov](https://codecov.io/gh/codekeyz/yaroo-example/graph/badge.svg?token=Q3YPK3LRLR)](https://codecov.io/gh/codekeyz/yaroo-example)
+![dart](https://github.com/codekeyz/yaroo-example/actions/workflows/test.yml/badge.svg) <a title="Made with Fluent Design" href="https://github.com/bdlukaa/fluent_ui"><img src="https://img.shields.io/badge/fluent-design-blue?style=flat-square&color=gray&labelColor=0078D7"></a> [![codecov](https://codecov.io/gh/codekeyz/yaroo-example/graph/badge.svg?token=Q3YPK3LRLR)](https://codecov.io/gh/codekeyz/yaroo-example)
 
 ### Setup
 
