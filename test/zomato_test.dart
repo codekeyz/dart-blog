@@ -15,7 +15,8 @@ final server = App(app.config);
 void main() {
   initializeReflectable();
 
-  DB.init(db.config); // you can use different configs here purposely for testing
+  DB.init(
+      db.config); // you can use different configs here purposely for testing
 
   setUpAll(() => server.bootstrap(listen: false));
 
@@ -72,20 +73,28 @@ void main() {
         });
 
         test('should create user', () async {
-          final newUserEmail = 'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
-          final apiResult = await (await server.tester)
-              .post(path, {'name': 'Foo User', 'email': newUserEmail, 'password': 'foo-bar-mee-moo'}).actual;
+          final newUserEmail =
+              'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
+          final apiResult = await (await server.tester).post(path, {
+            'name': 'Foo User',
+            'email': newUserEmail,
+            'password': 'foo-bar-mee-moo'
+          }).actual;
 
           expect(apiResult.statusCode, HttpStatus.ok);
 
           // expect json response
-          expect(apiResult.headers[HttpHeaders.contentTypeHeader], 'application/json; charset=utf-8');
+          expect(apiResult.headers[HttpHeaders.contentTypeHeader],
+              'application/json; charset=utf-8');
 
           // validate api result
           final user = jsonDecode(apiResult.body)['user'];
           expect(user['email'], newUserEmail);
           expect(user['name'], 'Foo User');
-          expect(user, allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+          expect(
+              user,
+              allOf(contains('id'), contains('createdAt'),
+                  contains('updatedAt')));
         });
       });
 
@@ -101,15 +110,22 @@ void main() {
           }
 
           // when empty body
-          await attemptLogin({}, errors: ['email: The field is required', 'password: The field is required']);
+          await attemptLogin({}, errors: [
+            'email: The field is required',
+            'password: The field is required'
+          ]);
 
           // when no password
-          await attemptLogin({'email': 'foo-bar@hello.com'}, errors: ['password: The field is required']);
+          await attemptLogin({'email': 'foo-bar@hello.com'},
+              errors: ['password: The field is required']);
 
           // when invalid email
           await attemptLogin(
             {'email': 'foo-bar'},
-            errors: ['email: The field is not a valid email address', 'password: The field is required'],
+            errors: [
+              'email: The field is not a valid email address',
+              'password: The field is required'
+            ],
           );
         });
 
@@ -138,8 +154,8 @@ void main() {
 
           final email = randomUser!.email;
 
-          final apiResult =
-              await (await server.tester).post(path, {'email': email, 'password': 'foo-bar-mee-moo'}).actual;
+          final apiResult = await (await server.tester).post(
+              path, {'email': email, 'password': 'foo-bar-mee-moo'}).actual;
           expect(apiResult.statusCode, HttpStatus.ok);
 
           // validate api result

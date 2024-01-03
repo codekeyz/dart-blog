@@ -12,7 +12,8 @@ class AuthController extends HTTPController {
   AuthController(this.userSvc);
 
   Future<Response> login(@body LoginUserDTO data) async {
-    final user = await DB.query<User>().whereEqual('email', data.email).findOne();
+    final user =
+        await DB.query<User>().whereEqual('email', data.email).findOne();
     if (user == null) return invalidLogin;
 
     final match = BCrypt.checkpw(data.password, user.password);
@@ -22,7 +23,8 @@ class AuthController extends HTTPController {
   }
 
   Future<Response> register(@body CreateUserDTO data) async {
-    final existing = await DB.query<User>().whereEqual('email', data.email).findOne();
+    final existing =
+        await DB.query<User>().whereEqual('email', data.email).findOne();
     if (existing != null) return badRequest('Email already taken');
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());
@@ -33,5 +35,6 @@ class AuthController extends HTTPController {
 
   Map<String, dynamic> _userResponse(User user) => {'user': user.toPublic};
 
-  Response get invalidLogin => response.unauthorized(data: {'error': 'Email or Password not valid'});
+  Response get invalidLogin =>
+      response.unauthorized(data: {'error': 'Email or Password not valid'});
 }
