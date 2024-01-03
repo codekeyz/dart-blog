@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
+import 'package:flutter/material.dart';
 import 'package:frontend/pages/home_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       routerConfig: _router,
       title: 'Yaroo App Blog',
       debugShowCheckedModeBanner: false,
+      color: Colors.blue,
       theme: FluentThemeData.light(),
     );
   }
