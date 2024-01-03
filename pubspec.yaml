@@ -21,10 +21,7 @@ dependencies:
       url: https://github.com/codekeyz/yaroo.git
       path: yaroorm
 
-  # jwt auth
   pharaoh_jwt_auth: ^1.0.0+2
-
-  # data
   json_annotation: ^4.8.1
 
 dev_dependencies:
