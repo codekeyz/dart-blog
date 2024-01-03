@@ -48,7 +48,7 @@ jobs:
 
       - name: Run API Tests
         run: |
-          dart test --coverage=coverage
+          melos tests
           dart pub global run coverage:format_coverage --check-ignore --report-on=lib --lcov -o lcov.info -i ./coverage
 
       - name: Upload Coverage
