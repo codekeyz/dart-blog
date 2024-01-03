@@ -87,6 +87,17 @@ void main() {
           expect(user['name'], 'Foo User');
           expect(user, allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
         });
+
+        test('should error on existing email', () async {
+          final randomUser = await DB.query<User>().get();
+          expect(randomUser, isA<User>());
+
+          await (await server.tester)
+              .post(path, {'email': randomUser!.email, 'name': 'Foo Bar', 'password': 'moooasdfmdf'})
+              .expectStatus(HttpStatus.unprocessableEntity)
+              .expectJsonBody({'error': 'Email already taken'})
+              .test();
+        });
       });
 
       group('.login', () {
