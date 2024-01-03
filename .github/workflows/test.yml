@@ -22,7 +22,7 @@ jobs:
       - uses: dart-lang/setup-dart@v1.3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.10.6"
+          flutter-version: "3.16.5"
           channel: "stable"
       - uses: bluefireteam/melos-action@v3
 
