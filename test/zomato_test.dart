@@ -16,7 +16,7 @@ final server = App(app.config);
 void main() {
   initializeReflectable();
 
-  DB.init(db.config);
+  DB.init(db.config); // you can use different configs here purposely for testing
 
   setUpAll(() => server.bootstrap(listen: false));
 
