@@ -6,7 +6,7 @@ COPY . ./
 RUN dart pub get
 
 # Build backend
-RUN dart pub run build_runner build --delete-conflicting-outputs
+RUN dart run build_runner build --delete-conflicting-outputs
 RUN dart compile exe bin/backend.dart -o bin/backend
 RUN dart compile exe bin/tools/migrator.dart -o bin/tools/migrator
 
