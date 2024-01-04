@@ -1,6 +1,6 @@
 # Dart Blog 🚀
 
-![dart](https://github.com/codekeyz/yaroo-example/actions/workflows/test.yml/badge.svg) <a title="Made with Fluent Design" href="https://github.com/bdlukaa/fluent_ui"><img src="https://img.shields.io/badge/fluent-design-blue?style=flat-square&color=gray&labelColor=0078D7"></a> [![codecov](https://codecov.io/gh/codekeyz/yaroo-example/graph/badge.svg?token=Q3YPK3LRLR)](https://codecov.io/gh/codekeyz/yaroo-example)
+![dart](https://github.com/codekeyz/yaroo-example/actions/workflows/test.yml/badge.svg) [![Release](https://github.com/codekeyz/dart-blog/actions/workflows/release.yml/badge.svg)](https://github.com/codekeyz/dart-blog/actions/workflows/release.yml) <a title="Made with Fluent Design" href="https://github.com/bdlukaa/fluent_ui"><img src="https://img.shields.io/badge/fluent-design-blue?style=flat-square&color=gray&labelColor=0078D7"></a> [![codecov](https://codecov.io/gh/codekeyz/yaroo-example/graph/badge.svg?token=Q3YPK3LRLR)](https://codecov.io/gh/codekeyz/yaroo-example)
 
 ### Setup
 
@@ -31,7 +31,11 @@ you to re-run this command. If something's not working, just re-run this.
 $ dart pub run build_runner build --delete-conflicting-outputs
 ```
 
+<<<<<<< HEAD
 ### Database Migration
+=======
+#### Database Migration
+>>>>>>> f46657d (add release badge)
 
 This project comes with a CLI for running migrations on your database. There are only 3 main commands for now. `migrate`, `migrate:reset` and `migrate:rollback`.
 
@@ -41,7 +45,11 @@ $ dart run bin/tools/migrator.dart <command-goes-here>
 
 The project uses `sqlite` by default. You can configure it to use `MariaDB` or `MySQL`.
 
+<<<<<<< HEAD
 ### Start Server
+=======
+#### Start Server
+>>>>>>> f46657d (add release badge)
 
 ```shell
 $ dart run
