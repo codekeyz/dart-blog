@@ -18,13 +18,18 @@ $ melos bootstrap
 
 #### Generate code
 
-This project relies heavily on `build_runner` for code-generation. Most of the components require you to re-run this command. Things like adding a new `Middleware`, `Controller`, `Controller Method` require
+This project consists of a Backend using Yaroo & Flutter Web for the frontend. You'll need to run this command so Flutter web can be bundled into the `public` folder.
+
+```shell
+$ melos build:backend
+```
+
+Also this project relies heavily on `build_runner` for code-generation. Most of the components require you to re-run this command. Things like adding a new `Middleware`, `Controller`, `Controller Method` require
 you to re-run this command. If something's not working, just re-run this.
 
 ```shell
 $ dart pub run build_runner build --delete-conflicting-outputs
 ```
-
 
 #### Database Migration
 
@@ -35,7 +40,6 @@ $ dart run bin/tools/migrator.dart <command-goes-here>
 ```
 
 The project uses `sqlite` by default. You can configure it to use `MariaDB` or `MySQL`.
-
 
 #### Start Server
 
