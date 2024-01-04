@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FluentApp.router(
       routerConfig: _router,
-      title: 'Yaroo App Blog',
+      title: 'Dart Blog 🚀',
       debugShowCheckedModeBanner: false,
       color: Colors.blue,
       theme: FluentThemeData.light(),
