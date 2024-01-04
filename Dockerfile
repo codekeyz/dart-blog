@@ -4,11 +4,9 @@ FROM dart:stable AS build
 WORKDIR /app
 COPY . ./
 RUN dart pub get
-RUN dart pub global activate melos
-RUN melos bootstrap
 
-# Build backend & flutter frontend
-RUN melos build:backend
+# Build backend
+RUN dart run build_runner build
 RUN cat .env && dart compile exe bin/backend.dart -o bin/backend
 RUN dart compile exe bin/tools/migrator.dart -o bin/tools/migrator
 
