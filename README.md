@@ -16,7 +16,7 @@ then initialize the workspace using the command below
 $ melos bootstrap
 ```
 
-### Generate code
+### Bootstrap
 
 This project consists of a Backend using Yaroo & Flutter Web for the frontend. You'll need to run this command so Flutter web can be bundled into the `public` folder.
 
@@ -24,12 +24,15 @@ This project consists of a Backend using Yaroo & Flutter Web for the frontend. Y
 $ melos build:backend
 ```
 
-Also this project relies heavily on `build_runner` for code-generation. Most of the components require you to re-run this command. Things like adding a new `Middleware`, `Controller`, `Controller Method` require
-you to re-run this command. If something's not working, just re-run this.
+#### Backend Workflow
+
+We rely heavily on code-generation. Things like adding a new `Middleware`, `Controller`, `Controller Method` require you to re-run the command below.
 
 ```shell
 $ dart pub run build_runner build --delete-conflicting-outputs
 ```
+
+If something's not working, just remember to re-run the command.
 
 ### Database Migration
 
