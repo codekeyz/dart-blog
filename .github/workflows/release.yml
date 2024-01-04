@@ -43,13 +43,20 @@ jobs:
           channel: "stable"
       - uses: bluefireteam/melos-action@v3
 
-      - name: Build Project
+      - name: Prepare Project 🧰
         run: melos build:backend
 
-      - name: Build and push Docker image
+      - name: Build Docker Image 📦
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Deploy on Render 🚀
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
+          wait-for-success: true
