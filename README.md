@@ -31,11 +31,7 @@ you to re-run this command. If something's not working, just re-run this.
 $ dart pub run build_runner build --delete-conflicting-outputs
 ```
 
-<<<<<<< HEAD
 ### Database Migration
-=======
-#### Database Migration
->>>>>>> f46657d (add release badge)
 
 This project comes with a CLI for running migrations on your database. There are only 3 main commands for now. `migrate`, `migrate:reset` and `migrate:rollback`.
 
@@ -45,11 +41,7 @@ $ dart run bin/tools/migrator.dart <command-goes-here>
 
 The project uses `sqlite` by default. You can configure it to use `MariaDB` or `MySQL`.
 
-<<<<<<< HEAD
 ### Start Server
-=======
-#### Start Server
->>>>>>> f46657d (add release badge)
 
 ```shell
 $ dart run
