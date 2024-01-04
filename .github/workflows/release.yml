@@ -54,9 +54,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Deploy on Render 🚀
-        uses: johnbeynon/render-deploy-action@v0.0.8
-        with:
-          service-id: ${{ secrets.RENDER_SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_API_KEY }}
-          wait-for-success: true
+      - name: Trigger Deploy on Render 🚀
+        run: |
+          RENDER_URL=${{ secrets.RENDER_WEBHOOK_URL }}
+          curl "$RENDER_URL"
