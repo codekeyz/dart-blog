@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:mime/mime.dart';
 import 'package:yaroo/http/http.dart';
 import 'package:path/path.dart' as path;
 
@@ -18,6 +19,9 @@ class ServeStaticMiddleware extends Middleware {
     final assetPath = path.join(Directory.current.path, 'public$requestPath');
     final requestedFile = File(assetPath);
     if (!await requestedFile.exists()) return next(res.status(HttpStatus.notFound).end());
+
+    final mimeType = lookupMimeType(requestPath);
+    if (mimeType != null) res = res.header(HttpHeaders.contentTypeHeader, mimeType);
 
     next(res.send(requestedFile.openRead()));
   }
