@@ -1,11 +1,11 @@
 {
-    "name": "Dart Blog 🚀",
+    "name": "Dart Blog",
     "short_name": "dart-blog",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#2196f3",
-    "theme_color": "#2196f3",
-    "description": "A new Flutter project.",
+    "background_color": "#1c2834",
+    "theme_color": "#1c2834",
+    "description": "Full-stack blog show-casing Dart on the Backend and Flutter Web on the Frontend.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
