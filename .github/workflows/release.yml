@@ -55,4 +55,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Trigger Deploy on Render 🚀
-        run: curl "$RENDER_WEBHOOK_URL"
+        run: curl -G -d "key=${{ secrets.RENDER_KEY }}" -d "imgURL=ghcr.io/codekeyz/dart-blog:main" https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}
