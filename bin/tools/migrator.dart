@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:yaroorm/migration/cli.dart';
 import 'package:yaroorm/yaroorm.dart';
 
@@ -8,8 +6,6 @@ import '../../config/database.dart' as db;
 import 'migrator.reflectable.dart';
 
 void main(List<String> args) async {
-  print(Platform.environment.keys.join('\n\n'));
-
   if (args.isEmpty) return print('Nothing to do here');
 
   initializeReflectable();
