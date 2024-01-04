@@ -32,8 +32,6 @@ We rely heavily on code-generation. Things like adding a new `Middleware`, `Cont
 $ dart pub run build_runner build --delete-conflicting-outputs
 ```
 
-If something's not working, just remember to re-run the command.
-
 ### Database Migration
 
 This project comes with a CLI for running migrations on your database. There are only 3 main commands for now. `migrate`, `migrate:reset` and `migrate:rollback`.
