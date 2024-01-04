@@ -37,7 +37,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - uses: dart-lang/setup-dart@v1.3
+      #   - uses: dart-lang/setup-dart@v1.3
       - uses: bluefireteam/melos-action@v3
       - uses: subosito/flutter-action@v2
         with:
