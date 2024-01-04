@@ -5,6 +5,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ScaffoldPage();
+    return const ScaffoldPage(
+      content: Center(
+        child: Text('Dart Blog 🚀'),
+      ),
+    );
   }
 }
