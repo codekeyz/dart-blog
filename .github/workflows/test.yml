@@ -24,8 +24,14 @@ jobs:
       - name: Check formatting
         run: dart format . --line-length=120 --set-exit-if-changed
 
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.16.5"
+          channel: "stable"
+
       - name: Check linting
         run: |
+          flutter pub get --directory=frontend
           dart run build_runner build
           dart analyze . --fatal-infos
 
@@ -41,14 +47,14 @@ jobs:
       - name: Bootstrap
         run: |
           dart pub global activate coverage
-          dart run build_runner build
+          dart run build_runner build --delete-conflicting-outputs
 
       - name: Setup Test Database
         run: dart run ./bin/tools/migrator.dart migrate
 
-      - name: Run API Tests
+      - name: Run Tests
         run: |
-          dart test --coverage=coverage
+          dart test --coverage=coverage --fail-fast
           dart pub global run coverage:format_coverage --check-ignore --report-on=lib --lcov -o lcov.info -i ./coverage
 
       - name: Upload Coverage

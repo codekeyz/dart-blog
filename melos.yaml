@@ -2,7 +2,7 @@ name: blogdev
 
 packages:
   - ./
-  - frontend
+  - .frontend
 
 command:
   bootstrap:
@@ -15,6 +15,19 @@ scripts:
     packageFilters:
       flutter: true
 
-  format: melos exec -- "dart format . --line-length=120"
+  build:backend:
+    run: |
+      dart run build_runner build --delete-conflicting-outputs
+      melos build:frontend
+    packageFilters:
+      flutter: false
+
+  tests:
+    run: |
+      melos exec -c 1  -- "dart test" --fail-fast
+    packageFilters:
+      flutter: false
+
+  format: melos exec -- "find . -name *.dart -not -name *.g.dart -exec "dart format {} --line-length=120 --set-exit-if-changed" \;"
 
   analyze: melos exec -- "dart analyze . --fatal-infos"

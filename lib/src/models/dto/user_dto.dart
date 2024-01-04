@@ -12,6 +12,7 @@ class CreateUserDTO extends BaseDTO {
 }
 
 class LoginUserDTO extends BaseDTO {
+  @ezEmail()
   String get email;
 
   String get password;

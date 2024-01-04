@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:path/path.dart' as path;
 
 import 'package:yaroo/http/http.dart';
 
@@ -13,7 +14,7 @@ class FrontendProvider extends ServiceProvider {
 }
 
 class FrontendViewEngine extends ViewEngine {
-  final publicDir = '${Directory.current.path}/public';
+  final publicDir = path.join(Directory.current.path, 'public');
 
   String get extension => 'html';
 
@@ -23,6 +24,6 @@ class FrontendViewEngine extends ViewEngine {
   @override
   FutureOr<String> render(String template, data) async {
     final file = File('$publicDir/$template.$extension');
-    return file.readAsString();
+    return await file.readAsString();
   }
 }

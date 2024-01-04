@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "64.0.0"
+  adaptive_number:
+    dependency: transitive
+    description:
+      name: adaptive_number
+      sha256: "3a567544e9b5c9c803006f51140ad544aedc79604fd4f3f2c1380003f97c1d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -161,6 +169,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.1"
+  clock:
+    dependency: transitive
+    description:
+      name: clock
+      sha256: cb6d7f03e1de671e34607e909a7213e31d7752be4fb66a86d29fe1eb14bfb5cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   code_builder:
     dependency: transitive
     description:
@@ -209,6 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  dart_jsonwebtoken:
+    dependency: transitive
+    description:
+      name: dart_jsonwebtoken
+      sha256: "063c20d3cee2b626d8a789ba9df0ad21f35012c4e9bd846ce50e921d77123df7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.12.2"
   dart_style:
     dependency: transitive
     description:
@@ -225,6 +249,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  ed25519_edwards:
+    dependency: transitive
+    description:
+      name: ed25519_edwards
+      sha256: "6ce0112d131327ec6d42beede1e5dfd526069b18ad45dcf654f15074ad9276cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   equatable:
     dependency: transitive
     description:
@@ -469,12 +501,19 @@ packages:
   pharaoh:
     dependency: transitive
     description:
-      path: "packages/pharaoh"
-      ref: HEAD
-      resolved-ref: cd96a24423dff6bf2b954608716ce7fae306eed4
-      url: "https://github.com/codekeyz/pharaoh.git"
-    source: git
-    version: "0.0.5+8"
+      name: pharaoh
+      sha256: "6512bde63966401d70ed89f6ae2291fa2052d838f1d4944b8610c8979fd81678"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
+  pharaoh_jwt_auth:
+    dependency: "direct main"
+    description:
+      name: pharaoh_jwt_auth
+      sha256: da2d7eb9a148146595f8d9ed3e3f2046dbad579647a2314fdcecd108af163a05
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+2"
   platform:
     dependency: transitive
     description:
@@ -483,6 +522,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.3"
   pool:
     dependency: transitive
     description:
@@ -873,7 +920,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: a4f21ae4594da60fe8a81f9b8d1fab839c81d9d6
+      resolved-ref: "5b70e9e7cb59fa3fc493013c45e750756f7dd5b7"
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -882,7 +929,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: a4f21ae4594da60fe8a81f9b8d1fab839c81d9d6
+      resolved-ref: "5b70e9e7cb59fa3fc493013c45e750756f7dd5b7"
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"

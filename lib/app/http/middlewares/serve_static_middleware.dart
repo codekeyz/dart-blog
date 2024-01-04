@@ -17,7 +17,7 @@ class ServeStaticMiddleware extends Middleware {
 
     final assetPath = path.join(Directory.current.path, 'public$requestPath');
     final requestedFile = File(assetPath);
-    if (!await requestedFile.exists()) return next(res.status(HttpStatus.notFound));
+    if (!await requestedFile.exists()) return next(res.status(HttpStatus.notFound).end());
 
     next(res.send(requestedFile.openRead()));
   }
