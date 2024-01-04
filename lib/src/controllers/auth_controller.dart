@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
 import 'package:yaroorm/yaroorm.dart';
@@ -23,7 +25,9 @@ class AuthController extends HTTPController {
 
   Future<Response> register(@body CreateUserDTO data) async {
     final existing = await DB.query<User>().whereEqual('email', data.email).findOne();
-    if (existing != null) return badRequest('Email already taken');
+    if (existing != null) {
+      return response.json(_makeError(['Email already taken']), statusCode: HttpStatus.badRequest);
+    }
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());
     final newUser = await userSvc.newUser(data.name, data.email, hashedPass);
@@ -33,5 +37,7 @@ class AuthController extends HTTPController {
 
   Map<String, dynamic> _userResponse(User user) => {'user': user.toPublic};
 
-  Response get invalidLogin => response.unauthorized(data: {'error': 'Email or Password not valid'});
+  Response get invalidLogin => response.unauthorized(data: _makeError(['Email or Password not valid']));
+
+  Map<String, dynamic> _makeError(List<String> errors) => {'errors': errors};
 }

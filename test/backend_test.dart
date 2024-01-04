@@ -94,8 +94,10 @@ void main() {
 
           await (await server.tester)
               .post(path, {'email': randomUser!.email, 'name': 'Foo Bar', 'password': 'moooasdfmdf'})
-              .expectStatus(HttpStatus.unprocessableEntity)
-              .expectJsonBody({'error': 'Email already taken'})
+              .expectStatus(HttpStatus.badRequest)
+              .expectJsonBody({
+                'errors': ['Email already taken']
+              })
               .test();
         });
       });
@@ -133,13 +135,17 @@ void main() {
           await (await server.tester)
               .post(path, {'email': email, 'password': 'wap wap wap'})
               .expectStatus(HttpStatus.unauthorized)
-              .expectJsonBody({'error': 'Email or Password not valid'})
+              .expectJsonBody({
+                'errors': ['Email or Password not valid']
+              })
               .test();
 
           await (await server.tester)
               .post(path, {'email': 'holy@bar.com', 'password': 'wap wap wap'})
               .expectStatus(HttpStatus.unauthorized)
-              .expectJsonBody({'error': 'Email or Password not valid'})
+              .expectJsonBody({
+                'errors': ['Email or Password not valid']
+              })
               .test();
         });
 
