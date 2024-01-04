@@ -1,6 +1,6 @@
 {
-    "name": "frontend",
-    "short_name": "frontend",
+    "name": "Dart Blog 🚀",
+    "short_name": "dart-blog",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#2196f3",

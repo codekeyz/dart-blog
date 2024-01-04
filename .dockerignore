@@ -7,3 +7,4 @@ build/
 .gitignore
 .packages
 pubspec.lock
+frontend
