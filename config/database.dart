@@ -1,8 +1,8 @@
 import 'package:path/path.dart' as path;
 import 'package:yaroorm/config.dart';
 
-import '../database/migrations/2024_05_01_1_03_00_create_users_table_001.dart';
-import '../database/migrations/2024_05_01_5_08_00_create_articles_table.dart';
+import '../database/migrations/create_articles_table.dart';
+import '../database/migrations/create_users_table.dart';
 
 final config = YaroormConfig.from({
   /*

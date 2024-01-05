@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1559198-15ea-4b36-8584-b403a8feef2d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/test.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/backend_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/backend_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2024_05_01_1_03_00_create_users_table_001.dart" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/create_users_table.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2024_05_01_5_08_00_create_articles_table.dart" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/create_articles_table.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/analysis_options.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/analysis_options.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +70,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1704482817649</updated>
-      <workItem from="1704482821739" duration="8822000" />
+      <workItem from="1704482821739" duration="9230000" />
     </task>
     <servers />
   </component>
