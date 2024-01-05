@@ -18,19 +18,26 @@ class AuthHeaderOptions extends StatelessWidget {
       initialData: auth.lastEvent,
       builder: (context, snapshot) {
         final user = auth.lastEvent?.data;
+        final isLoading = snapshot.data?.state == ProviderState.loading;
 
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (user == null) ...[
+            if (!isLoading && user == null) ...[
               Button(child: const Text('Login '), onPressed: () => router.push('/login')),
               spacing,
               Button(child: const Text('Register'), onPressed: () => router.push('/register')),
             ],
             if (user != null) ...[
-              Text('Welcome, ${user.name}'),
+              Text('Welcome, ${user.name.split(' ').first}'),
               spacing,
-              Button(child: const Text('Logout'), onPressed: () => router.push('/register')),
+              Button(
+                child: const Text('Logout'),
+                onPressed: () {
+                  auth.logout();
+                  router.pushReplacement('/');
+                },
+              ),
             ],
           ],
         );

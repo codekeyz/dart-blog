@@ -91,7 +91,6 @@ class _AppLayout extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 24),
         Expanded(child: child),
         Container(height: 40, width: double.maxFinite, color: Colors.grey.shade200),
       ],

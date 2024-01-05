@@ -10,6 +10,15 @@ class AuthProvider extends BaseProvider<User> {
   @visibleForTesting
   ApiService get apiSvc => getIt.get<ApiService>();
 
+  Future<void> getUser() async {
+    if (!apiSvc.hasAuthCookie) return;
+
+    final user = await _safeRun(() => apiSvc.getUser());
+    if (user == null) return;
+
+    addEvent(ProviderEvent.success(data: user));
+  }
+
   Future<void> login(String email, String password) async {
     final user = await _safeRun(() => apiSvc.loginUser(email, password));
     if (user == null) return;
@@ -33,5 +42,10 @@ class AuthProvider extends BaseProvider<User> {
       addEvent(ProviderEvent.error(message: e.errors.join('\n')));
       return null;
     }
+  }
+
+  void logout() {
+    apiSvc.clearAuthCookie();
+    addEvent(const ProviderEvent.idle());
   }
 }

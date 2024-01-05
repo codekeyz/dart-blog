@@ -6,5 +6,5 @@ export 'api_service.dart';
 final getIt = GetIt.instance;
 
 void setupServices() {
-  getIt.registerSingleton<ApiService>(const ApiService('http://localhost:3000'));
+  getIt.registerSingleton<ApiService>(ApiService('http://localhost:3000'));
 }

@@ -13,6 +13,7 @@ dependencies:
   uuid: ^4.2.1
   path: ^1.9.0
   bcrypt: ^1.1.3
+  collection: ^1.18.0
   yaroo:
     git:
       url: https://github.com/codekeyz/yaroo.git
@@ -22,8 +23,15 @@ dependencies:
       url: https://github.com/codekeyz/yaroo.git
       path: yaroorm
 
-  pharaoh_jwt_auth: ^1.0.0+2
+  dart_jsonwebtoken: ^2.12.2
   json_annotation: ^4.8.1
+  shelf_cors_headers: ^0.1.5
+
+dependency_overrides:
+  yaroo:
+    path: ../yaroo-dev/yaroo
+  pharaoh:
+    path: ../pharaoh-dev/packages/pharaoh
 
 dev_dependencies:
   lints: ^3.0.0

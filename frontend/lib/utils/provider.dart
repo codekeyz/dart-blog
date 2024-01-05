@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:meta/meta.dart';
 
 enum ProviderState { idle, loading, success, error }
 

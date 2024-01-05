@@ -9,7 +9,6 @@ class BlogArticlesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const spacing = 16.0;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
       alignment: Alignment.center,
       child: const Wrap(
         runSpacing: spacing,
