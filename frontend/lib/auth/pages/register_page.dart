@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:frontend/main.dart';
 
 import 'auth_layout.dart';
 
@@ -22,7 +23,8 @@ class _RegisterPageState extends State<RegisterPage> {
       child: (auth, layout) {
         registerAction(String name, String email, String password) async {
           layout.setLoading(true);
-          await auth.register(name, email, password);
+          final success = await auth.register(name, email, password);
+          router.pushReplacement(success ? '/login' : '/register');
 
           layout
             ..setLoading(false)

@@ -27,6 +27,7 @@ class BaseAuthLayoutState extends State<BaseAuthLayout> {
           width: 320,
           child: Card(
             padding: EdgeInsets.zero,
+            borderRadius: BorderRadius.zero,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
