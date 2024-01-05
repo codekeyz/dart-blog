@@ -1,9 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
-
-const _spacing = SizedBox(height: 24);
+import 'package:frontend/data/models/user.dart';
+import 'package:frontend/data/providers/auth_provider.dart';
+import 'package:frontend/utils/misc.dart';
+import 'package:frontend/utils/provider.dart';
+import 'package:provider/provider.dart';
 
 class BaseAuthLayout extends StatefulWidget {
-  final Widget Function(BaseAuthLayoutState state) child;
+  final Widget Function(AuthProvider auth, BaseAuthLayoutState layout) child;
 
   const BaseAuthLayout({super.key, required this.child});
 
@@ -16,6 +19,7 @@ class BaseAuthLayoutState extends State<BaseAuthLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final authProv = context.read<AuthProvider>();
     return ScaffoldPage(
       padding: EdgeInsets.zero,
       content: Center(
@@ -29,7 +33,7 @@ class BaseAuthLayoutState extends State<BaseAuthLayout> {
                 if (_showingLoading) const SizedBox(width: double.maxFinite, child: ProgressBar()),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-                  child: widget.child(this),
+                  child: widget.child(authProv, this),
                 ),
               ],
             ),
@@ -40,4 +44,9 @@ class BaseAuthLayoutState extends State<BaseAuthLayout> {
   }
 
   void setLoading(bool show) => setState(() => _showingLoading = show);
+
+  void handleErrors(ProviderEvent<User> event) {
+    if (event.state != ProviderState.error) return;
+    showError(context, event.errorMessage!);
+  }
 }

@@ -1,8 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:frontend/data/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
 
-import 'base_layout.dart';
+import 'auth_layout.dart';
 
 const _spacing = SizedBox(height: 24);
 
@@ -21,13 +19,14 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return BaseAuthLayout(
-      child: (state) {
-        final auth = context.read<AuthProvider>();
-
+      child: (auth, layout) {
         registerAction(String name, String email, String password) async {
-          state.setLoading(true);
+          layout.setLoading(true);
           await auth.register(name, email, password);
-          state.setLoading(false);
+
+          layout
+            ..setLoading(false)
+            ..handleErrors(auth.lastEvent!);
         }
 
         return Column(

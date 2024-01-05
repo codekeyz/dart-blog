@@ -39,7 +39,7 @@ class AuthProvider extends BaseProvider<User> {
     try {
       return await apiCall.call();
     } on ApiException catch (e) {
-      addEvent(ProviderEvent.error(message: e.errors.join('\n')));
+      addEvent(ProviderEvent.error(errorMessage: e.errors.join('\n')));
       return null;
     }
   }

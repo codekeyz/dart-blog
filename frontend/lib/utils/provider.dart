@@ -6,22 +6,22 @@ enum ProviderState { idle, loading, success, error }
 class ProviderEvent<T> {
   final T? data;
   final ProviderState state;
-  final String? message;
+  final String? errorMessage;
 
   const ProviderEvent.idle()
       : state = ProviderState.idle,
         data = null,
-        message = null;
+        errorMessage = null;
 
   const ProviderEvent.loading({this.data})
       : state = ProviderState.loading,
-        message = null;
+        errorMessage = null;
 
   const ProviderEvent.success({required this.data})
       : state = ProviderState.success,
-        message = null;
+        errorMessage = null;
 
-  const ProviderEvent.error({required this.message})
+  const ProviderEvent.error({required this.errorMessage})
       : state = ProviderState.error,
         data = null;
 }

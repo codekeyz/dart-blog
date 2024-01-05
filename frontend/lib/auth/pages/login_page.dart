@@ -1,9 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:frontend/data/providers/auth_provider.dart';
 import 'package:frontend/main.dart';
-import 'package:provider/provider.dart';
 
-import 'base_layout.dart';
+import 'auth_layout.dart';
 
 const _spacing = SizedBox(height: 18);
 
@@ -22,16 +20,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final themeData = FluentTheme.of(context);
     return BaseAuthLayout(
-      child: (state) {
-        final auth = context.read<AuthProvider>();
-
+      child: (auth, layout) {
         loginAction(String email, String password) async {
-          state.setLoading(true);
+          layout.setLoading(true);
           await auth.login(email, password);
-          state.setLoading(false);
 
-          final user = auth.lastEvent?.data;
-          if (user != null) router.pushReplacement('/');
+          final lastEvent = auth.lastEvent!;
+          if (lastEvent.data != null) return router.pushReplacement('/');
+
+          layout
+            ..setLoading(false)
+            ..handleErrors(lastEvent);
         }
 
         return Column(
@@ -48,13 +47,17 @@ class _LoginPageState extends State<LoginPage> {
               child: PasswordBox(onChanged: (value) => setState(() => password = value)),
             ),
             _spacing,
-            Text.rich(
-              TextSpan(
-                text: 'No account? ',
-                children: <InlineSpan>[
-                  TextSpan(
-                      text: 'Create one!', style: themeData.typography.body?.apply(color: themeData.accentColor.dark)),
-                ],
+            GestureDetector(
+              onTap: () => router.push('/register'),
+              child: Text.rich(
+                TextSpan(
+                  text: 'No account? ',
+                  children: <InlineSpan>[
+                    TextSpan(
+                        text: 'Create one!',
+                        style: themeData.typography.body?.apply(color: themeData.accentColor.dark)),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 32),

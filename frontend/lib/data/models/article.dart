@@ -10,4 +10,8 @@ class Article {
   final DateTime updatedAt;
 
   const Article(this.title, this.description, {required this.createdAt, required this.updatedAt});
+
+  Map<String, dynamic> toJson() => _$ArticleToJson(this);
+
+  factory Article.fromJson(Map<String, dynamic> json) => _$ArticleFromJson(json);
 }
