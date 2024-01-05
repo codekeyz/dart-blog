@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
 import 'package:yaroorm/yaroorm.dart';
@@ -10,9 +9,10 @@ import 'package:backend/src/services/services.dart';
 import 'package:bcrypt/bcrypt.dart';
 
 class AuthController extends HTTPController {
-  final UserService userSvc;
+  final AuthService _authService;
+  final UserService _userService;
 
-  AuthController(this.userSvc);
+  AuthController(this._authService, this._userService);
 
   Future<Response> login(@body LoginUserDTO data) async {
     final user = await DB.query<User>().whereEqual('email', data.email).findOne();
@@ -21,7 +21,7 @@ class AuthController extends HTTPController {
     final match = BCrypt.checkpw(data.password, user.password);
     if (!match) return invalidLogin;
 
-    final token = _getAccessTokenForUser(user);
+    final token = _authService.getAccessTokenForUser(user);
     final cookie = bakeCookie('auth', token, app.instanceOf<CookieOpts>());
 
     return response.withCookie(cookie).json(_userResponse(user));
@@ -34,20 +34,14 @@ class AuthController extends HTTPController {
     }
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());
-    final newUser = await userSvc.newUser(data.name, data.email, hashedPass);
+    final newUser = await _userService.newUser(data.name, data.email, hashedPass);
 
     return response.json(_userResponse(newUser));
   }
 
-  Map<String, dynamic> _userResponse(User user) => {'user': user.toPublic};
-
   Response get invalidLogin => response.unauthorized(data: _makeError(['Email or Password not valid']));
 
-  Map<String, dynamic> _makeError(List<String> errors) => {'errors': errors};
+  Map<String, dynamic> _userResponse(User user) => {'user': user.toPublic};
 
-  String _getAccessTokenForUser(User user) {
-    final secretKey = SecretKey(app.config.key);
-    final jwt = JWT(user.toPublic, issuer: app.config.url, subject: user.id!.toString(), jwtId: 'access-token');
-    return jwt.sign(secretKey, algorithm: JWTAlgorithm.HS256, expiresIn: Duration(minutes: 10));
-  }
+  Map<String, dynamic> _makeError(List<String> errors) => {'errors': errors};
 }

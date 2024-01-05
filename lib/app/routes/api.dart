@@ -4,6 +4,7 @@ import 'package:yaroo/yaroo.dart';
 List<RouteDefinition> routes = [
   Route.group('users').routes([
     Route.get('/', (UserController, #index)),
+    Route.get('/me', (UserController, #currentUser)),
     Route.get('/<userId>', (UserController, #show)),
   ]),
 ];

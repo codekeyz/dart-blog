@@ -9,6 +9,11 @@ class UserController extends HTTPController {
 
   UserController(this.userSvc);
 
+  Future<Response> currentUser() async {
+    final auth = request.auth as User;
+    return jsonResponse({'user': auth.toPublic});
+  }
+
   Future<Response> index() async {
     final result = await DB.query<User>().all();
     return jsonResponse(result);

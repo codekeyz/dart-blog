@@ -3,17 +3,20 @@ import 'dart:io';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:yaroo/http/http.dart';
 
-/// This sets up cookie parsing and CORS middleware
 class CoreMiddleware extends Middleware {
   late HandlerFunc _webMdw;
+  final CookieOpts _cookieConfig;
 
-  CoreMiddleware() {
+  CoreMiddleware(this._cookieConfig) {
     // setup cookie parser
-    final cookieParserMdw = cookieParser(opts: app.instanceOf<CookieOpts>());
+    final cookieParserMdw = cookieParser(opts: _cookieConfig);
 
     // setup cors
     final corsMiddleware = useShelfMiddleware(corsHeaders(
-      headers: {HttpHeaders.accessControlAllowOriginHeader: 'http://localhost:60154/'},
+      headers: {
+        HttpHeaders.accessControlAllowOriginHeader: 'http://localhost:55366',
+        HttpHeaders.accessControlAllowCredentialsHeader: 'true',
+      },
     ));
 
     _webMdw = cookieParserMdw.chain(corsMiddleware);
