@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:frontend/data/providers/article_provider.dart';
 import 'package:frontend/data/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,13 +14,23 @@ class BlogPage extends StatefulWidget {
 
 class _BlogPageState extends State<BlogPage> {
   late AuthProvider _authProvider;
+  late ArticleProvider _articleProvider;
 
   @override
   void initState() {
     super.initState();
 
     _authProvider = context.read();
-    Future.microtask(_authProvider.getUser);
+    _articleProvider = context.read();
+
+    _fetchData();
+  }
+
+  void _fetchData() async {
+    await Future.wait([
+      _authProvider.getUser(),
+      _articleProvider.fetchArticles(),
+    ]);
   }
 
   @override

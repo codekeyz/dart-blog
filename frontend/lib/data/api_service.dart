@@ -4,6 +4,7 @@ import 'dart:io';
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 
+import 'package:frontend/data/models/article.dart';
 import 'package:http/http.dart' show Response;
 import 'package:http/browser_client.dart';
 
@@ -51,6 +52,46 @@ class ApiService {
         () => client.post(getUri('/auth/register'), body: {'name': displayName, 'email': email, 'password': password}));
 
     return true;
+  }
+
+  Future<List<Article>> getArticles() async {
+    final result = await _runCatching(() => client.get(getUri('/articles')));
+
+    final items = jsonDecode(result.body)['articles'] as Iterable;
+    return items.map((e) => Article.fromJson(e)).toList();
+  }
+
+  Future<Article> getArticle(int articleId) async {
+    final result = await _runCatching(() => client.get(getUri('/articles/$articleId')));
+
+    final data = jsonDecode(result.body)['article'];
+    return Article.fromJson(data);
+  }
+
+  Future<Article> createArticle(String title, String description, String? imageUrl) async {
+    final result = await _runCatching(() => client.post(getUri('/articles'), body: {
+          'title': title,
+          'description': description,
+          'imageUrl': imageUrl,
+        }));
+
+    final data = jsonDecode(result.body)['article'];
+    return Article.fromJson(data);
+  }
+
+  Future<Article> updateArticle(int articleId, String title, String description, String? imageUrl) async {
+    final result = await _runCatching(() => client.put(getUri('/articles/$articleId'), body: {
+          'title': title,
+          'description': description,
+          'imageUrl': imageUrl,
+        }));
+
+    final data = jsonDecode(result.body)['article'];
+    return Article.fromJson(data);
+  }
+
+  Future<void> deleteArticle(int articleId) async {
+    await _runCatching(() => client.delete(getUri('/articles/$articleId')));
   }
 
   Future<Response> _runCatching(HttpResponseCb apiCall) async {
