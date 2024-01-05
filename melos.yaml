@@ -11,6 +11,7 @@ command:
 scripts:
   build:frontend:
     run: |
+      melos exec -- "dart run build_runner build --delete-conflicting-outputs"
       melos exec -c 1  -- "flutter build web --output=../public --release"
     packageFilters:
       flutter: true
