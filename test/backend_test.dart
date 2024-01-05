@@ -186,6 +186,13 @@ void main() {
 
       test('should have auth cookie ', () => expect(authCookie, isNotNull));
 
+      test('should reject if no cookie', () async {
+        await (await server.tester)
+            .get(articleApiPath)
+            .expectStatus(HttpStatus.unauthorized)
+            .expectJsonBody({'error': 'Unauthorized'}).test();
+      });
+
       group('when create article', () {
         test('should error on invalid body', () async {
           attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
