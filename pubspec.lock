@@ -499,11 +499,13 @@ packages:
     source: hosted
     version: "1.9.0"
   pharaoh:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../pharaoh-dev/packages/pharaoh"
-      relative: true
-    source: path
+      path: "packages/pharaoh"
+      ref: HEAD
+      resolved-ref: f01f09910f86d1a9f07281272dfcd701de865ac8
+      url: "https://github.com/codekeyz/pharaoh.git"
+    source: git
     version: "0.0.6"
   platform:
     dependency: transitive
@@ -917,16 +919,18 @@ packages:
   yaroo:
     dependency: "direct main"
     description:
-      path: "../yaroo-dev/yaroo"
-      relative: true
-    source: path
+      path: yaroo
+      ref: HEAD
+      resolved-ref: "33690339d66c20535cb9e78413fc19660296bda9"
+      url: "https://github.com/codekeyz/yaroo.git"
+    source: git
     version: "0.0.1"
   yaroorm:
     dependency: "direct main"
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: c9c9d02bb94bfad13b71df2dff3ca860636d7a96
+      resolved-ref: "33690339d66c20535cb9e78413fc19660296bda9"
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"

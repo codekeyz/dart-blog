@@ -27,11 +27,13 @@ dependencies:
   json_annotation: ^4.8.1
   shelf_cors_headers: ^0.1.5
 
-dependency_overrides:
-  yaroo:
-    path: ../yaroo-dev/yaroo
-  pharaoh:
-    path: ../pharaoh-dev/packages/pharaoh
+# dependency_overrides:
+#   yaroo:
+#     path: ../yaroo-dev/yaroo
+#   yaroorm:
+#     path: ../yaroo-dev/yaroorm
+#   pharaoh:
+#     path: ../pharaoh-dev/packages/pharaoh
 
 dev_dependencies:
   lints: ^3.0.0
