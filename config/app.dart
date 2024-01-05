@@ -119,9 +119,10 @@ final config = AppConfig.fromJson({
 
   'providers': ServiceProvider.defaultProviders
     ..addAll([
-      FrontendProvider,
+      CoreConfigProvider,
       RouteServiceProvider,
       DatabaseServiceProvider,
+      FrontendProvider,
       UserServiceProvider,
     ]),
 });

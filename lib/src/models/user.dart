@@ -14,7 +14,7 @@ class User extends Entity<int, User> {
   User(this.name, this.email, this.password);
 
   @override
-  Map<String, dynamic> toMap() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   static User fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

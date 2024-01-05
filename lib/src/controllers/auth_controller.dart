@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
 import 'package:yaroorm/yaroorm.dart';
@@ -20,7 +21,10 @@ class AuthController extends HTTPController {
     final match = BCrypt.checkpw(data.password, user.password);
     if (!match) return invalidLogin;
 
-    return jsonResponse(_userResponse(user));
+    final token = _getAccessTokenForUser(user);
+    final cookie = bakeCookie('auth', token, app.instanceOf<CookieOpts>());
+
+    return response.withCookie(cookie).json(_userResponse(user));
   }
 
   Future<Response> register(@body CreateUserDTO data) async {
@@ -40,4 +44,10 @@ class AuthController extends HTTPController {
   Response get invalidLogin => response.unauthorized(data: _makeError(['Email or Password not valid']));
 
   Map<String, dynamic> _makeError(List<String> errors) => {'errors': errors};
+
+  String _getAccessTokenForUser(User user) {
+    final secretKey = SecretKey(app.config.key);
+    final jwt = JWT(user.toPublic, issuer: app.config.url, subject: user.id!.toString(), jwtId: 'access-token');
+    return jwt.sign(secretKey, algorithm: JWTAlgorithm.HS256, expiresIn: Duration(minutes: 10));
+  }
 }
