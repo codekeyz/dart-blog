@@ -361,6 +361,26 @@ void main() {
           expect(await DB.query<Article>().get(article.id), isNull);
         });
       });
+
+      group('when get articles', () {
+        test('should return articles', () async {
+          final articles = await DB.query<Article>().all();
+          expect(articles, isNotEmpty);
+
+          await (await server.tester)
+              .get(articleApiPath, headers: {HttpHeaders.cookieHeader: authCookie!})
+              .expectStatus(HttpStatus.ok)
+              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
+              .expectBodyCustom(
+                (body) {
+                  final result = jsonDecode(body) as Iterable;
+                  return result.map((e) => Article.fromJson(e)).toList();
+                },
+                hasLength(articles.length),
+              )
+              .test();
+        });
+      });
     });
   });
 }
