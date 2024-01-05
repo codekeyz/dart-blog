@@ -5,11 +5,11 @@ import 'package:yaroo/http/http.dart';
 
 class CoreMiddleware extends Middleware {
   late HandlerFunc _webMdw;
-  final CookieOpts _cookieConfig;
 
-  CoreMiddleware(this._cookieConfig) {
+  CoreMiddleware() {
     // setup cookie parser
-    final cookieParserMdw = cookieParser(opts: _cookieConfig);
+    final cookieConfig = app.instanceOf<CookieOpts>();
+    final cookieParserMdw = cookieParser(opts: cookieConfig);
 
     // setup cors
     final corsMiddleware = useShelfMiddleware(corsHeaders(

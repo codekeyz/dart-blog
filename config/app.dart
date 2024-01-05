@@ -1,7 +1,7 @@
+import 'package:backend/app/app.dart';
 import 'package:uuid/v4.dart';
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/yaroo.dart';
-import 'package:backend/app/app.dart';
 
 final config = AppConfig.fromJson({
   /*
@@ -120,9 +120,9 @@ final config = AppConfig.fromJson({
   'providers': ServiceProvider.defaultProviders
     ..addAll([
       CoreProvider,
+      FrontendProvider,
       RouteServiceProvider,
       DatabaseServiceProvider,
-      FrontendProvider,
-      UserServiceProvider,
+      BlogServiceProvider,
     ]),
 });
