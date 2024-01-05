@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/yaroo.dart';
 
-import '../../src/controllers/auth_controller.dart';
+import '../../src/controllers/controllers.dart';
 import '../routes/api.dart' as api;
 import '../routes/web.dart' as web;
 
@@ -15,6 +15,9 @@ class RouteServiceProvider extends ServiceProvider {
         Route.group('api').routes([
           Route.post('/auth/login', (AuthController, #login)),
           Route.post('/auth/register', (AuthController, #register)),
+
+          // get articles without auth
+          Route.get('/articles', (ArticleController, #index)),
         ]),
 
         /*|--------------------------------------------------------------------------

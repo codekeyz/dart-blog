@@ -187,13 +187,6 @@ void main() {
       group('Articles', () {
         final articleApiPath = '$baseAPIPath/articles';
 
-        test('should reject if no cookie', () async {
-          await (await server.tester)
-              .get(articleApiPath)
-              .expectStatus(HttpStatus.unauthorized)
-              .expectJsonBody({'error': 'Unauthorized'}).test();
-        });
-
         group('when create article', () {
           test('should error on invalid body', () async {
             attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
@@ -370,24 +363,21 @@ void main() {
           });
         });
 
-        group('when get articles', () {
-          test('should return articles', () async {
-            final articles = await DB.query<Article>().all();
-            expect(articles, isNotEmpty);
+        test('should get Articles without auth', () async {
+          final articles = await DB.query<Article>().all();
+          expect(articles, isNotEmpty);
 
-            await (await server.tester)
-                .get(articleApiPath, headers: {HttpHeaders.cookieHeader: authCookie!})
-                .expectStatus(HttpStatus.ok)
-                .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
-                .expectBodyCustom(
-                  (body) {
-                    final result = jsonDecode(body)['articles'] as Iterable;
-                    return result.map((e) => Article.fromJson(e)).toList();
-                  },
-                  hasLength(articles.length),
-                )
-                .test();
-          });
+          await (await server.tester)
+              .get('$baseAPIPath/articles')
+              .expectStatus(HttpStatus.ok)
+              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
+              .expectBodyCustom(
+            (body) {
+              final result = jsonDecode(body)['articles'] as Iterable;
+              return result.map((e) => Article.fromJson(e)).toList();
+            },
+            hasLength(articles.length),
+          ).test();
         });
       });
 
