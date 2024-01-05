@@ -381,7 +381,7 @@ void main() {
                 .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
                 .expectBodyCustom(
                   (body) {
-                    final result = jsonDecode(body) as Iterable;
+                    final result = jsonDecode(body)['articles'] as Iterable;
                     return result.map((e) => Article.fromJson(e)).toList();
                   },
                   hasLength(articles.length),

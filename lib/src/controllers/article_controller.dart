@@ -12,7 +12,7 @@ class ArticleController extends HTTPController {
 
   Future<Response> index() async {
     final articles = await _articleService.getArticles();
-    return response.json(articles);
+    return response.json({'articles': articles.map((e) => e.toJson()).toList()});
   }
 
   Future<Response> show(@param int articleId) async {
