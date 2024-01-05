@@ -164,7 +164,7 @@ void main() {
       });
     });
 
-    group('When Authenticated', () {
+    group('when protected route', () {
       String? authCookie;
       User? currentUser;
 
@@ -180,9 +180,9 @@ void main() {
         authCookie = result.headers[HttpHeaders.setCookieHeader];
 
         await DB.query<Article>().whereEqual('ownerId', currentUser!.id).delete();
-      });
 
-      test('should have auth cookie ', () => expect(authCookie, isNotNull));
+        expect(authCookie, isNotNull);
+      });
 
       group('Articles', () {
         final articleApiPath = '$baseAPIPath/articles';
