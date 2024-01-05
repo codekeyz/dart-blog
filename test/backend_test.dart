@@ -153,18 +153,14 @@ void main() {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
-          final email = randomUser!.email;
+          final baseTest =
+              (await server.tester).post(path, {'email': randomUser!.email, 'password': 'foo-bar-mee-moo'});
 
-          final apiResult =
-              await (await server.tester).post(path, {'email': email, 'password': 'foo-bar-mee-moo'}).actual;
-          expect(apiResult.statusCode, HttpStatus.ok);
-
-          // validate api result
-          final user = jsonDecode(apiResult.body)['user'];
-          expect(user['id'], randomUser.id!);
-          expect(user['email'], email);
-          expect(user['name'], randomUser.name);
-          expect(randomUser.toPublic, user);
+          await baseTest
+              .expectStatus(HttpStatus.ok)
+              .expectJsonBody({'user': randomUser.toPublic})
+              .expectHeader(HttpHeaders.setCookieHeader, contains('auth=s%'))
+              .test();
         });
       });
     });
