@@ -24,17 +24,16 @@ jobs:
         with:
           flutter-version: "3.16.5"
           channel: "stable"
-      - uses: bluefireteam/melos-action@v3
-
 
       - name: Check formatting
         run: |
-          melos build:backend
+          cd frontend && dart run build_runner build --delete-conflicting-outputs && cd ..
           dart format . --line-length=120 --set-exit-if-changed
 
       - name: Check linting
         run: |
           flutter pub get --directory=frontend
+          dart run build_runner build
           dart analyze . --fatal-infos
 
   test:
