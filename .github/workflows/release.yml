@@ -47,13 +47,13 @@ jobs:
       - name: Prepare Project 🧰
         run: melos build:backend
 
-      # - name: Build Docker Image 📦
-      #   uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
-      #     labels: ${{ steps.meta.outputs.labels }}
+      - name: Build Docker Image 📦
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
-      # - name: Trigger Deploy on Render 🚀
-      #   run: curl -G -d "key=${{ secrets.RENDER_KEY }}" -d "imgURL=ghcr.io/codekeyz/dart-blog:main" https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}
+      - name: Trigger Deploy on Render 🚀
+        run: curl -G -d "key=${{ secrets.RENDER_KEY }}" -d "imgURL=ghcr.io/codekeyz/dart-blog:main" https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}
