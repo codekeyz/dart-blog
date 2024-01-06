@@ -18,7 +18,7 @@ void main() {
 
   setUpAll(() => server.bootstrap(listen: false));
 
-  group('Zomato API Tests', () {
+  group('Backend API', () {
     const baseAPIPath = '/api';
 
     group('Auth', () {
