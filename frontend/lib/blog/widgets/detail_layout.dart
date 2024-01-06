@@ -39,7 +39,7 @@ class ArticleDetailLayoutState extends State<ArticleDetailLayout> {
   @override
   Widget build(BuildContext context) {
     final pageWith = MediaQuery.of(context).size.width;
-    final widthToUse = pageWith < 400 ? 400 : pageWith * 0.7;
+    final widthToUse = pageWith <= 400 ? pageWith * 0.9 : pageWith * 0.7;
 
     return ScaffoldPage(
       padding: EdgeInsets.zero,
