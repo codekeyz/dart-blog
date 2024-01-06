@@ -620,14 +620,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.5"
-  shelf_helmet:
-    dependency: "direct main"
-    description:
-      name: shelf_helmet
-      sha256: "425d15eec5fb030a1f0339eb484ed18b13476591ccb6f76ebcfd6bccf7ef3675"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   shelf_packages_handler:
     dependency: transitive
     description:
@@ -929,7 +921,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: "611a3b953823abeb49c35d5c3ef518d95ec11855"
+      resolved-ref: d514a3f1baddbb2e32c63ff49f07696224eee150
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -938,7 +930,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: "611a3b953823abeb49c35d5c3ef518d95ec11855"
+      resolved-ref: d514a3f1baddbb2e32c63ff49f07696224eee150
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"

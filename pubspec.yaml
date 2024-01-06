@@ -28,7 +28,6 @@ dependencies:
   dart_jsonwebtoken: ^2.12.2
   json_annotation: ^4.8.1
   shelf_cors_headers: ^0.1.5
-  shelf_helmet: ^2.2.0
   http:
 
 dev_dependencies:
