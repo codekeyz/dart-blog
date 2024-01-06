@@ -15,7 +15,7 @@ class AuthService {
 
   String getAccessTokenForUser(User user) {
     final jwt = JWT(user.toPublic, issuer: issuer, subject: user.id!.toString(), jwtId: 'access-token');
-    return jwt.sign(_jwtKey, algorithm: JWTAlgorithm.HS256, expiresIn: Duration(minutes: 10));
+    return jwt.sign(_jwtKey, algorithm: JWTAlgorithm.HS256, expiresIn: Duration(hours: 1));
   }
 
   /// this resolves the token from either signed cookies or
