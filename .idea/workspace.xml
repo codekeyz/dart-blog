@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1559198-15ea-4b36-8584-b403a8feef2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/test.yml" afterDir="false" />
+    <list default="true" id="e1559198-15ea-4b36-8584-b403a8feef2d" name="Changes" comment="allow getting articles without auth">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/auth/pages/login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/auth/pages/login_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/blog/add_blog.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/blog/add_layout.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/blog/blog_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/blog/blog_detail.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/blog/widgets/add_card.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/blog/widgets/article_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/blog/widgets/article_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/blog/widgets/article_items.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/blog/widgets/article_items.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/blog/widgets/detail_layout.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/data/api_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/data/api_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/backend_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/backend_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,12 +79,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1704482817649</updated>
-      <workItem from="1704482821739" duration="10260000" />
+      <workItem from="1704482821739" duration="27838000" />
     </task>
+    <task id="LOCAL-00001" summary="allow getting articles without auth">
+      <option name="closed" value="true" />
+      <created>1704498233505</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1704498233506</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="allow getting articles without auth" />
+    <option name="LAST_COMMIT_MESSAGE" value="allow getting articles without auth" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
