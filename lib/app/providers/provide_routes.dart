@@ -16,8 +16,11 @@ class RouteServiceProvider extends ServiceProvider {
           Route.post('/auth/login', (AuthController, #login)),
           Route.post('/auth/register', (AuthController, #register)),
 
-          // get articles without auth
-          Route.get('/articles', (ArticleController, #index)),
+          // get articless and detail without auth
+          Route.group('/articles').routes([
+            Route.get('/', (ArticleController, #index)),
+            Route.get('/<articleId>', (ArticleController, #show)),
+          ]),
         ]),
 
         /*|--------------------------------------------------------------------------

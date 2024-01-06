@@ -12,7 +12,6 @@ List<RouteDefinition> routes = [
   /// Articles
   Route.group('articles').routes([
     Route.post('/', (ArticleController, #create)),
-    Route.get('/<articleId>', (ArticleController, #show)),
     Route.put('/<articleId>', (ArticleController, #update)),
     Route.delete('/<articleId>', (ArticleController, #delete)),
   ]),

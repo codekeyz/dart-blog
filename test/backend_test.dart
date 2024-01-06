@@ -261,17 +261,6 @@ void main() {
                 .expectJsonBody({'error': 'Not found'})
                 .test();
           });
-
-          test('should return when article', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
-            expect(article, isA<Article>());
-
-            await (await server.tester)
-                .get('$articleApiPath/${article!.id}', headers: {HttpHeaders.cookieHeader: authCookie!})
-                .expectStatus(HttpStatus.ok)
-                .expectJsonBody({'article': article.toJson()})
-                .test();
-          });
         });
 
         group('when update article', () {
@@ -378,6 +367,16 @@ void main() {
             },
             hasLength(articles.length),
           ).test();
+        });
+
+        test('should show article without auth', () async {
+          final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+          expect(article, isA<Article>());
+
+          await (await server.tester)
+              .get('$articleApiPath/${article!.id}')
+              .expectStatus(HttpStatus.ok)
+              .expectJsonBody({'article': article.toJson()}).test();
         });
       });
 
