@@ -21,9 +21,10 @@ dependencies:
   meta: ^1.10.0
   get_it: ^7.6.4
   collection: ^1.18.0
-  markdown_widget: ^2.3.2+3
   timeago: ^3.6.0
   fast_cached_network_image: ^1.2.0
+  markdown_widget:
+  appflowy_editor: ^2.2.0
 
 dev_dependencies:
   flutter_lints: ^3.0.1

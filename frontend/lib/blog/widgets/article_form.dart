@@ -1,3 +1,4 @@
+import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:frontend/blog/widgets/article_base_layout.dart';
 import 'package:frontend/data/providers/article_provider.dart';
@@ -17,17 +18,16 @@ class ArticleFormView extends StatefulWidget {
 }
 
 class _ArticleFormViewState extends State<ArticleFormView> {
-  String? title;
-  String? description;
-  String? imageUrl;
-
   final _titleCtrl = TextEditingController();
-  final _descriptionCtrl = TextEditingController();
   final _imageUrlCtrl = TextEditingController();
 
   bool hasSetDefaults = false;
 
   int? articleId;
+
+  EditorState? editorState;
+
+  bool get isValidPost => _titleCtrl.text.trim().isNotEmpty && editorState != null && !editorState!.document.isEmpty;
 
   @override
   void initState() {
@@ -37,6 +37,7 @@ class _ArticleFormViewState extends State<ArticleFormView> {
       articleId = int.tryParse(widget.articleId!);
       if (articleId == null) router.pop();
     }
+    if (widget.articleId == null) editorState = EditorState.blank();
   }
 
   @override
@@ -49,16 +50,35 @@ class _ArticleFormViewState extends State<ArticleFormView> {
         final articleProv = context.read<ArticleProvider>();
         final maybeArticle = detailProv.article;
 
-        if (maybeArticle != null && !hasSetDefaults) {
-          _titleCtrl.text = maybeArticle.title;
-          _descriptionCtrl.text = maybeArticle.description;
-          _imageUrlCtrl.text = maybeArticle.imageUrl ?? '';
+        if (articleId != null && maybeArticle == null) {
+          if (detailProv.isLoading) return loadingView();
+          if (detailProv.hasError) {
+            layout.handleErrors(ProviderEvent.error(errorMessage: detailProv.errorMessage!));
+            router.pop();
+            return const SizedBox.shrink();
+          }
         }
 
-        createOrUpdateAction(String title, String description, String? imageUrl) async {
+        if (maybeArticle != null && !hasSetDefaults) {
+          _titleCtrl.text = maybeArticle.title;
+          editorState = EditorState(document: markdownToDocument(maybeArticle.description));
+          final imageUrl = maybeArticle.imageUrl;
+          if (imageUrl != null) _imageUrlCtrl.text = imageUrl;
+        }
+
+        createOrUpdateAction() async {
+          if (!isValidPost) {
+            layout.handleErrors(const ProviderEvent.error(errorMessage: 'Post is not valid'));
+            return;
+          }
+
+          final title = _titleCtrl.text.trim();
+          final description = documentToMarkdown(editorState!.document);
+          final imageUrl = Uri.tryParse(_imageUrlCtrl.text)?.toString();
+
           layout.setLoading(true);
 
-          if (widget.articleId != null && maybeArticle != null) {
+          if (maybeArticle != null) {
             await articleProv.updateArticle(maybeArticle.id, title, description, imageUrl);
           } else if (widget.articleId == null) {
             await articleProv.addArticle(title, description, imageUrl);
@@ -74,52 +94,59 @@ class _ArticleFormViewState extends State<ArticleFormView> {
           router.pushReplacement('/');
         }
 
+        if (editorState == null) return loadingView();
+
         return Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.articleId == null ? "New Post" : "Edit Post",
-              style: typography.bodyStrong!.copyWith(color: blogColor, fontSize: 20),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            PageHeader(
+              title: Text(maybeArticle != null ? 'Update Post' : 'New Post'),
+              padding: 0,
             ),
-            const SizedBox(height: 24),
-            InfoLabel(
-                label: 'Blog Title',
-                child: TextBox(
-                    controller: _titleCtrl,
-                    keyboardType: TextInputType.name,
-                    onChanged: (value) => setState(() => title = value.trim()))),
             _spacing,
             InfoLabel(
-              label: 'Description',
+              label: 'Title',
+              labelStyle: const TextStyle(fontWeight: FontWeight.w300),
               child: TextBox(
-                controller: _descriptionCtrl,
-                keyboardType: TextInputType.multiline,
-                onChanged: (value) => setState(() => description = value),
-                maxLines: null,
-                minLines: 5,
+                controller: _titleCtrl,
+                keyboardType: TextInputType.text,
+                autofocus: true,
+                placeholder: 'Post Title',
+                style: typography.bodyLarge!.copyWith(color: blogColor),
+              ),
+            ),
+            const SizedBox(height: 32),
+            InfoLabel(label: 'Write your post'),
+            const SizedBox(height: 8),
+            Container(
+              constraints: const BoxConstraints(maxHeight: 150),
+              width: double.maxFinite,
+              child: Card(
+                borderColor: blogColor.withOpacity(0.1),
+                borderRadius: BorderRadius.zero,
+                child: AppFlowyEditor(
+                  shrinkWrap: true,
+                  editorStyle: EditorStyle.desktop(
+                      padding: EdgeInsets.zero, selectionColor: Colors.grey.withOpacity(0.5), cursorColor: blogColor),
+                  editorState: editorState!,
+                ),
               ),
             ),
             _spacing,
             InfoLabel(
-                label: 'Image Url (Optional)',
-                child: TextBox(
-                    controller: _imageUrlCtrl,
-                    keyboardType: TextInputType.name,
-                    onChanged: (value) => setState(() => imageUrl = value.trim()))),
+              label: 'Image Url',
+              labelStyle: const TextStyle(fontWeight: FontWeight.w300),
+              child: TextBox(controller: _imageUrlCtrl, keyboardType: TextInputType.url),
+            ),
             const SizedBox(height: 28),
             Row(
               children: [
                 const Expanded(child: SizedBox.shrink()),
                 FilledButton(
                   style: ButtonStyle(
-                    shape: ButtonState.all(const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
-                  ),
-                  onPressed: [title, description].contains(null)
-                      ? null
-                      : () => createOrUpdateAction(title!, description!, imageUrl),
+                      shape: ButtonState.all(const RoundedRectangleBorder(borderRadius: BorderRadius.zero))),
+                  onPressed: createOrUpdateAction,
                   child: Text(widget.articleId == null ? 'Add Post' : 'Update Post'),
                 )
               ],
@@ -134,7 +161,6 @@ class _ArticleFormViewState extends State<ArticleFormView> {
   void dispose() {
     super.dispose();
     _titleCtrl.dispose();
-    _descriptionCtrl.dispose();
     _imageUrlCtrl.dispose();
   }
 }

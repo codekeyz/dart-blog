@@ -34,78 +34,75 @@ class BlogDetail extends StatelessWidget {
 
         final imageHost = article.imageUrl == null ? null : Uri.tryParse(article.imageUrl!)?.host;
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              PageHeader(
-                title: Text(article.title, style: const TextStyle(color: Colors.black)),
-                commandBar: CommandBar(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  primaryItems: [
-                    if (isPostOwner)
-                      CommandBarButton(
-                        icon: const Icon(FluentIcons.edit),
-                        label: const Text('Edit'),
-                        onPressed: () => router.pushReplacement('/posts/${article.id}/edit'),
-                      ),
-                  ],
-                ),
-                padding: 0,
-              ),
-              Divider(
-                style: DividerThemeData(
-                  thickness: 0.2,
-                  decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      height: 150,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(child: Card(child: imageView(article.imageUrl!))),
-                          if (imageHost != null) ...[
-                            const SizedBox(height: 8),
-                            Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
-                          ]
-                        ],
-                      ),
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            PageHeader(
+              title: Text(article.title, style: const TextStyle(color: Colors.black)),
+              commandBar: CommandBar(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
+                primaryItems: [
+                  if (isPostOwner)
+                    CommandBarButton(
+                      icon: const Icon(FluentIcons.edit),
+                      label: const Text('Edit'),
+                      onPressed: () => router.pushReplacement('/posts/${article.id}/edit'),
                     ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: Container(
-                        constraints: const BoxConstraints(minHeight: 250),
-                        alignment: Alignment.topRight,
-                        child: MarkdownWidget(data: article.description, shrinkWrap: true),
-                      ),
-                    ),
-                  ],
-                ),
+                ],
               ),
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.5))),
-                ),
-                child: Row(
-                  children: [
-                    Text('Last updated ${timeago.format(article.updatedAt)}', style: footerStyle),
-                    const Spacer(),
-                    if (owner != null) Text('Posted by: ${owner.name}', style: footerStyle)
-                  ],
-                ),
-              )
-            ],
-          ),
+              padding: 0,
+            ),
+            Divider(
+              style: DividerThemeData(
+                thickness: 0.2,
+                decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 150,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(child: Card(child: imageView(article.imageUrl!))),
+                        if (imageHost != null) ...[
+                          const SizedBox(height: 8),
+                          Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
+                        ]
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 24),
+                  Expanded(
+                    child: Container(
+                      constraints: const BoxConstraints(minHeight: 350),
+                      alignment: Alignment.topRight,
+                      child: MarkdownWidget(data: article.description, shrinkWrap: true),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.5))),
+              ),
+              child: Row(
+                children: [
+                  Text('Last updated ${timeago.format(article.updatedAt)}', style: footerStyle),
+                  const Spacer(),
+                  if (owner != null) Text('Posted by: ${owner.name}', style: footerStyle)
+                ],
+              ),
+            )
+          ],
         );
       },
     );

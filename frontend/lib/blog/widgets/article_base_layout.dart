@@ -55,7 +55,10 @@ class ArticleBaseLayoutState extends State<ArticleBaseLayout> {
                         if (_showingLoading) const SizedBox(width: double.maxFinite, child: ProgressBar()),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-                          child: widget.child(_detailProvider, this),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                            child: widget.child(_detailProvider, this),
+                          ),
                         ),
                       ],
                     ),
