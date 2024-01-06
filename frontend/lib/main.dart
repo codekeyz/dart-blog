@@ -1,5 +1,4 @@
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
-import 'package:flutter/material.dart' show Colors;
 import 'package:frontend/data/services.dart';
 import 'package:frontend/blog/blog.dart';
 import 'package:go_router/go_router.dart';
@@ -92,7 +91,6 @@ class _AppLayout extends StatelessWidget {
           ),
         ),
         Expanded(child: child),
-        Container(height: 40, width: double.maxFinite, color: Colors.grey.shade200),
       ],
     );
   }
