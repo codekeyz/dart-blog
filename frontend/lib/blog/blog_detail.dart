@@ -73,8 +73,7 @@ class BlogDetail extends StatelessWidget {
                                     style: ButtonStyle(
                                         backgroundColor: ButtonState.all(Colors.red),
                                         shape: ButtonState.all(
-                                          const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.zero),
+                                          const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                                         )),
                                     onPressed: () async {
                                       await articleProv
@@ -85,8 +84,8 @@ class BlogDetail extends StatelessWidget {
                                   ),
                                   FilledButton(
                                     style: ButtonStyle(
-                                        shape: ButtonState.all(const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.zero))),
+                                        shape: ButtonState.all(
+                                            const RoundedRectangleBorder(borderRadius: BorderRadius.zero))),
                                     onPressed: () => router.pop(context),
                                     child: const Text("Cancel"),
                                   ),
@@ -102,8 +101,7 @@ class BlogDetail extends StatelessWidget {
             Divider(
               style: DividerThemeData(
                 thickness: 0.2,
-                decoration: BoxDecoration(
-                    border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
+                decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
               ),
             ),
             Padding(
@@ -120,8 +118,7 @@ class BlogDetail extends StatelessWidget {
                         Expanded(child: Card(child: imageView(article.imageUrl!))),
                         if (imageHost != null) ...[
                           const SizedBox(height: 8),
-                          Text(imageHost,
-                              style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
+                          Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
                         ]
                       ],
                     ),

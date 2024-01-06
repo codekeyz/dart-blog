@@ -22,11 +22,9 @@ class ArticleProvider extends BaseProvider<List<Article>> {
     addEvent(ProviderEvent.success(data: [...articles, article]));
   }
 
-  Future<void> updateArticle(
-      int articleId, String title, String description, String? imageUrl) async {
+  Future<void> updateArticle(int articleId, String title, String description, String? imageUrl) async {
     final articles = lastEvent?.data ?? [];
-    final article =
-        await safeRun(() => apiSvc.updateArticle(articleId, title, description, imageUrl));
+    final article = await safeRun(() => apiSvc.updateArticle(articleId, title, description, imageUrl));
     if (article == null) return;
 
     addEvent(ProviderEvent.success(data: [...articles, article]));

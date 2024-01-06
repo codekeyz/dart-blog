@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class ArticleService {
   Future<List<Article>> getArticles({String? ownerId}) async {
-    final query = DB.query<Article>();
+    final query = DB.query<Article>().orderByDesc('updatedAt');
     if (ownerId == null) return query.all();
 
     return query.whereEqual('ownerId', ownerId).findMany();
@@ -31,11 +31,10 @@ class ArticleService {
   Future<Article?> updateArticle(User user, int articleId, CreateArticleDTO dto) async {
     final userId = user.id!;
     final query = DB.query<Article>().whereEqual('id', articleId).whereEqual('ownerId', userId);
-    if ((await query.findOne()) == null) return null;
+    final article = await query.findOne();
+    if (article == null) return null;
 
-    await query.update(dto.data);
-
-    return await query.findOne();
+    return await article.update(dto.data);
   }
 
   Future<void> deleteArticle(int userId, int articleId) => DB.query<Article>().whereEqual('id', articleId).delete();
