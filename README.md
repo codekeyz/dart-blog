@@ -6,6 +6,11 @@ Full-stack Dart project meant to prove that **Dart for Backend** is highly possi
 the work and necessary support. The Backend runs on [Yaroo](https://github.com/codekeyz/yaroo) which serves both the
 frontend [Flutter Web](https://flutter.dev/multi-platform/web) and API.
 
+<p align="center">
+  <img src="screenshots/homescreen.png" width="400" alt="Screenshot 1">
+  <img src="screenshots/article.png" width="350" alt="Screenshot 2">
+</p>
+
 ### Setup
 
 Install [`Melos`](https://melos.invertase.dev/~melos-latest) as a global package
