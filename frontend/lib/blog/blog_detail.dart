@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:frontend/data/providers/article_provider.dart';
 import 'package:frontend/data/providers/auth_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/utils/misc.dart';
@@ -20,6 +21,8 @@ class BlogDetail extends StatelessWidget {
       articleId: int.tryParse(articleId),
       child: (detail, layout) {
         final currentUser = context.read<AuthProvider>().user;
+        final articleProv = context.read<ArticleProvider>();
+
         final article = detail.article;
         final owner = detail.owner;
 
@@ -49,6 +52,49 @@ class BlogDetail extends StatelessWidget {
                       label: const Text('Edit'),
                       onPressed: () => router.pushReplacement('/posts/${article.id}/edit'),
                     ),
+                  if (isPostOwner)
+                    CommandBarButton(
+                      icon: Icon(FluentIcons.delete, color: Colors.red),
+                      label: Text(
+                        'Delete',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return ContentDialog(
+                                title: const Text('Delete Blog permanently?'),
+                                content: const Text(
+                                  'If you delete this file, you won\'t be able to recover it. Do you want to delete it?',
+                                ),
+                                actions: [
+                                  FilledButton(
+                                    style: ButtonStyle(
+                                        backgroundColor: ButtonState.all(Colors.red),
+                                        shape: ButtonState.all(
+                                          const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.zero),
+                                        )),
+                                    onPressed: () async {
+                                      await articleProv
+                                          .deleteArticle(int.tryParse(articleId)!)
+                                          .then((value) => router.pushReplacement('/'));
+                                    },
+                                    child: const Text("Delete"),
+                                  ),
+                                  FilledButton(
+                                    style: ButtonStyle(
+                                        shape: ButtonState.all(const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.zero))),
+                                    onPressed: () => router.pop(context),
+                                    child: const Text("Cancel"),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                    ),
                 ],
               ),
               padding: 0,
@@ -56,7 +102,8 @@ class BlogDetail extends StatelessWidget {
             Divider(
               style: DividerThemeData(
                 thickness: 0.2,
-                decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
+                decoration: BoxDecoration(
+                    border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
               ),
             ),
             Padding(
@@ -73,7 +120,8 @@ class BlogDetail extends StatelessWidget {
                         Expanded(child: Card(child: imageView(article.imageUrl!))),
                         if (imageHost != null) ...[
                           const SizedBox(height: 8),
-                          Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
+                          Text(imageHost,
+                              style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
                         ]
                       ],
                     ),

@@ -927,16 +927,20 @@ packages:
   yaroo:
     dependency: "direct main"
     description:
-      path: "../yaroo-dev/yaroo"
-      relative: true
-    source: path
+      path: yaroo
+      ref: HEAD
+      resolved-ref: a83e6d8821a01fc6d45a37a5a3006977936d5c4e
+      url: "https://github.com/codekeyz/yaroo.git"
+    source: git
     version: "0.0.1"
   yaroorm:
     dependency: "direct main"
     description:
-      path: "../yaroo-dev/yaroorm"
-      relative: true
-    source: path
+      path: yaroorm
+      ref: HEAD
+      resolved-ref: a83e6d8821a01fc6d45a37a5a3006977936d5c4e
+      url: "https://github.com/codekeyz/yaroo.git"
+    source: git
     version: "1.0.0"
 sdks:
   dart: ">=3.2.2 <4.0.0"

@@ -11,15 +11,15 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final typography = FluentTheme.of(context).typography;
-    return SizedBox(
-      width: 300,
-      height: 250,
-      child: Card(
-        borderColor: Colors.grey.withOpacity(0.3),
-        borderRadius: BorderRadius.zero,
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
-        child: GestureDetector(
-          onTap: () => router.push('/posts/${article.id}'),
+    return GestureDetector(
+      onTap: () => router.push('/posts/${article.id}'),
+      child: SizedBox(
+        width: 300,
+        height: 250,
+        child: Card(
+          borderColor: Colors.grey.withOpacity(0.3),
+          borderRadius: BorderRadius.zero,
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
