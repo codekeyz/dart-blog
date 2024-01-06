@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       ],
       child: FluentApp.router(
         routerConfig: router,
-        title: 'Dart Blog 🚀',
+        title: 'Dart Blog',
         debugShowCheckedModeBanner: false,
         color: blogColor,
         theme: FluentThemeData.light(),

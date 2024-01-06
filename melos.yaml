@@ -12,7 +12,7 @@ scripts:
   build:frontend:
     run: |
       melos exec -- "dart run build_runner build --delete-conflicting-outputs"
-      melos exec -c 1  -- "flutter build web --output=../public --release --web-renderer=html"
+      melos exec -c 1  -- "flutter build web --output=../public --release --web-renderer=html --dart-define Endpoint=$APP_URL"
     packageFilters:
       flutter: true
 
