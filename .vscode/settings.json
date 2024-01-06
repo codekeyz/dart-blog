@@ -1,0 +1,11 @@
+{
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "${workspaceFolder:yaroo-example}/database/db.sqlite",
+      "name": "Test Database"
+    }
+  ]
+}

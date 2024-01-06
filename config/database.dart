@@ -1,6 +1,7 @@
 import 'package:path/path.dart' as path;
 import 'package:yaroorm/config.dart';
 
+import '../database/migrations/create_articles_table.dart';
 import '../database/migrations/create_users_table.dart';
 
 final config = YaroormConfig.from({
@@ -61,5 +62,5 @@ final config = YaroormConfig.from({
     */
 
   'migrations_table': 'migrations',
-  'migrations': [CreateUsersTable()]
+  'migrations': [CreateUsersTable(), CreateArticlesTable()],
 });
