@@ -14,7 +14,7 @@ final server = App(app.config);
 void main() {
   initializeReflectable();
 
-  DB.init(db.config); // you can use different configs here purposely for testing
+  DB.init(db.config);
 
   setUpAll(() => server.bootstrap(listen: false));
 
@@ -164,7 +164,7 @@ void main() {
       });
     });
 
-    group('when protected route', () {
+    group('', () {
       String? authCookie;
       User? currentUser;
 
@@ -178,16 +178,55 @@ void main() {
         }).actual;
 
         authCookie = result.headers[HttpHeaders.setCookieHeader];
+        expect(authCookie, isNotNull);
 
         await DB.query<Article>().whereEqual('ownerId', currentUser!.id).delete();
+      });
 
-        expect(authCookie, isNotNull);
+      group('Users', () {
+        final usersApiPath = '$baseAPIPath/users';
+
+        test('should reject if no cookie', () async {
+          await (await server.tester)
+              .get(usersApiPath)
+              .expectStatus(HttpStatus.unauthorized)
+              .expectJsonBody({'error': 'Unauthorized'}).test();
+        });
+
+        test('should return user for /users/me ', () async {
+          await (await server.tester)
+              .get('$usersApiPath/me', headers: {HttpHeaders.cookieHeader: authCookie!})
+              .expectStatus(HttpStatus.ok)
+              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
+              .expectBodyCustom(
+                  (body) => jsonDecode(body)['user'],
+                  allOf(
+                    contains('id'),
+                    contains('email'),
+                    contains('name'),
+                    contains('createdAt'),
+                    contains('updatedAt'),
+                  ))
+              .test();
+        });
+
+        test('should get user `/users/<userId>` without auth', () async {
+          final randomUser = await DB.query<User>().get();
+          expect(randomUser, isA<User>());
+
+          await (await server.tester)
+              .get('$usersApiPath/${randomUser!.id!}')
+              .expectStatus(HttpStatus.ok)
+              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
+              .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toPublic)
+              .test();
+        });
       });
 
       group('Articles', () {
         final articleApiPath = '$baseAPIPath/articles';
 
-        group('when create article', () {
+        group('create', () {
           test('should error on invalid body', () async {
             attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
               return (await server.tester)
@@ -210,60 +249,40 @@ void main() {
             ]);
           });
 
-          test('should create without image', () async {
-            final result = await (await server.tester).post(
-                articleApiPath, {'title': 'Hurry 🚀', 'description': 'Welcome to the jungle'},
-                headers: {HttpHeaders.cookieHeader: authCookie!}).actual;
-            expect(result.statusCode, HttpStatus.ok);
-
-            final article = jsonDecode(result.body)['article'];
-            expect(article['ownerId'], currentUser!.id);
-            expect(article['title'], 'Hurry 🚀');
-            expect(article['description'], 'Welcome to the jungle');
-            expect(article, allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
-          });
-
           test('should create with image', () async {
             final result = await (await server.tester).post(articleApiPath, {
               'title': 'Santa Clause 🚀',
               'description': 'Dart for backend is here',
-              'imageUrl': 'https://dart.dev/assets/shared/dart-logo-for-shares.png'
+              'imageUrl': 'https://holy-dart.com/dart-logo-for-shares.png'
             }, headers: {
               HttpHeaders.cookieHeader: authCookie!
             }).actual;
             expect(result.statusCode, HttpStatus.ok);
 
-            final article = jsonDecode(result.body)['article'];
-            expect(article['ownerId'], currentUser!.id);
-            expect(article['title'], 'Santa Clause 🚀');
-            expect(article['description'], 'Dart for backend is here');
-            expect(article['imageUrl'], 'https://dart.dev/assets/shared/dart-logo-for-shares.png');
-            expect(article, allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            final article = Article.fromJson(jsonDecode(result.body)['article']);
+            expect(article.ownerId, currentUser!.id);
+            expect(article.title, 'Santa Clause 🚀');
+            expect(article.description, 'Dart for backend is here');
+            expect(article.imageUrl, 'https://holy-dart.com/dart-logo-for-shares.png');
+            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+          });
+
+          test('should use default image if none set', () async {
+            final result = await (await server.tester).post(
+                articleApiPath, {'title': 'Hurry 🚀', 'description': 'Welcome to the jungle'},
+                headers: {HttpHeaders.cookieHeader: authCookie!}).actual;
+            expect(result.statusCode, HttpStatus.ok);
+
+            final article = Article.fromJson(jsonDecode(result.body)['article']);
+            expect(article.ownerId, currentUser!.id);
+            expect(article.title, 'Hurry 🚀');
+            expect(article.description, 'Welcome to the jungle');
+            expect(article.imageUrl, 'https://dart.dev/assets/shared/dart-logo-for-shares.png');
+            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
           });
         });
 
-        group('when show article', () {
-          test('should error when invalid articleId', () async {
-            await (await server.tester)
-                .get('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
-                .expectStatus(HttpStatus.badRequest)
-                .expectJsonBody({
-                  'location': 'param',
-                  'errors': ['articleId must be a int type']
-                })
-                .test();
-          });
-
-          test('should error when article not exist', () async {
-            await (await server.tester)
-                .get('$articleApiPath/2348', headers: {HttpHeaders.cookieHeader: authCookie!})
-                .expectStatus(HttpStatus.notFound)
-                .expectJsonBody({'error': 'Not found'})
-                .test();
-          });
-        });
-
-        group('when update article', () {
+        group('update ', () {
           test('should error when invalid params', () async {
             // bad params
             await (await server.tester)
@@ -307,14 +326,14 @@ void main() {
                 headers: {HttpHeaders.cookieHeader: authCookie!}).actual;
             expect(result.statusCode, HttpStatus.ok);
 
-            final updatedArticle = jsonDecode(result.body)['article'];
-            expect(updatedArticle['title'], 'Honey');
-            expect(updatedArticle['description'], 'Hold my beer lets talk');
-            expect(updatedArticle, allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            final updatedArticle = Article.fromJson(jsonDecode(result.body)['article']);
+            expect(updatedArticle.title, 'Honey');
+            expect(updatedArticle.description, 'Hold my beer lets talk');
+            expect(updatedArticle.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
           });
         });
 
-        group('when delete article', () {
+        group('delete', () {
           test('should error when invalid params', () async {
             // bad params
             await (await server.tester)
@@ -326,11 +345,10 @@ void main() {
                 })
                 .test();
 
-            const fakeId = 234;
+            const fakeId = 234239389239;
             final article = await DB.query<Article>().get(fakeId);
             expect(article, isNull);
 
-            // no existing article
             await (await server.tester)
                 .delete('$articleApiPath/$fakeId', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.ok)
@@ -352,6 +370,37 @@ void main() {
           });
         });
 
+        group('when get article by Id', () {
+          test('should error when invalid articleId', () async {
+            await (await server.tester)
+                .get('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .expectStatus(HttpStatus.badRequest)
+                .expectJsonBody({
+                  'location': 'param',
+                  'errors': ['articleId must be a int type']
+                })
+                .test();
+          });
+
+          test('should error when article not exist', () async {
+            await (await server.tester)
+                .get('$articleApiPath/2348', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .expectStatus(HttpStatus.notFound)
+                .expectJsonBody({'error': 'Not found'})
+                .test();
+          });
+
+          test('should show article without auth', () async {
+            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+            expect(article, isA<Article>());
+
+            await (await server.tester)
+                .get('$articleApiPath/${article!.id}')
+                .expectStatus(HttpStatus.ok)
+                .expectJsonBody({'article': article.toJson()}).test();
+          });
+        });
+
         test('should get Articles without auth', () async {
           final articles = await DB.query<Article>().all();
           expect(articles, isNotEmpty);
@@ -367,56 +416,6 @@ void main() {
             },
             hasLength(articles.length),
           ).test();
-        });
-
-        test('should show article without auth', () async {
-          final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
-          expect(article, isA<Article>());
-
-          await (await server.tester)
-              .get('$articleApiPath/${article!.id}')
-              .expectStatus(HttpStatus.ok)
-              .expectJsonBody({'article': article.toJson()}).test();
-        });
-      });
-
-      group('Users', () {
-        final usersApiPath = '$baseAPIPath/users';
-
-        test('should reject if no cookie', () async {
-          await (await server.tester)
-              .get(usersApiPath)
-              .expectStatus(HttpStatus.unauthorized)
-              .expectJsonBody({'error': 'Unauthorized'}).test();
-        });
-
-        test('should return user for /users/me ', () async {
-          await (await server.tester)
-              .get('$usersApiPath/me', headers: {HttpHeaders.cookieHeader: authCookie!})
-              .expectStatus(HttpStatus.ok)
-              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
-              .expectBodyCustom(
-                  (body) => jsonDecode(body)['user'],
-                  allOf(
-                    contains('id'),
-                    contains('email'),
-                    contains('name'),
-                    contains('createdAt'),
-                    contains('updatedAt'),
-                  ))
-              .test();
-        });
-
-        test('should return user for /users/<userId> without auth', () async {
-          final randomUser = await DB.query<User>().get();
-          expect(randomUser, isA<User>());
-
-          await (await server.tester)
-              .get('$usersApiPath/${randomUser!.id!}')
-              .expectStatus(HttpStatus.ok)
-              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
-              .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toPublic)
-              .test();
         });
       });
     });

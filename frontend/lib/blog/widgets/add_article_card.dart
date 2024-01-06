@@ -1,7 +1,9 @@
 import 'dart:math' as math;
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:frontend/data/providers/auth_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/utils/misc.dart';
+import 'package:provider/provider.dart';
 
 class AddArticleCard extends StatelessWidget {
   const AddArticleCard({super.key});
@@ -17,36 +19,46 @@ class DottedBorder extends StatelessWidget {
   final double strokeWidth;
   final double gap;
 
-  const DottedBorder(
-      {super.key, this.color = Colors.black, this.strokeWidth = 1.5, this.gap = 5.0});
+  const DottedBorder({super.key, this.color = Colors.black, this.strokeWidth = 1.5, this.gap = 5.0});
 
   @override
   Widget build(BuildContext context) {
     final typography = FluentTheme.of(context).typography;
+    final user = context.read<AuthProvider>().user;
 
     return Padding(
       padding: EdgeInsets.all(strokeWidth / 2),
       child: GestureDetector(
         onTap: () {
-          router.push('/addBlog');
+          if (user == null) {
+            router.pushReplacement("/login", extra: {'returnUrl': '/posts/new'});
+            return;
+          }
+
+          router.push('/posts/new');
         },
-        child: CustomPaint(
-            painter: DashRectPainter(color: color, strokeWidth: strokeWidth, gap: gap),
-            child: SizedBox(
-              width: 200,
-              height: 200,
-              child: Card(
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
-                child: Center(
-                  child: Text(
-                    "Add Blog +",
-                    style: typography.bodyStrong!.copyWith(color: blogColor),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+        child: Container(
+          alignment: Alignment.center,
+          width: 300,
+          height: 250,
+          child: CustomPaint(
+              painter: DashRectPainter(color: color, strokeWidth: strokeWidth, gap: gap),
+              child: SizedBox(
+                width: 200,
+                height: 200,
+                child: Card(
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  child: Center(
+                    child: Text(
+                      "New Post +",
+                      style: typography.bodyStrong!.copyWith(color: blogColor),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
-              ),
-            )),
+              )),
+        ),
       ),
     );
   }
@@ -118,10 +130,8 @@ class DashRectPainter extends CustomPainter {
 
     while (currentPoint.x <= b.x && currentPoint.y <= b.y) {
       shouldDraw
-          ? path.lineTo(
-              double.parse(currentPoint.x.toString()), double.parse(currentPoint.y.toString()))
-          : path.moveTo(
-              double.parse(currentPoint.x.toString()), double.parse(currentPoint.y.toString()));
+          ? path.lineTo(double.parse(currentPoint.x.toString()), double.parse(currentPoint.y.toString()))
+          : path.moveTo(double.parse(currentPoint.x.toString()), double.parse(currentPoint.y.toString()));
       shouldDraw = !shouldDraw;
       currentPoint = math.Point(
         currentPoint.x + dx,

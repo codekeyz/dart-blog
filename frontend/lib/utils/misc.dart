@@ -1,5 +1,6 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 
 const projectUrl = 'https://github.com/codekeyz/dart-blog';
@@ -35,7 +36,7 @@ loadingView({String message = 'loading, please wait...'}) => Container(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const ProgressRing(),
+          const ProgressRing(strokeWidth: 2),
           const SizedBox(height: 24),
           Text(message, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300)),
         ],
@@ -56,3 +57,11 @@ errorView({String? message}) {
     ),
   );
 }
+
+imageView(String imageUrl) => FastCachedImage(
+      url: imageUrl,
+      fit: BoxFit.cover,
+      width: double.maxFinite,
+      fadeInDuration: const Duration(seconds: 1),
+      loadingBuilder: (p0, p1) => loadingView(message: ''),
+    );

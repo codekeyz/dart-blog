@@ -6,18 +6,17 @@ import 'package:markdown_widget/markdown_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'widgets/detail_layout.dart';
+import 'widgets/article_base_layout.dart';
 
 class BlogDetail extends StatelessWidget {
   final String articleId;
-  final bool edit;
 
-  const BlogDetail(this.articleId, {super.key, this.edit = false});
+  const BlogDetail(this.articleId, {super.key});
 
   @override
   @override
   Widget build(BuildContext context) {
-    return ArticleDetailLayout(
+    return ArticleBaseLayout(
       articleId: int.tryParse(articleId),
       child: (detail, layout) {
         final currentUser = context.read<AuthProvider>().user;
@@ -32,6 +31,8 @@ class BlogDetail extends StatelessWidget {
 
         const footerStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
         final isPostOwner = currentUser != null && owner != null && currentUser.id == owner.id;
+
+        final imageHost = article.imageUrl == null ? null : Uri.tryParse(article.imageUrl!)?.host;
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -54,11 +55,41 @@ class BlogDetail extends StatelessWidget {
                 ),
                 padding: 0,
               ),
-              Container(
-                height: 300,
-                decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
+              Divider(
+                style: DividerThemeData(
+                  thickness: 0.2,
+                  decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: MarkdownWidget(data: article.description),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      height: 150,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(child: Card(child: imageView(article.imageUrl!))),
+                          if (imageHost != null) ...[
+                            const SizedBox(height: 8),
+                            Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
+                          ]
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 24),
+                    Expanded(
+                      child: Container(
+                        constraints: const BoxConstraints(minHeight: 250),
+                        alignment: Alignment.topRight,
+                        child: MarkdownWidget(data: article.description, shrinkWrap: true),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 height: 40,

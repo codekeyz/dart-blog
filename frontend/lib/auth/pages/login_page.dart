@@ -6,7 +6,9 @@ import 'auth_layout.dart';
 const _spacing = SizedBox(height: 18);
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final String? returnUrl;
+
+  const LoginPage({super.key, this.returnUrl});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -19,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final themeData = FluentTheme.of(context);
+
     return BaseAuthLayout(
       child: (auth, layout) {
         loginAction(String email, String password) async {
@@ -27,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
 
           final lastEvent = auth.lastEvent!;
           if (lastEvent.data != null) {
-            return router.pushReplacement('/');
+            return router.pushReplacement(widget.returnUrl ?? '/');
           } else {
             router.pushReplacement('/login');
           }

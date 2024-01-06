@@ -28,78 +28,80 @@ class ApiService {
     return cookie != null && cookie.contains('auth');
   }
 
+  Map<String, String> get _headers => {HttpHeaders.contentTypeHeader: 'application/json'};
+
   Uri getUri(String path) => Uri.parse('$baseUrl/api$path');
 
   void clearAuthCookie() => html.document.cookie = 'auth=' '';
 
   Future<User> getUser() async {
-    final result = await _runCatching(() => client.get(getUri('/users/me')));
+    final result = await _runCatching(() => client.get(getUri('/users/me'), headers: _headers));
 
     final data = jsonDecode(result.body)['user'];
     return User.fromJson(data);
   }
 
   Future<User> getUserById(int userId) async {
-    final result = await _runCatching(() => client.get(getUri('/users/$userId')));
+    final result = await _runCatching(() => client.get(getUri('/users/$userId'), headers: _headers));
 
     final data = jsonDecode(result.body)['user'];
     return User.fromJson(data);
   }
 
   Future<User> loginUser(String email, String password) async {
-    final result = await _runCatching(
-        () => client.post(getUri('/auth/login'), body: {'email': email, 'password': password}));
+    final requestBody = jsonEncode({'email': email, 'password': password});
+    final result = await _runCatching(() => client.post(getUri('/auth/login'), headers: _headers, body: requestBody));
 
     final data = jsonDecode(result.body)['user'];
     return User.fromJson(data);
   }
 
   Future<bool> registerUser(String displayName, String email, String password) async {
-    await _runCatching(() => client.post(getUri('/auth/register'),
-        body: {'name': displayName, 'email': email, 'password': password}));
+    final requestBody = jsonEncode({'name': displayName, 'email': email, 'password': password});
+    await _runCatching(() => client.post(getUri('/auth/register'), headers: _headers, body: requestBody));
 
     return true;
   }
 
   Future<List<Article>> getArticles() async {
-    final result = await _runCatching(() => client.get(getUri('/articles')));
+    final result = await _runCatching(() => client.get(getUri('/articles'), headers: _headers));
 
     final items = jsonDecode(result.body)['articles'] as Iterable;
     return items.map((e) => Article.fromJson(e)).toList();
   }
 
   Future<Article> getArticle(int articleId) async {
-    final result = await _runCatching(() => client.get(getUri('/articles/$articleId')));
+    final result = await _runCatching(() => client.get(getUri('/articles/$articleId'), headers: _headers));
 
     final data = jsonDecode(result.body)['article'];
     return Article.fromJson(data);
   }
 
   Future<Article> createArticle(String title, String description, String? imageUrl) async {
-    final result = await _runCatching(() => client.post(getUri('/articles'), body: {
-          'title': title,
-          'description': description,
-          if (imageUrl != null) 'imageUrl': imageUrl,
-        }));
+    final dataMap = {
+      'title': title,
+      'description': description,
+      if (imageUrl != null && imageUrl.trim().isNotEmpty) 'imageUrl': imageUrl,
+    };
+
+    final result =
+        await _runCatching(() => client.post(getUri('/articles'), headers: _headers, body: jsonEncode(dataMap)));
 
     final data = jsonDecode(result.body)['article'];
     return Article.fromJson(data);
   }
 
-  Future<Article> updateArticle(
-      int articleId, String title, String description, String? imageUrl) async {
-    final result = await _runCatching(() => client.put(getUri('/articles/$articleId'), body: {
-          'title': title,
-          'description': description,
-          'imageUrl': imageUrl,
-        }));
+  Future<Article> updateArticle(int articleId, String title, String description, String? imageUrl) async {
+    final requestData = jsonEncode({'title': title, 'description': description, 'imageUrl': imageUrl});
+    final result =
+        await _runCatching(() => client.put(getUri('/articles/$articleId'), headers: _headers, body: requestData));
 
     final data = jsonDecode(result.body)['article'];
     return Article.fromJson(data);
   }
 
   Future<void> deleteArticle(int articleId) async {
-    await _runCatching(() => client.delete(getUri('/articles/$articleId')));
+    await _runCatching(() => client.delete(getUri('/articles/$articleId'), headers: _headers));
   }
 
   Future<Response> _runCatching(HttpResponseCb apiCall) async {

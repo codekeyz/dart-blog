@@ -40,7 +40,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'debug': env<bool>('APP_DEBUG', false),
+  'debug': env<bool>('APP_DEBUG', true),
 
   /*
     |--------------------------------------------------------------------------

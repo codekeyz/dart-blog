@@ -2,23 +2,22 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:frontend/data/models/article.dart';
 import 'package:frontend/data/models/user.dart';
 import 'package:frontend/data/services.dart';
-import 'package:frontend/main.dart';
 import 'package:frontend/utils/provider.dart';
 
 import '../../utils/misc.dart';
 
-class ArticleDetailLayout extends StatefulWidget {
+class ArticleBaseLayout extends StatefulWidget {
   final int? articleId;
 
-  final Widget Function(ArticleDetailLoader detailProv, ArticleDetailLayoutState layout) child;
+  final Widget Function(ArticleDetailLoader detailProv, ArticleBaseLayoutState layout) child;
 
-  const ArticleDetailLayout({required this.articleId, super.key, required this.child});
+  const ArticleBaseLayout({this.articleId, super.key, required this.child});
 
   @override
-  State<ArticleDetailLayout> createState() => ArticleDetailLayoutState();
+  State<ArticleBaseLayout> createState() => ArticleBaseLayoutState();
 }
 
-class ArticleDetailLayoutState extends State<ArticleDetailLayout> {
+class ArticleBaseLayoutState extends State<ArticleBaseLayout> {
   final _detailProvider = ArticleDetailLoader();
 
   bool _showingLoading = false;
@@ -28,18 +27,12 @@ class ArticleDetailLayoutState extends State<ArticleDetailLayout> {
     super.initState();
 
     final id = widget.articleId;
-    if (id == null) {
-      router.pushReplacement('/');
-      return;
-    }
-
-    _detailProvider.fetchArticle(id);
+    if (id != null) _detailProvider.fetchArticle(id);
   }
 
   @override
   Widget build(BuildContext context) {
-    final pageWith = MediaQuery.of(context).size.width;
-    final widthToUse = pageWith <= 400 ? pageWith * 0.9 : pageWith * 0.7;
+    final pageWidth = MediaQuery.of(context).size.width * 0.8;
 
     return ScaffoldPage(
       padding: EdgeInsets.zero,
@@ -48,13 +41,14 @@ class ArticleDetailLayoutState extends State<ArticleDetailLayout> {
           acrylicBackground,
           Center(
             child: SizedBox(
-              width: widthToUse.toDouble(),
+              width: pageWidth.toDouble(),
               child: StreamBuilder<ProviderEvent<Article>>(
                 stream: _detailProvider.stream,
                 initialData: _detailProvider.lastEvent,
                 builder: (context, snapshot) {
                   return Card(
                     padding: EdgeInsets.zero,
+                    backgroundColor: Colors.white,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [

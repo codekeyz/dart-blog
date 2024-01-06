@@ -1,7 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:frontend/blog/widgets/add_card.dart';
+import 'package:frontend/blog/widgets/add_article_card.dart';
 import 'package:frontend/data/models/article.dart';
 import 'package:frontend/data/providers/article_provider.dart';
+import 'package:frontend/utils/misc.dart';
 import 'package:frontend/utils/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -24,18 +25,8 @@ class BlogArticlesWidget extends StatelessWidget {
         final loading = state == ProviderState.loading;
 
         if (articles.isEmpty) {
-          if (loading) {
-            return Container(
-                height: 400,
-                alignment: Alignment.center,
-                child: const SizedBox(child: ProgressRing()));
-          }
-          if (state == ProviderState.error) {
-            return Container(
-                height: 400,
-                alignment: Alignment.center,
-                child: const Center(child: Text('An error occurred. Refresh the page')));
-          }
+          if (loading) return loadingView();
+          if (state == ProviderState.error) return errorView();
         }
 
         return Wrap(
