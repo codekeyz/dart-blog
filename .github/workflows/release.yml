@@ -12,6 +12,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  APP_URL: https://dart-blog.onrender.com
 
 jobs:
   test:
@@ -44,9 +45,7 @@ jobs:
       - uses: bluefireteam/melos-action@v3
 
       - name: Prepare Project 🧰
-        run: |
-          APP_URL=${{ env.APP_URL }}
-          melos build:backend
+        run: melos build:backend
 
       # - name: Build Docker Image 📦
       #   uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
