@@ -407,12 +407,12 @@ void main() {
               .test();
         });
 
-        test('should return user for /users/<userId> ', () async {
+        test('should return user for /users/<userId> without auth', () async {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
           await (await server.tester)
-              .get('$usersApiPath/${randomUser!.id!}', headers: {HttpHeaders.cookieHeader: authCookie!})
+              .get('$usersApiPath/${randomUser!.id!}')
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
               .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toPublic)
