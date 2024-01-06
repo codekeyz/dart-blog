@@ -24,10 +24,7 @@ class BaseAuthLayoutState extends State<BaseAuthLayout> {
       padding: EdgeInsets.zero,
       content: Stack(
         children: [
-          const Card(
-            padding: EdgeInsets.zero,
-            child: SizedBox(height: double.maxFinite, width: double.maxFinite, child: Acrylic(tint: blogColor)),
-          ),
+          acrylicBackground,
           Center(
             child: SizedBox(
               width: 320,

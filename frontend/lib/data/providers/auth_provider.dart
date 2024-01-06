@@ -10,6 +10,8 @@ class AuthProvider extends BaseProvider<User> {
   @visibleForTesting
   ApiService get apiSvc => getIt.get<ApiService>();
 
+  User? get user => lastEvent?.data;
+
   Future<void> getUser() async {
     if (!apiSvc.hasAuthCookie) return;
 

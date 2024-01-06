@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:frontend/data/models/article.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/utils/misc.dart';
 
 class ArticleCard extends StatelessWidget {
@@ -14,8 +15,9 @@ class ArticleCard extends StatelessWidget {
       width: 250,
       child: Card(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () => router.push('/posts/${article.id}'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

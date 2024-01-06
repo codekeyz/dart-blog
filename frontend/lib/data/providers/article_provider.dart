@@ -8,8 +8,6 @@ class ArticleProvider extends BaseProvider<List<Article>> {
   ApiService get apiSvc => getIt.get<ApiService>();
 
   Future<void> fetchArticles() async {
-    if (!apiSvc.hasAuthCookie) return;
-
     final articles = await safeRun(() => apiSvc.getArticles());
     if (articles == null) return;
 
