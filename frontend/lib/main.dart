@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/material.dart' show Colors;
 import 'package:frontend/blog/add_blog.dart';
+import 'package:frontend/blog/blog_detail.dart';
 import 'package:frontend/data/services.dart';
 import 'package:frontend/blog/blog.dart';
 import 'package:go_router/go_router.dart';
@@ -19,6 +20,10 @@ final router = GoRouter(
     GoRoute(path: '/login', builder: (_, __) => const LoginPage(), name: 'login'),
     GoRoute(path: '/register', builder: (_, __) => const RegisterPage(), name: 'register'),
     GoRoute(path: '/addBlog', builder: (_, __) => const AddBlogPage(), name: 'addBlog'),
+    GoRoute(path: '/posts/:postId', builder: (_, state) => BlogDetail(state.pathParameters['postId'] ?? '')),
+    GoRoute(
+        path: '/posts/:postId/edit',
+        builder: (_, state) => BlogDetail(state.pathParameters['postId'] ?? '', edit: true)),
   ],
 );
 
@@ -66,12 +71,15 @@ class _AppLayout extends StatelessWidget {
             padding: const EdgeInsets.only(top: 12),
             alignment: Alignment.center,
             child: PageHeader(
-              title: Row(
-                children: [
-                  Image.asset('imgs/yaroo.png', width: 24, height: 24),
-                  const SizedBox(width: 10),
-                  const Text('Dart Blog', style: TextStyle(fontSize: 20)),
-                ],
+              title: GestureDetector(
+                onTap: () => router.pushReplacement('/'),
+                child: Row(
+                  children: [
+                    Image.asset('imgs/yaroo.png', width: 24, height: 24),
+                    const SizedBox(width: 10),
+                    const Text('Dart Blog', style: TextStyle(fontSize: 20)),
+                  ],
+                ),
               ),
               commandBar: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -94,7 +102,6 @@ class _AppLayout extends StatelessWidget {
           ),
         ),
         Expanded(child: child),
-        Container(height: 40, width: double.maxFinite, color: Colors.grey.shade200),
       ],
     );
   }

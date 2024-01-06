@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
+import 'package:shelf_helmet/shelf_helmet.dart';
 import 'package:yaroo/http/http.dart';
 
 class CoreMiddleware extends Middleware {
@@ -11,6 +12,9 @@ class CoreMiddleware extends Middleware {
     final cookieConfig = app.instanceOf<CookieOpts>();
     final cookieParserMdw = cookieParser(opts: cookieConfig);
 
+    // setup helmet
+    final shelfHelmet = useShelfMiddleware(helmet());
+
     // setup cors
     final corsMiddleware = useShelfMiddleware(corsHeaders(
       headers: {
@@ -19,9 +23,9 @@ class CoreMiddleware extends Middleware {
       },
     ));
 
-    _webMdw = cookieParserMdw.chain(corsMiddleware);
+    _webMdw = shelfHelmet.chain(corsMiddleware).chain(cookieParserMdw);
   }
 
   @override
-  HandlerFunc? get handler => _webMdw;
+  HandlerFunc get handler => _webMdw;
 }

@@ -20,3 +20,39 @@ void showError(BuildContext context, String error) => CherryToast.error(
       displayCloseButton: false,
       iconWidget: const Icon(FluentIcons.error, color: Colors.white),
     ).show(context);
+
+const acrylicBackground = Card(
+  padding: EdgeInsets.zero,
+  child: SizedBox(
+    height: double.maxFinite,
+    width: double.maxFinite,
+    child: Acrylic(tint: blogColor),
+  ),
+);
+
+loadingView({String message = 'loading, please wait...'}) => Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const ProgressRing(),
+          const SizedBox(height: 24),
+          Text(message, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300)),
+        ],
+      ),
+    );
+
+errorView({String? message}) {
+  message ??= 'Oops!, an error occurred';
+  return Container(
+    alignment: Alignment.center,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(FluentIcons.error),
+        const SizedBox(height: 24),
+        Text(message, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300)),
+      ],
+    ),
+  );
+}

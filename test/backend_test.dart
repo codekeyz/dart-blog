@@ -187,13 +187,6 @@ void main() {
       group('Articles', () {
         final articleApiPath = '$baseAPIPath/articles';
 
-        test('should reject if no cookie', () async {
-          await (await server.tester)
-              .get(articleApiPath)
-              .expectStatus(HttpStatus.unauthorized)
-              .expectJsonBody({'error': 'Unauthorized'}).test();
-        });
-
         group('when create article', () {
           test('should error on invalid body', () async {
             attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
@@ -266,17 +259,6 @@ void main() {
                 .get('$articleApiPath/2348', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.notFound)
                 .expectJsonBody({'error': 'Not found'})
-                .test();
-          });
-
-          test('should return when article', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
-            expect(article, isA<Article>());
-
-            await (await server.tester)
-                .get('$articleApiPath/${article!.id}', headers: {HttpHeaders.cookieHeader: authCookie!})
-                .expectStatus(HttpStatus.ok)
-                .expectJsonBody({'article': article.toJson()})
                 .test();
           });
         });
@@ -370,24 +352,31 @@ void main() {
           });
         });
 
-        group('when get articles', () {
-          test('should return articles', () async {
-            final articles = await DB.query<Article>().all();
-            expect(articles, isNotEmpty);
+        test('should get Articles without auth', () async {
+          final articles = await DB.query<Article>().all();
+          expect(articles, isNotEmpty);
 
-            await (await server.tester)
-                .get(articleApiPath, headers: {HttpHeaders.cookieHeader: authCookie!})
-                .expectStatus(HttpStatus.ok)
-                .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
-                .expectBodyCustom(
-                  (body) {
-                    final result = jsonDecode(body)['articles'] as Iterable;
-                    return result.map((e) => Article.fromJson(e)).toList();
-                  },
-                  hasLength(articles.length),
-                )
-                .test();
-          });
+          await (await server.tester)
+              .get('$baseAPIPath/articles')
+              .expectStatus(HttpStatus.ok)
+              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
+              .expectBodyCustom(
+            (body) {
+              final result = jsonDecode(body)['articles'] as Iterable;
+              return result.map((e) => Article.fromJson(e)).toList();
+            },
+            hasLength(articles.length),
+          ).test();
+        });
+
+        test('should show article without auth', () async {
+          final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+          expect(article, isA<Article>());
+
+          await (await server.tester)
+              .get('$articleApiPath/${article!.id}')
+              .expectStatus(HttpStatus.ok)
+              .expectJsonBody({'article': article.toJson()}).test();
         });
       });
 
@@ -418,12 +407,12 @@ void main() {
               .test();
         });
 
-        test('should return user for /users/<userId> ', () async {
+        test('should return user for /users/<userId> without auth', () async {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
           await (await server.tester)
-              .get('$usersApiPath/${randomUser!.id!}', headers: {HttpHeaders.cookieHeader: authCookie!})
+              .get('$usersApiPath/${randomUser!.id!}')
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
               .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toPublic)

@@ -39,6 +39,13 @@ class ApiService {
     return User.fromJson(data);
   }
 
+  Future<User> getUserById(int userId) async {
+    final result = await _runCatching(() => client.get(getUri('/users/$userId')));
+
+    final data = jsonDecode(result.body)['user'];
+    return User.fromJson(data);
+  }
+
   Future<User> loginUser(String email, String password) async {
     final result = await _runCatching(
         () => client.post(getUri('/auth/login'), body: {'email': email, 'password': password}));

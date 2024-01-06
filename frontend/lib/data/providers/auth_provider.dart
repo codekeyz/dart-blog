@@ -10,6 +10,8 @@ class AuthProvider extends BaseProvider<User> {
   @visibleForTesting
   ApiService get apiSvc => getIt.get<ApiService>();
 
+  User? get user => lastEvent?.data;
+
   Future<void> getUser() async {
     if (!apiSvc.hasAuthCookie) return;
 
@@ -26,11 +28,12 @@ class AuthProvider extends BaseProvider<User> {
     addEvent(ProviderEvent.success(data: user));
   }
 
-  Future<void> register(String displayName, String email, String password) async {
+  Future<bool> register(String displayName, String email, String password) async {
     final success = await safeRun(() => apiSvc.registerUser(displayName, email, password));
-    if (success != true) return;
+    if (success != true) return false;
 
     addEvent(const ProviderEvent.idle());
+    return true;
   }
 
   void logout() {

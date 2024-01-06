@@ -65,6 +65,14 @@ mixin DataStreamMixin<T> {
 }
 
 abstract class BaseProvider<T> extends ChangeNotifier with DataStreamMixin<ProviderEvent<T>> {
+  ProviderState? get state => lastEvent?.state;
+
+  bool get isLoading => state == ProviderState.loading;
+
+  bool get hasError => state == ProviderState.error;
+
+  String? get errorMessage => lastEvent?.errorMessage;
+
   @override
   void clear() {
     super.clear();

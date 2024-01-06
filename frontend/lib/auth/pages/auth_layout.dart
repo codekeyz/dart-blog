@@ -22,23 +22,28 @@ class BaseAuthLayoutState extends State<BaseAuthLayout> {
     final authProv = context.read<AuthProvider>();
     return ScaffoldPage(
       padding: EdgeInsets.zero,
-      content: Center(
-        child: SizedBox(
-          width: 320,
-          child: Card(
-            padding: EdgeInsets.zero,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (_showingLoading) const SizedBox(width: double.maxFinite, child: ProgressBar()),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-                  child: widget.child(authProv, this),
+      content: Stack(
+        children: [
+          acrylicBackground,
+          Center(
+            child: SizedBox(
+              width: 320,
+              child: Card(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_showingLoading) const SizedBox(width: double.maxFinite, child: ProgressBar()),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+                      child: widget.child(authProv, this),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

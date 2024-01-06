@@ -11,8 +11,17 @@ class Article {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  const Article(this.id, this.title, this.description,
-      {this.imageUrl, required this.createdAt, required this.updatedAt});
+  final int ownerId;
+
+  const Article(
+    this.id,
+    this.title,
+    this.description, {
+    this.imageUrl,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.ownerId,
+  });
 
   Map<String, dynamic> toJson() => _$ArticleToJson(this);
 

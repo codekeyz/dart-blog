@@ -26,7 +26,11 @@ class _LoginPageState extends State<LoginPage> {
           await auth.login(email, password);
 
           final lastEvent = auth.lastEvent!;
-          if (lastEvent.data != null) return router.pushReplacement('/');
+          if (lastEvent.data != null) {
+            return router.pushReplacement('/');
+          } else {
+            router.pushReplacement('/login');
+          }
 
           layout
             ..setLoading(false)
