@@ -92,9 +92,14 @@ class ApiService {
   }
 
   Future<Article> updateArticle(int articleId, String title, String description, String? imageUrl) async {
-    final requestData = jsonEncode({'title': title, 'description': description, 'imageUrl': imageUrl});
-    final result =
-        await _runCatching(() => client.put(getUri('/articles/$articleId'), headers: _headers, body: requestData));
+    final requestData = {
+      'title': title,
+      'description': description,
+      if (imageUrl != null && imageUrl.trim().isNotEmpty) 'imageUrl': imageUrl,
+    };
+
+    final result = await _runCatching(
+        () => client.put(getUri('/articles/$articleId'), headers: _headers, body: jsonEncode(requestData)));
 
     final data = jsonDecode(result.body)['article'];
     return Article.fromJson(data);
