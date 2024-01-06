@@ -31,4 +31,17 @@ class ArticleProvider extends BaseProvider<List<Article>> {
 
     addEvent(ProviderEvent.success(data: [...articles, article]));
   }
+
+  Future<void> deleteArticle(
+    int articleId,
+  ) async {
+    final articles = lastEvent?.data ?? [];
+    await safeRun(() => apiSvc.deleteArticle(
+          articleId,
+        ));
+
+    addEvent(ProviderEvent.success(data: [
+      ...articles,
+    ]));
+  }
 }
