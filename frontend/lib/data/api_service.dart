@@ -40,16 +40,16 @@ class ApiService {
   }
 
   Future<User> loginUser(String email, String password) async {
-    final result =
-        await _runCatching(() => client.post(getUri('/auth/login'), body: {'email': email, 'password': password}));
+    final result = await _runCatching(
+        () => client.post(getUri('/auth/login'), body: {'email': email, 'password': password}));
 
     final data = jsonDecode(result.body)['user'];
     return User.fromJson(data);
   }
 
   Future<bool> registerUser(String displayName, String email, String password) async {
-    await _runCatching(
-        () => client.post(getUri('/auth/register'), body: {'name': displayName, 'email': email, 'password': password}));
+    await _runCatching(() => client.post(getUri('/auth/register'),
+        body: {'name': displayName, 'email': email, 'password': password}));
 
     return true;
   }
@@ -72,14 +72,15 @@ class ApiService {
     final result = await _runCatching(() => client.post(getUri('/articles'), body: {
           'title': title,
           'description': description,
-          'imageUrl': imageUrl,
+          if (imageUrl != null) 'imageUrl': imageUrl,
         }));
 
     final data = jsonDecode(result.body)['article'];
     return Article.fromJson(data);
   }
 
-  Future<Article> updateArticle(int articleId, String title, String description, String? imageUrl) async {
+  Future<Article> updateArticle(
+      int articleId, String title, String description, String? imageUrl) async {
     final result = await _runCatching(() => client.put(getUri('/articles/$articleId'), body: {
           'title': title,
           'description': description,

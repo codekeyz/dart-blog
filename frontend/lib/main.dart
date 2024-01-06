@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/material.dart' show Colors;
+import 'package:frontend/blog/add_blog.dart';
 import 'package:frontend/data/services.dart';
 import 'package:frontend/blog/blog.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +18,7 @@ final router = GoRouter(
     GoRoute(path: '/', builder: (_, __) => const BlogPage()),
     GoRoute(path: '/login', builder: (_, __) => const LoginPage(), name: 'login'),
     GoRoute(path: '/register', builder: (_, __) => const RegisterPage(), name: 'register'),
+    GoRoute(path: '/addBlog', builder: (_, __) => const AddBlogPage(), name: 'addBlog'),
   ],
 );
 

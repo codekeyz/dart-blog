@@ -14,7 +14,7 @@ class CoreMiddleware extends Middleware {
     // setup cors
     final corsMiddleware = useShelfMiddleware(corsHeaders(
       headers: {
-        HttpHeaders.accessControlAllowOriginHeader: 'http://localhost:55366',
+        HttpHeaders.accessControlAllowOriginHeader: 'http://localhost:57448',
         HttpHeaders.accessControlAllowCredentialsHeader: 'true',
       },
     ));
