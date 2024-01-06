@@ -24,4 +24,8 @@ EXPOSE $PORT
 
 WORKDIR /app
 
+# Nasty hack to get-around not being able to access Render.com's shell. 
+# No money for subscription.
+RUN bin/tools/migrator migrate
+
 CMD ["/app/bin/backend"]
