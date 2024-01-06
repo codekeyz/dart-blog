@@ -63,12 +63,15 @@ class _AppLayout extends StatelessWidget {
             padding: const EdgeInsets.only(top: 12),
             alignment: Alignment.center,
             child: PageHeader(
-              title: Row(
-                children: [
-                  Image.asset('imgs/yaroo.png', width: 24, height: 24),
-                  const SizedBox(width: 10),
-                  const Text('Dart Blog', style: TextStyle(fontSize: 20)),
-                ],
+              title: GestureDetector(
+                onTap: () => router.pushReplacement('/'),
+                child: Row(
+                  children: [
+                    Image.asset('imgs/yaroo.png', width: 24, height: 24),
+                    const SizedBox(width: 10),
+                    const Text('Dart Blog', style: TextStyle(fontSize: 20)),
+                  ],
+                ),
               ),
               commandBar: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
