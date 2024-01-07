@@ -12,12 +12,10 @@ class CoreMiddleware extends Middleware {
     final cookieParserMdw = cookieParser(opts: cookieConfig);
 
     // setup cors
-    final corsMiddleware = useShelfMiddleware(corsHeaders(
-      headers: {
-        HttpHeaders.accessControlAllowOriginHeader: '*',
-        HttpHeaders.accessControlAllowCredentialsHeader: 'true',
-      },
-    ));
+    final corsMiddleware = useShelfMiddleware(corsHeaders(headers: {
+      HttpHeaders.accessControlAllowOriginHeader: 'http://localhost:60892/',
+      HttpHeaders.accessControlAllowCredentialsHeader: 'true'
+    }));
 
     _webMdw = corsMiddleware.chain(cookieParserMdw);
   }
