@@ -27,16 +27,14 @@ class AuthProvider extends BaseProvider<User> {
     final user = await safeRun(() => apiSvc.getUser());
     if (user == null) return;
 
-    addEvent(ProviderEvent.success(data: user));
+    _setUser(user);
   }
 
   Future<void> login(String email, String password) async {
     final user = await safeRun(() => apiSvc.loginUser(email, password));
     if (user == null) return;
 
-    _userLocalStore.setItem(userStorageKey, user.toJson());
-
-    addEvent(ProviderEvent.success(data: user));
+    _setUser(user);
   }
 
   Future<bool> register(String displayName, String email, String password) async {
@@ -45,6 +43,12 @@ class AuthProvider extends BaseProvider<User> {
 
     addEvent(const ProviderEvent.idle());
     return true;
+  }
+
+  void _setUser(User user) {
+    addEvent(ProviderEvent.success(data: user));
+
+    _userLocalStore.setItem(userStorageKey, user.toJson());
   }
 
   void logout() {
