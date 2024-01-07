@@ -24,8 +24,7 @@ class ApiService {
   ApiService(this.baseUrl) : client = BrowserClient()..withCredentials = true;
 
   bool get hasAuthCookie {
-    final cookie = html.document.cookie;
-    return cookie != null && cookie.contains('auth');
+    return (html.document.cookie?.split('auth=').length ?? 0) >= 2;
   }
 
   Map<String, String> get _headers => {HttpHeaders.contentTypeHeader: 'application/json'};
