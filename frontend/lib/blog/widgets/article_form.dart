@@ -135,7 +135,7 @@ class _ArticleFormViewState extends State<ArticleFormView> {
             ),
             _spacing,
             InfoLabel(
-              label: 'Image Url',
+              label: 'Image Url (Optional)',
               labelStyle: const TextStyle(fontWeight: FontWeight.w300),
               child: TextBox(controller: _imageUrlCtrl, keyboardType: TextInputType.url),
             ),
