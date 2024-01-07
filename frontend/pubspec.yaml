@@ -25,6 +25,7 @@ dependencies:
   fast_cached_network_image: ^1.2.0
   markdown_widget:
   appflowy_editor: ^2.2.0
+  localstorage: ^4.0.1+4
 
 dev_dependencies:
   flutter_lints: ^3.0.1
