@@ -11,7 +11,7 @@ command:
 scripts:
   build:frontend:
     run: |
-      cd frontend && echo $APP_URL
+      cd frontend
       dart run build_runner build --delete-conflicting-outputs
       flutter build web --output=../public --release --web-renderer=html --dart-define Endpoint=$APP_URL
     packageFilters:

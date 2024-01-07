@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:frontend/blog/blog.dart';
 import 'package:frontend/data/models/article.dart';
 import 'package:frontend/data/models/user.dart';
 import 'package:frontend/data/services.dart';
@@ -32,44 +33,27 @@ class ArticleBaseLayoutState extends State<ArticleBaseLayout> {
 
   @override
   Widget build(BuildContext context) {
-    final pageWidth = MediaQuery.of(context).size.width * 0.8;
-
-    return ScaffoldPage(
-      padding: EdgeInsets.zero,
-      content: Stack(
-        children: [
-          acrylicBackground,
-          Center(
-            child: SizedBox(
-              width: pageWidth.toDouble(),
-              child: StreamBuilder<ProviderEvent<Article>>(
-                stream: _detailProvider.stream,
-                initialData: _detailProvider.lastEvent,
-                builder: (context, snapshot) {
-                  return Card(
-                    padding: EdgeInsets.zero,
-                    backgroundColor: Colors.white,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (_showingLoading) const SizedBox(width: double.maxFinite, child: ProgressBar()),
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                            child: widget.child(_detailProvider, this),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+    return WebConstrainedLayout(
+      child: StreamBuilder<ProviderEvent<Article>>(
+        stream: _detailProvider.stream,
+        initialData: _detailProvider.lastEvent,
+        builder: (_, __) => ScaffoldPage.scrollable(
+          children: [
+            if (_showingLoading) const SizedBox(width: double.maxFinite, child: ProgressBar()),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 30),
+              child: widget.child(_detailProvider, this),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _detailProvider.dispose();
   }
 
   void setLoading(bool show) => setState(() => _showingLoading = show);

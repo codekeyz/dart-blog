@@ -48,13 +48,19 @@ class DottedBorder extends StatelessWidget {
                 height: 200,
                 child: Card(
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
-                  child: Center(
-                    child: Text(
-                      "New Post +",
-                      style: typography.bodyStrong!.copyWith(color: blogColor),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(FluentIcons.page_add, size: 34),
+                      const SizedBox(height: 16),
+                      Text(
+                        "New Post +",
+                        style: typography.bodyStrong!.copyWith(color: blogColor),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
               )),

@@ -31,17 +31,15 @@ const acrylicBackground = Card(
   ),
 );
 
-loadingView({String message = 'loading, please wait...'}) => Container(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const ProgressRing(strokeWidth: 2),
-          const SizedBox(height: 24),
-          Text(message, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300)),
-        ],
-      ),
-    );
+loadingView({String message = 'loading, please wait...', bool showMessage = true, double? size}) => Container(
+    alignment: Alignment.center,
+    child: Column(mainAxisSize: MainAxisSize.min, children: [
+      SizedBox(width: size, height: size, child: const ProgressRing(strokeWidth: 2)),
+      if (showMessage) ...[
+        const SizedBox(height: 24),
+        Text(message, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w300)),
+      ]
+    ]));
 
 errorView({String? message}) {
   message ??= 'Oops!, an error occurred';
@@ -58,10 +56,11 @@ errorView({String? message}) {
   );
 }
 
-imageView(String imageUrl) => FastCachedImage(
+imageView(String imageUrl, {double? width, double? height}) => FastCachedImage(
       url: imageUrl,
       fit: BoxFit.cover,
-      width: double.maxFinite,
+      height: height ?? double.maxFinite,
+      width: width ?? double.maxFinite,
       fadeInDuration: const Duration(seconds: 1),
-      loadingBuilder: (p0, p1) => loadingView(message: ''),
+      loadingBuilder: (p0, p1) => loadingView(showMessage: false, size: 24),
     );
