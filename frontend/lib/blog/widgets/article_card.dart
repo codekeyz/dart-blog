@@ -23,10 +23,11 @@ class ArticleCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (article.imageUrl != null) ...[
-                Expanded(child: imageView(article.imageUrl!)),
-              ] else
-                Container(color: blogColor.withOpacity(0.1), height: 100),
+              Expanded(
+                child: article.imageUrl != null
+                    ? imageView(article.imageUrl!)
+                    : Container(color: blogColor.withOpacity(0.1)),
+              ),
               const SizedBox(height: 16),
               Text(
                 article.title,

@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:frontend/data/providers/article_provider.dart';
 import 'package:frontend/data/providers/auth_provider.dart';
+import 'package:frontend/utils/misc.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/article_items.dart';
@@ -35,9 +36,28 @@ class _BlogPageState extends State<BlogPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldPage.scrollable(
-      padding: const EdgeInsets.all(12),
-      children: const [BlogArticlesWidget()],
+    return WebConstrainedLayout(
+      child: ScaffoldPage.scrollable(children: const [BlogArticlesWidget()]),
+    );
+  }
+}
+
+class WebConstrainedLayout extends StatelessWidget {
+  final Widget child;
+  const WebConstrainedLayout({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final borderSide = BorderSide(color: blogColor.withOpacity(0.1));
+
+    return Container(
+      alignment: Alignment.topCenter,
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 1300),
+        decoration: BoxDecoration(border: Border(left: borderSide, right: borderSide, top: borderSide)),
+        margin: const EdgeInsets.all(24),
+        child: child,
+      ),
     );
   }
 }

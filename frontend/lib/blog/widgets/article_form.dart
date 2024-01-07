@@ -120,7 +120,7 @@ class _ArticleFormViewState extends State<ArticleFormView> {
             InfoLabel(label: 'Write your post'),
             const SizedBox(height: 8),
             Container(
-              constraints: const BoxConstraints(maxHeight: 150),
+              constraints: const BoxConstraints(maxHeight: 400),
               width: double.maxFinite,
               child: Card(
                 borderColor: blogColor.withOpacity(0.1),

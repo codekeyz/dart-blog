@@ -36,9 +36,9 @@ class BlogDetail extends StatelessWidget {
         final isPostOwner = currentUser != null && owner != null && currentUser.id == owner.id;
 
         final imageHost = article.imageUrl == null ? null : Uri.tryParse(article.imageUrl!)?.host;
+        const spacing = SizedBox(height: 24);
 
         return Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             PageHeader(
               title: Text(article.title, style: const TextStyle(color: Colors.black)),
@@ -104,35 +104,33 @@ class BlogDetail extends StatelessWidget {
                 decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.05)))),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 200,
-                    height: 150,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(child: Card(child: imageView(article.imageUrl!))),
-                        if (imageHost != null) ...[
-                          const SizedBox(height: 8),
-                          Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
-                        ]
-                      ],
-                    ),
+            spacing,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 400,
+                  height: 250,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(child: imageView(article.imageUrl!)),
+                      if (imageHost != null) ...[
+                        const SizedBox(height: 8),
+                        Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
+                      ]
+                    ],
                   ),
-                  const SizedBox(width: 24),
-                  Expanded(
-                    child: Container(
-                      constraints: const BoxConstraints(minHeight: 350),
-                      alignment: Alignment.topRight,
-                      child: MarkdownWidget(data: article.description, shrinkWrap: true),
-                    ),
+                ),
+                const SizedBox(width: 40),
+                Expanded(
+                  child: Container(
+                    constraints: const BoxConstraints(minHeight: 350),
+                    alignment: Alignment.topRight,
+                    child: MarkdownWidget(data: article.description, shrinkWrap: true),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Container(
               height: 40,
@@ -141,9 +139,9 @@ class BlogDetail extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Text('Last updated ${timeago.format(article.updatedAt)}', style: footerStyle),
+                  Text('Last Updated: ${timeago.format(article.updatedAt)}', style: footerStyle),
                   const Spacer(),
-                  if (owner != null) Text('Posted by: ${owner.name}', style: footerStyle)
+                  if (owner != null) Text('Author: ${owner.name}', style: footerStyle)
                 ],
               ),
             )
