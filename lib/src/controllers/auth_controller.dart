@@ -41,7 +41,7 @@ class AuthController extends HTTPController {
 
   Response get invalidLogin => response.unauthorized(data: _makeError(['Email or Password not valid']));
 
-  Map<String, dynamic> _userResponse(User user) => {'user': user.toPublic};
+  Map<String, dynamic> _userResponse(User user) => {'user': user.toJson()};
 
   Map<String, dynamic> _makeError(List<String> errors) => {'errors': errors};
 }

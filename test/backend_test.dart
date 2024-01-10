@@ -70,23 +70,6 @@ void main() {
           );
         });
 
-        test('should create user', () async {
-          final newUserEmail = 'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
-          final apiResult = await (await server.tester)
-              .post(path, {'name': 'Foo User', 'email': newUserEmail, 'password': 'foo-bar-mee-moo'}).actual;
-
-          expect(apiResult.statusCode, HttpStatus.ok);
-
-          // expect json response
-          expect(apiResult.headers[HttpHeaders.contentTypeHeader], 'application/json; charset=utf-8');
-
-          // validate api result
-          final user = jsonDecode(apiResult.body)['user'];
-          expect(user['email'], newUserEmail);
-          expect(user['name'], 'Foo User');
-          expect(user, allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
-        });
-
         test('should error on existing email', () async {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
@@ -98,6 +81,21 @@ void main() {
                 'errors': ['Email already taken']
               })
               .test();
+        });
+        test('should create user', () async {
+          final newUserEmail = 'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
+          final apiResult = await (await server.tester)
+              .post(path, {'name': 'Foo User', 'email': newUserEmail, 'password': 'foo-bar-mee-moo'}).actual;
+
+          expect(apiResult.statusCode, HttpStatus.ok);
+          expect(apiResult.headers[HttpHeaders.contentTypeHeader], 'application/json; charset=utf-8');
+
+          final user = User.fromJson(jsonDecode(apiResult.body)['user']);
+          expect(user.email, newUserEmail);
+          expect(user.name, 'Foo User');
+          expect(user.id, isNotNull);
+          expect(user.createdAt, isNotNull);
+          expect(user.updatedAt, isNotNull);
         });
       });
 
@@ -112,13 +110,8 @@ void main() {
                 .expectJsonBody({'location': 'body', 'errors': errors}).test();
           }
 
-          // when empty body
           await attemptLogin({}, errors: ['email: The field is required', 'password: The field is required']);
-
-          // when no password
           await attemptLogin({'email': 'foo-bar@hello.com'}, errors: ['password: The field is required']);
-
-          // when invalid email
           await attemptLogin(
             {'email': 'foo-bar'},
             errors: ['email: The field is not a valid email address', 'password: The field is required'],
@@ -157,7 +150,7 @@ void main() {
 
           await baseTest
               .expectStatus(HttpStatus.ok)
-              .expectJsonBody({'user': randomUser.toPublic})
+              .expectJsonBody({'user': randomUser.toJson()})
               .expectHeader(HttpHeaders.setCookieHeader, contains('auth=s%'))
               .test();
         });
@@ -218,7 +211,7 @@ void main() {
               .get('$usersApiPath/${randomUser!.id!}')
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
-              .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toPublic)
+              .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toJson())
               .test();
         });
       });

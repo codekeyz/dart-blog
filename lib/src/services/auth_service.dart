@@ -14,7 +14,7 @@ class AuthService {
   JWTKey get _jwtKey => SecretKey(jwtKey);
 
   String getAccessTokenForUser(User user) {
-    final jwt = JWT(user.toPublic, issuer: issuer, subject: user.id!.toString(), jwtId: 'access-token');
+    final jwt = JWT(user.toJson(), issuer: issuer, subject: user.id!.toString(), jwtId: 'access-token');
     return jwt.sign(_jwtKey, algorithm: JWTAlgorithm.HS256, expiresIn: Duration(hours: 1));
   }
 

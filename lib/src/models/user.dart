@@ -10,14 +10,13 @@ class User extends Entity<int, User> {
 
   final String email;
 
+  @JsonKey(includeToJson: false, defaultValue: '')
   final String password;
 
-  User(this.name, this.email, this.password);
+  User(this.name, this.email, {required this.password});
 
   @override
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   static User fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  Map<String, dynamic> get toPublic => toJson()..remove('password');
 }
