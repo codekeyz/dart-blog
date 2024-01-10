@@ -70,18 +70,6 @@ void main() {
           );
         });
 
-        test('should error on existing email', () async {
-          final randomUser = await DB.query<User>().get();
-          expect(randomUser, isA<User>());
-
-          await (await server.tester)
-              .post(path, {'email': randomUser!.email, 'name': 'Foo Bar', 'password': 'moooasdfmdf'})
-              .expectStatus(HttpStatus.badRequest)
-              .expectJsonBody({
-                'errors': ['Email already taken']
-              })
-              .test();
-        });
         test('should create user', () async {
           final newUserEmail = 'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
           final apiResult = await (await server.tester)
@@ -96,6 +84,19 @@ void main() {
           expect(user.id, isNotNull);
           expect(user.createdAt, isNotNull);
           expect(user.updatedAt, isNotNull);
+        });
+
+        test('should error on existing email', () async {
+          final randomUser = await DB.query<User>().get();
+          expect(randomUser, isA<User>());
+
+          await (await server.tester)
+              .post(path, {'email': randomUser!.email, 'name': 'Foo Bar', 'password': 'moooasdfmdf'})
+              .expectStatus(HttpStatus.badRequest)
+              .expectJsonBody({
+                'errors': ['Email already taken']
+              })
+              .test();
         });
       });
 
