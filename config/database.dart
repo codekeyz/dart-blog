@@ -40,8 +40,8 @@ final config = YaroormConfig.from({
       'database': env('DB_DATABASE', path.absolute('database', 'db.sqlite')),
       'foreign_key_constraints': env('DB_FOREIGN_KEYS', true),
     },
-    'mariadb': {
-      'driver': 'mariadb',
+    'prod_db': {
+      'driver': 'mysql',
       'host': env<String>('DB_HOST', ''),
       'port': env<int>('DB_PORT'),
       'database': env<String>('DB_DATABASE', ''),

@@ -54,6 +54,14 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+        env:
+          APP_DEBUG: false
+          APP_ENV: production
+          DB_CONNECTION: prod_db
+          DB_DATABASE: dart-blog
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Trigger Deploy on Render 🚀
         run: curl -G -d "key=${{ secrets.RENDER_KEY }}" -d "imgURL=ghcr.io/codekeyz/dart-blog:main" https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}
