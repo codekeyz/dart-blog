@@ -366,7 +366,7 @@ void main() {
                 .expectJsonBody({'message': 'Article deleted'})
                 .test();
 
-            expect(await DB.query<Article>().get(article.id), isNull);
+            expect(await DB.query<Article>().get(article.id!), isNull);
           });
         });
 

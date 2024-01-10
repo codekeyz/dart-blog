@@ -4,6 +4,7 @@ import 'package:yaroorm/yaroorm.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
+@EntityMeta(table: 'users', timestamps: true)
 class User extends Entity<int, User> {
   final String name;
 
@@ -17,9 +18,6 @@ class User extends Entity<int, User> {
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   static User fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  @override
-  bool get enableTimestamps => true;
 
   Map<String, dynamic> get toPublic => toJson()..remove('password');
 }

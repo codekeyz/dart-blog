@@ -20,12 +20,7 @@ class ArticleService {
 
   Future<Article> createArticle(User user, CreateArticleDTO data, {String? imageUrl}) async {
     imageUrl ??= await getRandomImage(data.title);
-
-    final query = DB.query<Article>();
-    final userId = user.id!;
-    final article = Article(userId, data.title, data.description, imageUrl: imageUrl);
-
-    return await query.insert<Article>(article);
+    return Article(user.id!, data.title, data.description, imageUrl: imageUrl).save();
   }
 
   Future<Article?> updateArticle(User user, int articleId, CreateArticleDTO dto) async {

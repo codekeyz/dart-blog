@@ -5,6 +5,7 @@ import 'package:yaroorm/yaroorm.dart';
 part 'article.g.dart';
 
 @JsonSerializable()
+@EntityMeta(table: 'articles', timestamps: true)
 class Article extends Entity<int, Article> {
   final String title;
   final String description;
@@ -14,9 +15,6 @@ class Article extends Entity<int, Article> {
   final int ownerId;
 
   Article(this.ownerId, this.title, this.description, {this.imageUrl});
-
-  @override
-  bool get enableTimestamps => true;
 
   @override
   Map<String, dynamic> toJson() => _$ArticleToJson(this);
