@@ -11,7 +11,7 @@ class UserController extends HTTPController {
 
   Future<Response> currentUser() async {
     final user = request.auth as User;
-    return jsonResponse({'user': user.toPublic});
+    return jsonResponse({'user': user.toJson()});
   }
 
   Future<Response> index() async {
@@ -22,6 +22,6 @@ class UserController extends HTTPController {
   Future<Response> show(@param int userId) async {
     final user = await userSvc.getUser(userId);
     if (user == null) return notFound('User not found');
-    return jsonResponse({'user': user.toPublic});
+    return jsonResponse({'user': user.toJson()});
   }
 }
