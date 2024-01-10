@@ -13,7 +13,6 @@ RUN dart compile exe bin/tools/migrator.dart -o bin/tools/migrator
 
 # Re-package executables into alpine image
 FROM alpine:3.14
-RUN apk --no-cache add sqlite sqlite-dev
 COPY --from=build /runtime/ /
 COPY --from=build /app/bin/backend /app/bin/
 COPY --from=build /app/bin/tools/migrator /app/bin/tools/migrator
