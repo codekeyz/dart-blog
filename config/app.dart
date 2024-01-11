@@ -32,7 +32,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'debug': env<bool>('APP_DEBUG', true),
+  'debug': env<bool>('APP_DEBUG', false),
 
   /*
     |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'port': env<int>('APP_PORT', 3000),
+  'port': env<int>('APP_PORT', 80),
 
   /*
     |--------------------------------------------------------------------------

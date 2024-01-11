@@ -1,4 +1,5 @@
 import 'package:backend/src/services/services.dart';
+import 'package:logger/logger.dart';
 import 'package:yaroo/http/http.dart';
 
 class CoreProvider extends ServiceProvider {
@@ -9,5 +10,16 @@ class CoreProvider extends ServiceProvider {
     app.singleton<CookieOpts>(cookieConfig);
 
     app.singleton<AuthService>(AuthService(app.config.key, app.config.url));
+
+    app.singleton<Logger>(Logger(printer: PrettyPrinter(), filter: _CustomLogFilter(app.config.isDebug)));
   }
+}
+
+class _CustomLogFilter extends LogFilter {
+  final bool loggingEnabled;
+
+  _CustomLogFilter(this.loggingEnabled);
+
+  @override
+  bool shouldLog(LogEvent event) => loggingEnabled;
 }
