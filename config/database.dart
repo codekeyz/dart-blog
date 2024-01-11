@@ -47,6 +47,7 @@ final config = YaroormConfig.from({
       'database': env<String>('DB_DATABASE', ''),
       'username': env<String>('DB_USERNAME', ''),
       'password': env<String>('DB_PASSWORD', ''),
+      'secure': true,
     }
   },
 
