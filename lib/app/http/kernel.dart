@@ -19,8 +19,7 @@ class Kernel extends prefix01.Kernel {
       };
 
   @override
-  FutureOr<Response> onApplicationException(
-      Object error, Request request, Response response) {
+  FutureOr<Response> onApplicationException(Object error, Request request, Response response) {
     if (error is RequestValidationError) {
       return response.json(error.errorBody, statusCode: HttpStatus.badRequest);
     }

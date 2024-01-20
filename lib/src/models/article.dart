@@ -20,6 +20,5 @@ class Article extends Entity<int, Article> {
 
   Future<User?> get owner => DB.query<User>().get(ownerId);
 
-  factory Article.fromJson(Map<String, dynamic> json) =>
-      _$ArticleFromJson(json);
+  factory Article.fromJson(Map<String, dynamic> json) => _$ArticleFromJson(json);
 }

@@ -13,9 +13,7 @@ class CreateArticlesTable extends Migration {
         ..integer('ownerId')
         ..foreign<Article, User>(
           column: 'ownerId',
-          onKey: (fkey) => fkey.actions(
-              onDelete: ForeignKeyAction.cascade,
-              onUpdate: ForeignKeyAction.cascade),
+          onKey: (fkey) => fkey.actions(onDelete: ForeignKeyAction.cascade, onUpdate: ForeignKeyAction.cascade),
         )
         ..timestamps();
     });
