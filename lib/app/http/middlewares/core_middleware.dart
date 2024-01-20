@@ -1,23 +1,22 @@
-import 'dart:io';
-
-import 'package:shelf_cors_headers/shelf_cors_headers.dart';
+import 'package:logger/logger.dart';
 import 'package:yaroo/http/http.dart';
 
 class CoreMiddleware extends Middleware {
   late HandlerFunc _webMdw;
+  final Logger _logger;
 
-  CoreMiddleware() {
+  CoreMiddleware(this._logger) {
     // setup cookie parser
     final cookieConfig = app.instanceOf<CookieOpts>();
     final cookieParserMdw = cookieParser(opts: cookieConfig);
 
-    // setup cors
-    final corsMiddleware = useShelfMiddleware(corsHeaders(headers: {
-      HttpHeaders.accessControlAllowOriginHeader: 'http://localhost:60892/',
-      HttpHeaders.accessControlAllowCredentialsHeader: 'true'
-    }));
+    /// setup logger
+    loggerMdw(Request req, Response res, NextFunction next) {
+      _logger.i('Req: ${req.method.name}:${req.path}');
+      next();
+    }
 
-    _webMdw = corsMiddleware.chain(cookieParserMdw);
+    _webMdw = loggerMdw.chain(cookieParserMdw);
   }
 
   @override

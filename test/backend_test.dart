@@ -71,12 +71,17 @@ void main() {
         });
 
         test('should create user', () async {
-          final newUserEmail = 'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
-          final apiResult = await (await server.tester)
-              .post(path, {'name': 'Foo User', 'email': newUserEmail, 'password': 'foo-bar-mee-moo'}).actual;
+          final newUserEmail =
+              'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
+          final apiResult = await (await server.tester).post(path, {
+            'name': 'Foo User',
+            'email': newUserEmail,
+            'password': 'foo-bar-mee-moo'
+          }).actual;
 
           expect(apiResult.statusCode, HttpStatus.ok);
-          expect(apiResult.headers[HttpHeaders.contentTypeHeader], 'application/json; charset=utf-8');
+          expect(apiResult.headers[HttpHeaders.contentTypeHeader],
+              'application/json; charset=utf-8');
 
           final user = User.fromJson(jsonDecode(apiResult.body)['user']);
           expect(user.email, newUserEmail);
@@ -91,7 +96,11 @@ void main() {
           expect(randomUser, isA<User>());
 
           await (await server.tester)
-              .post(path, {'email': randomUser!.email, 'name': 'Foo Bar', 'password': 'moooasdfmdf'})
+              .post(path, {
+                'email': randomUser!.email,
+                'name': 'Foo Bar',
+                'password': 'moooasdfmdf'
+              })
               .expectStatus(HttpStatus.badRequest)
               .expectJsonBody({
                 'errors': ['Email already taken']
@@ -111,11 +120,18 @@ void main() {
                 .expectJsonBody({'location': 'body', 'errors': errors}).test();
           }
 
-          await attemptLogin({}, errors: ['email: The field is required', 'password: The field is required']);
-          await attemptLogin({'email': 'foo-bar@hello.com'}, errors: ['password: The field is required']);
+          await attemptLogin({}, errors: [
+            'email: The field is required',
+            'password: The field is required'
+          ]);
+          await attemptLogin({'email': 'foo-bar@hello.com'},
+              errors: ['password: The field is required']);
           await attemptLogin(
             {'email': 'foo-bar'},
-            errors: ['email: The field is not a valid email address', 'password: The field is required'],
+            errors: [
+              'email: The field is not a valid email address',
+              'password: The field is required'
+            ],
           );
         });
 
@@ -146,8 +162,8 @@ void main() {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
-          final baseTest =
-              (await server.tester).post(path, {'email': randomUser!.email, 'password': 'foo-bar-mee-moo'});
+          final baseTest = (await server.tester).post(path,
+              {'email': randomUser!.email, 'password': 'foo-bar-mee-moo'});
 
           await baseTest
               .expectStatus(HttpStatus.ok)
@@ -166,7 +182,8 @@ void main() {
         currentUser = await DB.query<User>().get();
         expect(currentUser, isA<User>());
 
-        final result = await (await server.tester).post('$baseAPIPath/auth/login', {
+        final result =
+            await (await server.tester).post('$baseAPIPath/auth/login', {
           'email': currentUser!.email,
           'password': 'foo-bar-mee-moo',
         }).actual;
@@ -174,7 +191,10 @@ void main() {
         authCookie = result.headers[HttpHeaders.setCookieHeader];
         expect(authCookie, isNotNull);
 
-        await DB.query<Article>().whereEqual('ownerId', currentUser!.id).delete();
+        await DB
+            .query<Article>()
+            .whereEqual('ownerId', currentUser!.id)
+            .delete();
       });
 
       group('Users', () {
@@ -189,9 +209,11 @@ void main() {
 
         test('should return user for /users/me ', () async {
           await (await server.tester)
-              .get('$usersApiPath/me', headers: {HttpHeaders.cookieHeader: authCookie!})
+              .get('$usersApiPath/me',
+                  headers: {HttpHeaders.cookieHeader: authCookie!})
               .expectStatus(HttpStatus.ok)
-              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
+              .expectHeader(HttpHeaders.contentTypeHeader,
+                  'application/json; charset=utf-8')
               .expectBodyCustom(
                   (body) => jsonDecode(body)['user'],
                   allOf(
@@ -211,8 +233,10 @@ void main() {
           await (await server.tester)
               .get('$usersApiPath/${randomUser!.id!}')
               .expectStatus(HttpStatus.ok)
-              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
-              .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toJson())
+              .expectHeader(HttpHeaders.contentTypeHeader,
+                  'application/json; charset=utf-8')
+              .expectBodyCustom(
+                  (body) => jsonDecode(body)['user'], randomUser.toJson())
               .test();
         });
       });
@@ -224,14 +248,18 @@ void main() {
           test('should error on invalid body', () async {
             attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
               return (await server.tester)
-                  .post(articleApiPath, body, headers: {HttpHeaders.cookieHeader: authCookie!})
+                  .post(articleApiPath, body,
+                      headers: {HttpHeaders.cookieHeader: authCookie!})
                   .expectStatus(HttpStatus.badRequest)
                   .expectJsonBody({'location': 'body', 'errors': errors})
                   .test();
             }
 
             // when empty body
-            await attemptCreate({}, errors: ['title: The field is required', 'description: The field is required']);
+            await attemptCreate({}, errors: [
+              'title: The field is required',
+              'description: The field is required'
+            ]);
 
             // when short title or description
             await attemptCreate({
@@ -253,26 +281,36 @@ void main() {
             }).actual;
             expect(result.statusCode, HttpStatus.ok);
 
-            final article = Article.fromJson(jsonDecode(result.body)['article']);
+            final article =
+                Article.fromJson(jsonDecode(result.body)['article']);
             expect(article.ownerId, currentUser!.id);
             expect(article.title, 'Santa Clause 🚀');
             expect(article.description, 'Dart for backend is here');
-            expect(article.imageUrl, 'https://holy-dart.com/dart-logo-for-shares.png');
-            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(article.imageUrl,
+                'https://holy-dart.com/dart-logo-for-shares.png');
+            expect(
+                article.toJson(),
+                allOf(contains('id'), contains('createdAt'),
+                    contains('updatedAt')));
           });
 
           test('should use default image if none set', () async {
-            final result = await (await server.tester).post(
-                articleApiPath, {'title': 'Hurry 🚀', 'description': 'Welcome to the jungle'},
+            final result = await (await server.tester).post(articleApiPath,
+                {'title': 'Hurry 🚀', 'description': 'Welcome to the jungle'},
                 headers: {HttpHeaders.cookieHeader: authCookie!}).actual;
             expect(result.statusCode, HttpStatus.ok);
 
-            final article = Article.fromJson(jsonDecode(result.body)['article']);
+            final article =
+                Article.fromJson(jsonDecode(result.body)['article']);
             expect(article.ownerId, currentUser!.id);
             expect(article.title, 'Hurry 🚀');
             expect(article.description, 'Welcome to the jungle');
-            expect(article.imageUrl, 'https://dart.dev/assets/shared/dart-logo-for-shares.png');
-            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(article.imageUrl,
+                'https://dart.dev/assets/shared/dart-logo-for-shares.png');
+            expect(
+                article.toJson(),
+                allOf(contains('id'), contains('createdAt'),
+                    contains('updatedAt')));
           });
         });
 
@@ -280,7 +318,8 @@ void main() {
           test('should error when invalid params', () async {
             // bad params
             await (await server.tester)
-                .put('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .put('$articleApiPath/some-random-id',
+                    headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
                   'location': 'param',
@@ -290,40 +329,59 @@ void main() {
 
             // bad body
             await (await server.tester)
-                .put('$articleApiPath/234', body: {'name': 'foo'}, headers: {HttpHeaders.cookieHeader: authCookie!})
+                .put('$articleApiPath/234',
+                    body: {'name': 'foo'},
+                    headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
                   'location': 'body',
-                  'errors': ['title: The field is required', 'description: The field is required']
+                  'errors': [
+                    'title: The field is required',
+                    'description: The field is required'
+                  ]
                 })
                 .test();
 
             // no existing article
             await (await server.tester)
-                .put('$articleApiPath/234',
-                    body: {'title': 'Honey', 'description': 'Hold my beer lets talk'},
-                    headers: {HttpHeaders.cookieHeader: authCookie!})
+                .put('$articleApiPath/234', body: {
+                  'title': 'Honey',
+                  'description': 'Hold my beer lets talk'
+                }, headers: {
+                  HttpHeaders.cookieHeader: authCookie!
+                })
                 .expectStatus(HttpStatus.notFound)
                 .expectJsonBody({'error': 'Not found'})
                 .test();
           });
 
           test('should update article', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+            final article = await DB
+                .query<Article>()
+                .whereEqual('ownerId', currentUser!.id!)
+                .findOne();
             expect(article, isA<Article>());
 
             expect(article!.title, isNot('Honey'));
             expect(article.description, isNot('Hold my beer lets talk'));
 
-            final result = await (await server.tester).put('$articleApiPath/${article.id}',
-                body: {'title': 'Honey', 'description': 'Hold my beer lets talk'},
-                headers: {HttpHeaders.cookieHeader: authCookie!}).actual;
+            final result = await (await server.tester)
+                .put('$articleApiPath/${article.id}', body: {
+              'title': 'Honey',
+              'description': 'Hold my beer lets talk'
+            }, headers: {
+              HttpHeaders.cookieHeader: authCookie!
+            }).actual;
             expect(result.statusCode, HttpStatus.ok);
 
-            final updatedArticle = Article.fromJson(jsonDecode(result.body)['article']);
+            final updatedArticle =
+                Article.fromJson(jsonDecode(result.body)['article']);
             expect(updatedArticle.title, 'Honey');
             expect(updatedArticle.description, 'Hold my beer lets talk');
-            expect(updatedArticle.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(
+                updatedArticle.toJson(),
+                allOf(contains('id'), contains('createdAt'),
+                    contains('updatedAt')));
           });
         });
 
@@ -331,7 +389,8 @@ void main() {
           test('should error when invalid params', () async {
             // bad params
             await (await server.tester)
-                .delete('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .delete('$articleApiPath/some-random-id',
+                    headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
                   'location': 'param',
@@ -344,18 +403,23 @@ void main() {
             expect(article, isNull);
 
             await (await server.tester)
-                .delete('$articleApiPath/$fakeId', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .delete('$articleApiPath/$fakeId',
+                    headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.ok)
                 .expectJsonBody({'message': 'Article deleted'})
                 .test();
           });
 
           test('should delete article', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+            final article = await DB
+                .query<Article>()
+                .whereEqual('ownerId', currentUser!.id!)
+                .findOne();
             expect(article, isA<Article>());
 
             await (await server.tester)
-                .delete('$articleApiPath/${article!.id}', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .delete('$articleApiPath/${article!.id}',
+                    headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.ok)
                 .expectJsonBody({'message': 'Article deleted'})
                 .test();
@@ -367,7 +431,8 @@ void main() {
         group('when get article by Id', () {
           test('should error when invalid articleId', () async {
             await (await server.tester)
-                .get('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .get('$articleApiPath/some-random-id',
+                    headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
                   'location': 'param',
@@ -378,14 +443,18 @@ void main() {
 
           test('should error when article not exist', () async {
             await (await server.tester)
-                .get('$articleApiPath/2348', headers: {HttpHeaders.cookieHeader: authCookie!})
+                .get('$articleApiPath/2348',
+                    headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.notFound)
                 .expectJsonBody({'error': 'Not found'})
                 .test();
           });
 
           test('should show article without auth', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+            final article = await DB
+                .query<Article>()
+                .whereEqual('ownerId', currentUser!.id!)
+                .findOne();
             expect(article, isA<Article>());
 
             await (await server.tester)
@@ -402,7 +471,8 @@ void main() {
           await (await server.tester)
               .get('$baseAPIPath/articles')
               .expectStatus(HttpStatus.ok)
-              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
+              .expectHeader(HttpHeaders.contentTypeHeader,
+                  'application/json; charset=utf-8')
               .expectBodyCustom(
             (body) {
               final result = jsonDecode(body)['articles'] as Iterable;

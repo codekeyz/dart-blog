@@ -16,29 +16,46 @@ class ArticleService {
     return query.whereEqual('ownerId', ownerId).findMany();
   }
 
-  Future<Article?> getArticle(int articleId) => DB.query<Article>().get(articleId);
+  Future<Article?> getArticle(int articleId) =>
+      DB.query<Article>().get(articleId);
 
-  Future<Article> createArticle(User user, CreateArticleDTO data, {String? imageUrl}) async {
+  Future<Article> createArticle(User user, CreateArticleDTO data,
+      {String? imageUrl}) async {
     imageUrl ??= await getRandomImage(data.title);
-    return Article(user.id!, data.title, data.description, imageUrl: imageUrl).save();
+    return Article(user.id!, data.title, data.description, imageUrl: imageUrl)
+        .save();
   }
 
-  Future<Article?> updateArticle(User user, int articleId, CreateArticleDTO dto) async {
+  Future<Article?> updateArticle(
+      User user, int articleId, CreateArticleDTO dto) async {
     final userId = user.id!;
-    final query = DB.query<Article>().whereEqual('id', articleId).whereEqual('ownerId', userId);
+    final query = DB
+        .query<Article>()
+        .whereEqual('id', articleId)
+        .whereEqual('ownerId', userId);
     final article = await query.findOne();
     if (article == null) return null;
 
-    return await article.update(dto.data);
+    article
+      ..title = dto.title
+      ..description = dto.description
+      ..imageUrl = dto.imageUrl;
+
+    return await article.save();
   }
 
-  Future<void> deleteArticle(int userId, int articleId) => DB.query<Article>().whereEqual('id', articleId).delete();
+  Future<void> deleteArticle(int userId, int articleId) =>
+      DB.query<Article>().whereEqual('id', articleId).delete();
 
   Future<String?> getRandomImage(String searchText) async {
     try {
       final response = await http.get(
-        Uri.parse('https://api.pexels.com/v1/search?query=$searchText&per_page=1'),
-        headers: {HttpHeaders.authorizationHeader: env<String>('PEXELS_API_KEY')!},
+        Uri.parse(
+            'https://api.pexels.com/v1/search?query=$searchText&per_page=1'),
+        headers: {
+          HttpHeaders.authorizationHeader:
+              env<String>('PEXELS_API_KEY', defaultValue: '')
+        },
       ).timeout(const Duration(seconds: 2));
       final result = await Isolate.run(() => jsonDecode(response.body)) as Map;
       return result['photos'][0]['src']['medium'];
