@@ -15,7 +15,8 @@ class AuthController extends HTTPController {
   AuthController(this._authService, this._userService);
 
   Future<Response> login(@body LoginUserDTO data) async {
-    final user = await DB.query<User>().whereEqual('email', data.email).findOne();
+    final user =
+        await DB.query<User>().whereEqual('email', data.email).findOne();
     if (user == null) return invalidLogin;
 
     final match = BCrypt.checkpw(data.password, user.password);
@@ -28,18 +29,22 @@ class AuthController extends HTTPController {
   }
 
   Future<Response> register(@body CreateUserDTO data) async {
-    final existing = await DB.query<User>().whereEqual('email', data.email).findOne();
+    final existing =
+        await DB.query<User>().whereEqual('email', data.email).findOne();
     if (existing != null) {
-      return response.json(_makeError(['Email already taken']), statusCode: HttpStatus.badRequest);
+      return response.json(_makeError(['Email already taken']),
+          statusCode: HttpStatus.badRequest);
     }
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());
-    final newUser = await _userService.newUser(data.name, data.email, hashedPass);
+    final newUser =
+        await _userService.newUser(data.name, data.email, hashedPass);
 
     return response.json(_userResponse(newUser));
   }
 
-  Response get invalidLogin => response.unauthorized(data: _makeError(['Email or Password not valid']));
+  Response get invalidLogin =>
+      response.unauthorized(data: _makeError(['Email or Password not valid']));
 
   Map<String, dynamic> _userResponse(User user) => {'user': user.toJson()};
 

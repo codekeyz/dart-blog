@@ -10,5 +10,7 @@ final blogApp = App(app.config);
 void main(List<String> arguments) async {
   initializeReflectable();
 
+  DB.init(db.config);
+
   await blogApp.bootstrap();
 }
