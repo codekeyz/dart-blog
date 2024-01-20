@@ -15,8 +15,7 @@ class User extends Entity<int, User> {
 
   User(this.name, this.email, {required this.password});
 
-  @override
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
-  static User fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

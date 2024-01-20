@@ -12,11 +12,13 @@ class RouteServiceProvider extends ServiceProvider {
   FutureOr<void> boot() {
     app.useRoutes(
       () => [
+        /*|--------------------------------------------------------------------------
+          | API Routes
+          |--------------------------------------------------------------------------*/
         Route.group('api').routes([
           Route.post('/auth/login', (AuthController, #login)),
           Route.post('/auth/register', (AuthController, #register)),
 
-          /// get user detail without auth
           Route.get('/users/<userId>', (UserController, #show)),
 
           /// get articles and detail without auth
@@ -25,10 +27,6 @@ class RouteServiceProvider extends ServiceProvider {
             Route.get('/<articleId>', (ArticleController, #show)),
           ]),
         ]),
-
-        /*|--------------------------------------------------------------------------
-          | API Routes
-          |--------------------------------------------------------------------------*/
         Route.middleware('auth:api').group('api').routes(api.routes),
 
         /*|--------------------------------------------------------------------------

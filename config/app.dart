@@ -10,7 +10,7 @@ final config = AppConfig.fromJson({
     |--------------------------------------------------------------------------
     |
     */
-  'name': env('APP_NAME', 'The Yaroo blog'),
+  'name': env('APP_NAME', defaultValue: 'The Yaroo blog'),
 
   /*
     |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'env': env<String>('APP_ENV', 'production'),
+  'env': env<String>('APP_ENV', defaultValue: 'development'),
 
   /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'debug': env<bool>('APP_DEBUG', false),
+  'debug': env<bool>('APP_DEBUG', defaultValue: true),
 
   /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'url': env<String>('APP_URL', 'http://localhost'),
+  'url': env<String>('APP_URL', defaultValue: 'http://localhost'),
 
   /*
     |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'port': env<int>('APP_PORT', 80),
+  'port': env<int>('APP_PORT', defaultValue: 80),
 
   /*
     |--------------------------------------------------------------------------
@@ -84,7 +84,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'key': env('APP_KEY', UuidV4().generate()),
+  'key': env('APP_KEY', defaultValue: UuidV4().generate()),
 
   /*
     |--------------------------------------------------------------------------
@@ -100,7 +100,6 @@ final config = AppConfig.fromJson({
   'providers': ServiceProvider.defaultProviders
     ..addAll([
       CoreProvider,
-      FrontendProvider,
       RouteServiceProvider,
       DatabaseServiceProvider,
       BlogServiceProvider,

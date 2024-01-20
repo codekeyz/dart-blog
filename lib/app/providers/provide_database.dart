@@ -3,7 +3,5 @@ import 'package:yaroorm/yaroorm.dart';
 
 class DatabaseServiceProvider extends ServiceProvider {
   @override
-  void boot() async {
-    await DB.defaultDriver.connect();
-  }
+  void boot() async => DB.defaultDriver.connect();
 }

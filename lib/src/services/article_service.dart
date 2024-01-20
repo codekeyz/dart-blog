@@ -29,7 +29,12 @@ class ArticleService {
     final article = await query.findOne();
     if (article == null) return null;
 
-    return await article.update(dto.data);
+    article
+      ..title = dto.title
+      ..description = dto.description
+      ..imageUrl = dto.imageUrl;
+
+    return await article.save();
   }
 
   Future<void> deleteArticle(int userId, int articleId) => DB.query<Article>().whereEqual('id', articleId).delete();
@@ -38,7 +43,7 @@ class ArticleService {
     try {
       final response = await http.get(
         Uri.parse('https://api.pexels.com/v1/search?query=$searchText&per_page=1'),
-        headers: {HttpHeaders.authorizationHeader: env<String>('PEXELS_API_KEY')!},
+        headers: {HttpHeaders.authorizationHeader: env<String>('PEXELS_API_KEY', defaultValue: '')},
       ).timeout(const Duration(seconds: 2));
       final result = await Isolate.run(() => jsonDecode(response.body)) as Map;
       return result['photos'][0]['src']['medium'];

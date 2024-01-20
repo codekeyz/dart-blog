@@ -12,7 +12,7 @@ class CreateArticlesTable extends Migration {
         ..string('imageUrl', nullable: true)
         ..integer('ownerId')
         ..foreign<Article, User>(
-          'ownerId',
+          column: 'ownerId',
           onKey: (fkey) => fkey.actions(onDelete: ForeignKeyAction.cascade, onUpdate: ForeignKeyAction.cascade),
         )
         ..timestamps();
