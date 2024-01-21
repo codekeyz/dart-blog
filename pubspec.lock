@@ -668,6 +668,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.2"
+  shelf_swagger_ui:
+    dependency: "direct main"
+    description:
+      name: shelf_swagger_ui
+      sha256: "36793398760659311d767f2fd9760bac18784b7bf8fca2756d83a387b6268443"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+2"
   shelf_web_socket:
     dependency: transitive
     description:
@@ -961,7 +969,7 @@ packages:
     description:
       path: yaroo
       ref: HEAD
-      resolved-ref: c64772e05ea14b4e4e987ac50e93a7ec673a54d8
+      resolved-ref: c08fe25305e65b403d8ba630d87f81ca580c7ac0
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -970,7 +978,7 @@ packages:
     description:
       path: yaroorm
       ref: HEAD
-      resolved-ref: c64772e05ea14b4e4e987ac50e93a7ec673a54d8
+      resolved-ref: c08fe25305e65b403d8ba630d87f81ca580c7ac0
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"

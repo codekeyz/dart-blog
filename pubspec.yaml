@@ -27,6 +27,7 @@ dependencies:
   logger: ^2.0.2+1
   dart_jsonwebtoken: ^2.12.2
   json_annotation: ^4.8.1
+  shelf_swagger_ui: ^1.0.0+2
 
 dev_dependencies:
   lints: ^3.0.0
