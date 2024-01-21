@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider {
             Route.get('/<articleId>', (ArticleController, #show)),
           ]),
         ]),
-        Route.middleware('auth:api').group('api').routes(api.routes),
+        Route.middleware('api:auth').group('api').routes(api.routes),
 
         /*|--------------------------------------------------------------------------
           | Web Routes

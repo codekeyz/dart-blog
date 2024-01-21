@@ -7,6 +7,7 @@ import 'package:yaroo/http/meta.dart';
 
 import 'middlewares/api_auth_middleware.dart';
 import 'middlewares/core_middleware.dart';
+import 'middlewares/serve_api_doc_mdw.dart';
 
 class Kernel extends prefix01.Kernel {
   @override
@@ -15,7 +16,8 @@ class Kernel extends prefix01.Kernel {
   @override
   Map<String, List<Type>> get middlewareGroups => {
         'web': [],
-        'auth:api': [ApiAuthMiddleware],
+        'api:auth': [ApiAuthMiddleware],
+        'api:docs': [ServeApiSwaggerDoc],
       };
 
   @override

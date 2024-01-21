@@ -53,7 +53,7 @@ final config = AppConfig.fromJson({
     |
     */
 
-  'port': env<int>('APP_PORT', defaultValue: 80),
+  'port': env<int>('PORT', defaultValue: 80),
 
   /*
     |--------------------------------------------------------------------------
