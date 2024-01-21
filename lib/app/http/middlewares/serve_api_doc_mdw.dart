@@ -5,7 +5,12 @@ class ServeApiSwaggerDoc extends Middleware {
   late HandlerFunc _handlerFunc;
 
   ServeApiSwaggerDoc() {
-    final shelfSwagger = SwaggerUI('swagger.json', title: app.name);
+    final shelfSwagger = SwaggerUI(
+      'swagger.json',
+      title: app.name,
+      deepLink: true,
+      syntaxHighlightTheme: SyntaxHighlightTheme.tomorrowNight,
+    );
     _handlerFunc = useShelfMiddleware(shelfSwagger.call);
   }
 
