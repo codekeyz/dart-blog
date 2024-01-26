@@ -20,7 +20,6 @@ bool get isTestMode {
     isDebug = true;
     return true;
   }());
-
   return isDebug;
 }
 
