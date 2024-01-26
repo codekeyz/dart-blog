@@ -43,7 +43,7 @@ class ArticleService {
     try {
       final response = await http.get(
         Uri.parse('https://api.pexels.com/v1/search?query=$searchText&per_page=1'),
-        headers: {HttpHeaders.authorizationHeader: env<String>('PEXELS_API_KEY', defaultValue: '')},
+        headers: {HttpHeaders.authorizationHeader: env<String>('PEXELS_API_KEY', '')},
       ).timeout(const Duration(seconds: 2));
       final result = await Isolate.run(() => jsonDecode(response.body)) as Map;
       return result['photos'][0]['src']['medium'];

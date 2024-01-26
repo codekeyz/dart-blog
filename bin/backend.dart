@@ -1,16 +1,13 @@
 import 'package:yaroorm/yaroorm.dart';
-import 'package:backend/app/app.dart';
+import 'package:backend/backend.dart';
 
-import '../config/app.dart' as app;
-import '../config/database.dart' as db;
+import '../database/config.dart' as orm;
 import 'backend.reflectable.dart';
-
-final blogApp = App(app.config);
 
 void main(List<String> arguments) async {
   initializeReflectable();
 
-  DB.init(db.config);
+  DB.init(orm.config);
 
   await blogApp.bootstrap();
 }

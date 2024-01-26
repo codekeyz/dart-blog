@@ -133,10 +133,10 @@ packages:
     dependency: transitive
     description:
       name: built_value
-      sha256: c9aabae0718ec394e5bc3c7272e6bb0dc0b32201a08fe185ec1d8401d3e39309
+      sha256: a3ec2e0f967bc47f69f95009bb93db936288d61d5343b9436e378b28a2f830c6
       url: "https://pub.dev"
     source: hosted
-    version: "8.8.1"
+    version: "8.9.0"
   charcode:
     dependency: transitive
     description:
@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  cli_completion:
+    dependency: transitive
+    description:
+      name: cli_completion
+      sha256: "1e87700c029c77041d836e57f9016b5c90d353151c43c2ca0c36deaadc05aa3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0"
   cli_launcher:
     dependency: transitive
     description:
@@ -434,6 +442,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  mason_logger:
+    dependency: transitive
+    description:
+      name: mason_logger
+      sha256: "3e68a3548e7b30d3c6066ac0f94c3392cc2c778d60a0f6909741896b19ac9ae4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.11"
   matcher:
     dependency: transitive
     description:
@@ -462,10 +478,10 @@ packages:
     dependency: "direct main"
     description:
       name: mime
-      sha256: e4ff8e8564c03f255408decd16e7899da1733852a9110a58fe6d1b817684a63e
+      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   mustache_template:
     dependency: transitive
     description:
@@ -551,10 +567,10 @@ packages:
     dependency: transitive
     description:
       name: postgres
-      sha256: d384c0cce2c30f9b349a133812f976ca16fa916fd567882bb6a01741b194c22a
+      sha256: "4946cca91527b4f5fd85bd7b347c3a09108e69904f304de448c8b52bfdaa7fe6"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.6"
+    version: "3.0.7"
   process:
     dependency: transitive
     description:
@@ -744,10 +760,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: "76db4d324c8cbb16ca5b60ad2f3d25cec953107c93ae65aafa480d3e6fb69f14"
+      sha256: "28d8c66baee4968519fb8bd6cdbedad982d6e53359091f0b74544a9f32ec72d5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.2-1"
+    version: "2.5.3"
   sqflite_common_ffi:
     dependency: transitive
     description:
@@ -824,10 +840,10 @@ packages:
     dependency: "direct dev"
     description:
       name: test
-      sha256: "694c108e13c6b35b15fcb0f8f03eddf8373f93b044c9497b5e81ce09f7381bda"
+      sha256: "7ee446762c2c50b3bd4ea96fe13ffac69919352bd3b4b17bac3f3465edc58073"
       url: "https://pub.dev"
     source: hosted
-    version: "1.25.1"
+    version: "1.25.2"
   test_api:
     dependency: transitive
     description:
@@ -940,6 +956,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  win32:
+    dependency: transitive
+    description:
+      name: win32
+      sha256: "464f5674532865248444b4c3daca12bd9bf2d7c47f759ce2617986e7229494a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0"
   yaml:
     dependency: transitive
     description:
@@ -959,18 +983,27 @@ packages:
   yaroo:
     dependency: "direct main"
     description:
-      path: yaroo
+      path: "packages/yaroo"
       ref: HEAD
-      resolved-ref: c64772e05ea14b4e4e987ac50e93a7ec673a54d8
+      resolved-ref: cad334d5a29ef204f3f770614870780fe5ff7b39
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
+  yaroo_cli:
+    dependency: "direct dev"
+    description:
+      path: "packages/yaroo_cli"
+      ref: HEAD
+      resolved-ref: cad334d5a29ef204f3f770614870780fe5ff7b39
+      url: "https://github.com/codekeyz/yaroo.git"
+    source: git
+    version: "1.0.0"
   yaroorm:
     dependency: "direct main"
     description:
-      path: yaroorm
+      path: "packages/yaroorm"
       ref: HEAD
-      resolved-ref: c64772e05ea14b4e4e987ac50e93a7ec673a54d8
+      resolved-ref: cad334d5a29ef204f3f770614870780fe5ff7b39
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"

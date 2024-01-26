@@ -1,18 +1,12 @@
-import 'package:yaroorm/migration/cli.dart';
-import 'package:yaroorm/yaroorm.dart';
+// ignore: depend_on_referenced_packages
+import 'package:yaroo_cli/orm/runner.dart';
 
-import '../../config/database.dart' as db;
-
+import '../../database/config.dart' as orm;
 import 'migrator.reflectable.dart';
 
 export 'package:backend/src/models/models.dart';
 
 void main(List<String> args) async {
-  if (args.isEmpty) return print('Nothing to do here');
-
   initializeReflectable();
-
-  DB.init(db.config);
-
-  await MigratorCLI.processCmd(args[0], cmdArguments: args.sublist(1));
+  await OrmCLIRunner.start(args, orm.config);
 }

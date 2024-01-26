@@ -1,22 +1,35 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:backend/app/app.dart';
-import 'package:test/test.dart';
+import 'package:backend/backend.dart';
+import 'package:yaroo/yaroo.dart';
 import 'package:yaroorm/yaroorm.dart';
+import 'package:path/path.dart' as path;
 
-import '../config/app.dart' as app;
-import '../config/database.dart' as db;
 import 'backend_test.reflectable.dart';
 
-final server = App(app.config);
+final ormConfig = YaroormConfig(
+  'sqlite',
+  connections: [
+    DatabaseConnection(
+      'sqlite',
+      DatabaseDriverType.sqlite,
+      database: path.absolute('database', 'db.sqlite'),
+    ),
+  ],
+);
 
 void main() {
   initializeReflectable();
 
-  DB.init(db.config);
+  DB.init(ormConfig);
 
-  setUpAll(() => server.bootstrap(listen: false));
+  late Spookie blogAppTester;
+
+  setUpAll(() async {
+    await blogApp.bootstrap(listen: false);
+    blogAppTester = await blogApp.tester;
+  });
 
   group('Backend API', () {
     const baseAPIPath = '/api';
@@ -27,7 +40,7 @@ void main() {
         final path = '$authPath/register';
         test('should error on invalid body', () async {
           attemptRegister(Map<String, dynamic> body, {dynamic errors}) async {
-            return (await server.tester)
+            return blogAppTester
                 .post(path, body)
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({'location': 'body', 'errors': errors}).test();
@@ -72,8 +85,11 @@ void main() {
 
         test('should create user', () async {
           final newUserEmail = 'foo-${DateTime.now().millisecondsSinceEpoch}@bar.com';
-          final apiResult = await (await server.tester)
-              .post(path, {'name': 'Foo User', 'email': newUserEmail, 'password': 'foo-bar-mee-moo'}).actual;
+          final apiResult = await blogAppTester.post(path, {
+            'name': 'Foo User',
+            'email': newUserEmail,
+            'password': 'foo-bar-mee-moo',
+          }).actual;
 
           expect(apiResult.statusCode, HttpStatus.ok);
           expect(apiResult.headers[HttpHeaders.contentTypeHeader], 'application/json; charset=utf-8');
@@ -90,7 +106,7 @@ void main() {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
-          await (await server.tester)
+          await blogAppTester
               .post(path, {'email': randomUser!.email, 'name': 'Foo Bar', 'password': 'moooasdfmdf'})
               .expectStatus(HttpStatus.badRequest)
               .expectJsonBody({
@@ -105,7 +121,7 @@ void main() {
 
         test('should error on invalid body', () async {
           attemptLogin(Map<String, dynamic> body, {dynamic errors}) async {
-            return (await server.tester)
+            return blogAppTester
                 .post('$authPath/login', body)
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({'location': 'body', 'errors': errors}).test();
@@ -125,7 +141,7 @@ void main() {
 
           final email = randomUser!.email;
 
-          await (await server.tester)
+          await blogAppTester
               .post(path, {'email': email, 'password': 'wap wap wap'})
               .expectStatus(HttpStatus.unauthorized)
               .expectJsonBody({
@@ -133,7 +149,7 @@ void main() {
               })
               .test();
 
-          await (await server.tester)
+          await blogAppTester
               .post(path, {'email': 'holy@bar.com', 'password': 'wap wap wap'})
               .expectStatus(HttpStatus.unauthorized)
               .expectJsonBody({
@@ -146,8 +162,10 @@ void main() {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
-          final baseTest =
-              (await server.tester).post(path, {'email': randomUser!.email, 'password': 'foo-bar-mee-moo'});
+          final baseTest = blogAppTester.post(path, {
+            'email': randomUser!.email,
+            'password': 'foo-bar-mee-moo',
+          });
 
           await baseTest
               .expectStatus(HttpStatus.ok)
@@ -166,7 +184,7 @@ void main() {
         currentUser = await DB.query<User>().get();
         expect(currentUser, isA<User>());
 
-        final result = await (await server.tester).post('$baseAPIPath/auth/login', {
+        final result = await blogAppTester.post('$baseAPIPath/auth/login', {
           'email': currentUser!.email,
           'password': 'foo-bar-mee-moo',
         }).actual;
@@ -181,26 +199,25 @@ void main() {
         final usersApiPath = '$baseAPIPath/users';
 
         test('should reject if no cookie', () async {
-          await (await server.tester)
+          await blogAppTester
               .get(usersApiPath)
               .expectStatus(HttpStatus.unauthorized)
               .expectJsonBody({'error': 'Unauthorized'}).test();
         });
 
         test('should return user for /users/me ', () async {
-          await (await server.tester)
+          await blogAppTester
               .get('$usersApiPath/me', headers: {HttpHeaders.cookieHeader: authCookie!})
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
               .expectBodyCustom(
-                  (body) => jsonDecode(body)['user'],
-                  allOf(
-                    contains('id'),
-                    contains('email'),
-                    contains('name'),
-                    contains('createdAt'),
-                    contains('updatedAt'),
-                  ))
+                (body) => User.fromJson(jsonDecode(body)['user']),
+                isA<User>().having(
+                  (user) => [user.id, user.createdAt, user.updatedAt].every((e) => e != null),
+                  'user with properties',
+                  isTrue,
+                ),
+              )
               .test();
         });
 
@@ -208,7 +225,7 @@ void main() {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
-          await (await server.tester)
+          await blogAppTester
               .get('$usersApiPath/${randomUser!.id!}')
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
@@ -222,8 +239,8 @@ void main() {
 
         group('create', () {
           test('should error on invalid body', () async {
-            attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
-              return (await server.tester)
+            Future<void> attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
+              return blogAppTester
                   .post(articleApiPath, body, headers: {HttpHeaders.cookieHeader: authCookie!})
                   .expectStatus(HttpStatus.badRequest)
                   .expectJsonBody({'location': 'body', 'errors': errors})
@@ -244,7 +261,7 @@ void main() {
           });
 
           test('should create with image', () async {
-            final result = await (await server.tester).post(articleApiPath, {
+            final result = await blogAppTester.post(articleApiPath, {
               'title': 'Santa Clause 🚀',
               'description': 'Dart for backend is here',
               'imageUrl': 'https://holy-dart.com/dart-logo-for-shares.png'
@@ -258,13 +275,17 @@ void main() {
             expect(article.title, 'Santa Clause 🚀');
             expect(article.description, 'Dart for backend is here');
             expect(article.imageUrl, 'https://holy-dart.com/dart-logo-for-shares.png');
-            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(article.id, isNotNull);
+            expect(article.createdAt, isNotNull);
+            expect(article.updatedAt, isNotNull);
           });
 
           test('should use default image if none set', () async {
-            final result = await (await server.tester).post(
-                articleApiPath, {'title': 'Hurry 🚀', 'description': 'Welcome to the jungle'},
-                headers: {HttpHeaders.cookieHeader: authCookie!}).actual;
+            final result = await blogAppTester.post(
+              articleApiPath,
+              {'title': 'Hurry 🚀', 'description': 'Welcome to the jungle'},
+              headers: {HttpHeaders.cookieHeader: authCookie!},
+            ).actual;
             expect(result.statusCode, HttpStatus.ok);
 
             final article = Article.fromJson(jsonDecode(result.body)['article']);
@@ -272,14 +293,16 @@ void main() {
             expect(article.title, 'Hurry 🚀');
             expect(article.description, 'Welcome to the jungle');
             expect(article.imageUrl, 'https://dart.dev/assets/shared/dart-logo-for-shares.png');
-            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(article.id, isNotNull);
+            expect(article.createdAt, isNotNull);
+            expect(article.updatedAt, isNotNull);
           });
         });
 
         group('update ', () {
           test('should error when invalid params', () async {
             // bad params
-            await (await server.tester)
+            await blogAppTester
                 .put('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
@@ -289,7 +312,7 @@ void main() {
                 .test();
 
             // bad body
-            await (await server.tester)
+            await blogAppTester
                 .put('$articleApiPath/234', body: {'name': 'foo'}, headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
@@ -299,10 +322,12 @@ void main() {
                 .test();
 
             // no existing article
-            await (await server.tester)
-                .put('$articleApiPath/234',
-                    body: {'title': 'Honey', 'description': 'Hold my beer lets talk'},
-                    headers: {HttpHeaders.cookieHeader: authCookie!})
+            await blogAppTester
+                .put(
+                  '$articleApiPath/234',
+                  body: {'title': 'Honey', 'description': 'Hold my beer lets talk'},
+                  headers: {HttpHeaders.cookieHeader: authCookie!},
+                )
                 .expectStatus(HttpStatus.notFound)
                 .expectJsonBody({'error': 'Not found'})
                 .test();
@@ -315,9 +340,11 @@ void main() {
             expect(article!.title, isNot('Honey'));
             expect(article.description, isNot('Hold my beer lets talk'));
 
-            final result = await (await server.tester).put('$articleApiPath/${article.id}',
-                body: {'title': 'Honey', 'description': 'Hold my beer lets talk'},
-                headers: {HttpHeaders.cookieHeader: authCookie!}).actual;
+            final result = await blogAppTester.put(
+              '$articleApiPath/${article.id}',
+              body: {'title': 'Honey', 'description': 'Hold my beer lets talk'},
+              headers: {HttpHeaders.cookieHeader: authCookie!},
+            ).actual;
             expect(result.statusCode, HttpStatus.ok);
 
             final updatedArticle = Article.fromJson(jsonDecode(result.body)['article']);
@@ -330,7 +357,7 @@ void main() {
         group('delete', () {
           test('should error when invalid params', () async {
             // bad params
-            await (await server.tester)
+            await blogAppTester
                 .delete('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
@@ -343,7 +370,7 @@ void main() {
             final article = await DB.query<Article>().get(fakeId);
             expect(article, isNull);
 
-            await (await server.tester)
+            await blogAppTester
                 .delete('$articleApiPath/$fakeId', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.ok)
                 .expectJsonBody({'message': 'Article deleted'})
@@ -354,7 +381,7 @@ void main() {
             final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
             expect(article, isA<Article>());
 
-            await (await server.tester)
+            await blogAppTester
                 .delete('$articleApiPath/${article!.id}', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.ok)
                 .expectJsonBody({'message': 'Article deleted'})
@@ -366,7 +393,7 @@ void main() {
 
         group('when get article by Id', () {
           test('should error when invalid articleId', () async {
-            await (await server.tester)
+            await blogAppTester
                 .get('$articleApiPath/some-random-id', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({
@@ -377,7 +404,7 @@ void main() {
           });
 
           test('should error when article not exist', () async {
-            await (await server.tester)
+            await blogAppTester
                 .get('$articleApiPath/2348', headers: {HttpHeaders.cookieHeader: authCookie!})
                 .expectStatus(HttpStatus.notFound)
                 .expectJsonBody({'error': 'Not found'})
@@ -388,7 +415,7 @@ void main() {
             final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
             expect(article, isA<Article>());
 
-            await (await server.tester)
+            await blogAppTester
                 .get('$articleApiPath/${article!.id}')
                 .expectStatus(HttpStatus.ok)
                 .expectJsonBody({'article': article.toJson()}).test();
@@ -399,7 +426,7 @@ void main() {
           final articles = await DB.query<Article>().all();
           expect(articles, isNotEmpty);
 
-          await (await server.tester)
+          await blogAppTester
               .get('$baseAPIPath/articles')
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
