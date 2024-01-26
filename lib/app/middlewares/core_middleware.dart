@@ -16,7 +16,11 @@ class CoreMiddleware extends Middleware {
       next();
     }
 
-    _webMdw = loggerMdw.chain(cookieParserMdw);
+    if (app.config.environment == 'development') {
+      _webMdw = loggerMdw.chain(cookieParserMdw);
+    } else {
+      _webMdw = cookieParserMdw;
+    }
   }
 
   @override

@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:backend/backend.dart';
-import 'package:test/test.dart';
-import 'package:spookie/spookie.dart' show Spookie;
+import 'package:yaroo/yaroo.dart';
 import 'package:yaroorm/yaroorm.dart';
 import 'package:path/path.dart' as path;
 
 import 'backend_test.reflectable.dart';
 
-final testYarooConfig = YaroormConfig(
+final ormConfig = YaroormConfig(
   'sqlite',
   connections: [
     DatabaseConnection(
@@ -23,7 +22,7 @@ final testYarooConfig = YaroormConfig(
 void main() {
   initializeReflectable();
 
-  DB.init(testYarooConfig);
+  DB.init(ormConfig);
 
   late Spookie blogAppTester;
 
@@ -122,7 +121,7 @@ void main() {
 
         test('should error on invalid body', () async {
           attemptLogin(Map<String, dynamic> body, {dynamic errors}) async {
-            return (await blogApp.tester)
+            return blogAppTester
                 .post('$authPath/login', body)
                 .expectStatus(HttpStatus.badRequest)
                 .expectJsonBody({'location': 'body', 'errors': errors}).test();
@@ -142,7 +141,7 @@ void main() {
 
           final email = randomUser!.email;
 
-          await (await blogApp.tester)
+          await blogAppTester
               .post(path, {'email': email, 'password': 'wap wap wap'})
               .expectStatus(HttpStatus.unauthorized)
               .expectJsonBody({
@@ -163,7 +162,7 @@ void main() {
           final randomUser = await DB.query<User>().get();
           expect(randomUser, isA<User>());
 
-          final baseTest = await blogAppTester.post(path, {
+          final baseTest = blogAppTester.post(path, {
             'email': randomUser!.email,
             'password': 'foo-bar-mee-moo',
           });
@@ -212,14 +211,13 @@ void main() {
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
               .expectBodyCustom(
-                  (body) => jsonDecode(body)['user'],
-                  allOf(
-                    contains('id'),
-                    contains('email'),
-                    contains('name'),
-                    contains('createdAt'),
-                    contains('updatedAt'),
-                  ))
+                (body) => User.fromJson(jsonDecode(body)['user']),
+                isA<User>().having(
+                  (user) => [user.id, user.createdAt, user.updatedAt].every((e) => e != null),
+                  'user with properties',
+                  isTrue,
+                ),
+              )
               .test();
         });
 
@@ -241,7 +239,7 @@ void main() {
 
         group('create', () {
           test('should error on invalid body', () async {
-            attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
+            Future<void> attemptCreate(Map<String, dynamic> body, {dynamic errors}) async {
               return blogAppTester
                   .post(articleApiPath, body, headers: {HttpHeaders.cookieHeader: authCookie!})
                   .expectStatus(HttpStatus.badRequest)
@@ -263,7 +261,7 @@ void main() {
           });
 
           test('should create with image', () async {
-            final result = await (await blogApp.tester).post(articleApiPath, {
+            final result = await blogAppTester.post(articleApiPath, {
               'title': 'Santa Clause 🚀',
               'description': 'Dart for backend is here',
               'imageUrl': 'https://holy-dart.com/dart-logo-for-shares.png'
@@ -277,7 +275,9 @@ void main() {
             expect(article.title, 'Santa Clause 🚀');
             expect(article.description, 'Dart for backend is here');
             expect(article.imageUrl, 'https://holy-dart.com/dart-logo-for-shares.png');
-            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(article.id, isNotNull);
+            expect(article.createdAt, isNotNull);
+            expect(article.updatedAt, isNotNull);
           });
 
           test('should use default image if none set', () async {
@@ -293,7 +293,9 @@ void main() {
             expect(article.title, 'Hurry 🚀');
             expect(article.description, 'Welcome to the jungle');
             expect(article.imageUrl, 'https://dart.dev/assets/shared/dart-logo-for-shares.png');
-            expect(article.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(article.id, isNotNull);
+            expect(article.createdAt, isNotNull);
+            expect(article.updatedAt, isNotNull);
           });
         });
 
