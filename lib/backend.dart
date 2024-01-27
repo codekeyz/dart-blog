@@ -14,19 +14,18 @@ export 'src/controllers/controllers.dart';
 export 'src/models/models.dart';
 export 'src/models/dto/dto.dart';
 
-bool get isTestMode {
+bool get isDebugMode {
   var isDebug = false;
   assert(() {
     isDebug = true;
     return true;
   }());
-
   return isDebug;
 }
 
 final blogApp = App(AppConfig(
   name: 'Dart Blog',
-  environment: env<String>('APP_ENV', isTestMode ? 'test' : 'development'),
+  environment: env<String>('APP_ENV', isDebugMode ? 'test' : 'development'),
   isDebug: env<bool>('APP_DEBUG', true),
   url: env<String>('APP_URL', 'http://localhost'),
   port: env<int>('PORT', 80),

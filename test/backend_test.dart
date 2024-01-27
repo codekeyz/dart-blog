@@ -4,25 +4,14 @@ import 'dart:io';
 import 'package:backend/backend.dart';
 import 'package:yaroo/yaroo.dart';
 import 'package:yaroorm/yaroorm.dart';
-import 'package:path/path.dart' as path;
+import '../database/config.dart' as orm;
 
 import 'backend_test.reflectable.dart';
-
-final ormConfig = YaroormConfig(
-  'sqlite',
-  connections: [
-    DatabaseConnection(
-      'sqlite',
-      DatabaseDriverType.sqlite,
-      database: path.absolute('database', 'db.sqlite'),
-    ),
-  ],
-);
 
 void main() {
   initializeReflectable();
 
-  DB.init(ormConfig);
+  DB.init(orm.config);
 
   late Spookie blogAppTester;
 

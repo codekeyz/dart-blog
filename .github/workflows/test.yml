@@ -44,7 +44,7 @@ jobs:
           dart run build_runner build --delete-conflicting-outputs
 
       - name: Setup Test Database
-        run: dart run ./bin/tools/migrator.dart migrate
+        run: dart run --enable-asserts ./bin/tools/migrator.dart migrate
 
       - name: Run Tests
         run: |
