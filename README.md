@@ -13,18 +13,10 @@ $ dart pub get && dart run build_runner build --delete-conflicting-outputs
 ### Migrate Database
 
 Prepare the database **(default: SQLite)** by running the command below. This will create the necessary
-tables in the database. You can change the database by editing the `database/config.dart` file.
-
-Currently supports `MariaB`, `MySQL`, `PostgreSQL` and `SQLite`.
+tables in the database.
 
 ```shell
-$ dart run bin/tools/migrator.dart migrate
-```
-
-You can run the command below to see which commands are available on the migrator.
-
-```shell
-$ dart run bin/tools/migrator.dart
+$ dart run --enable-asserts bin/tools/migrator.dart migrate
 ```
 
 ### Start Server
