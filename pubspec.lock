@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: eb376e9acf6938204f90eb3b1f00b578640d3188b4c8a8ec054f9f479af8d051
+      sha256: ae92f5d747aee634b87f89d9946000c2de774be1d6ac3e58268224348cd0101a
       url: "https://pub.dev"
     source: hosted
-    version: "64.0.0"
+    version: "61.0.0"
   adaptive_number:
     dependency: transitive
     description:
@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "69f54f967773f6c26c7dcb13e93d7ccee8b17a641689da39e878d5cf13b06893"
+      sha256: ea3d8652bda62982addfd92fdc2d0214e5f82e43325104990d4f4c4a2a313562
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "5.13.0"
   ansi_styles:
     dependency: transitive
     description:
@@ -245,10 +245,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "40ae61a5d43feea6d24bd22c0537a6629db858963b99b4bc1c3db80676f32368"
+      sha256: "1efa911ca7086affd35f463ca2fc1799584fb6aa89883cf0af8e3664d6a02d55"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.4"
+    version: "2.3.2"
   dotenv:
     dependency: transitive
     description:
@@ -636,13 +636,12 @@ packages:
     source: hosted
     version: "4.1.0"
   reflectable:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: reflectable
-      ref: HEAD
-      resolved-ref: e205b5313d540eecdf75422d5555f2b1ba8e77a3
-      url: "https://github.com/codekeyz/reflectable.dart.git"
-    source: git
+      name: reflectable
+      sha256: "775388897bfce5b1d0386b7160706367b565cdc72b5870bc6a198d0f7be1aa0b"
+      url: "https://pub.dev"
+    source: hosted
     version: "4.0.5"
   sasl_scram:
     dependency: transitive
@@ -985,7 +984,7 @@ packages:
     description:
       path: "packages/yaroo"
       ref: HEAD
-      resolved-ref: cad334d5a29ef204f3f770614870780fe5ff7b39
+      resolved-ref: "44bf4297c219155230f03a0826e88d067b325c22"
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "0.0.1"
@@ -994,18 +993,17 @@ packages:
     description:
       path: "packages/yaroo_cli"
       ref: HEAD
-      resolved-ref: cad334d5a29ef204f3f770614870780fe5ff7b39
+      resolved-ref: "44bf4297c219155230f03a0826e88d067b325c22"
       url: "https://github.com/codekeyz/yaroo.git"
     source: git
     version: "1.0.0"
   yaroorm:
     dependency: "direct main"
     description:
-      path: "packages/yaroorm"
-      ref: HEAD
-      resolved-ref: cad334d5a29ef204f3f770614870780fe5ff7b39
-      url: "https://github.com/codekeyz/yaroo.git"
-    source: git
-    version: "1.0.0"
+      name: yaroorm
+      sha256: "29f299a2c26dcdd3aa93385beaa41fb6a0a6e537e5401fbb8059ed2fafeb425a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
 sdks:
   dart: ">=3.2.2 <4.0.0"
