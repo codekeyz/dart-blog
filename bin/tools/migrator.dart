@@ -1,5 +1,5 @@
 // ignore: depend_on_referenced_packages
-import 'package:yaroo_cli/orm/runner.dart';
+import 'package:yaroo_cli/orm/orm.dart';
 
 import '../../database/config.dart' as orm;
 import 'migrator.reflectable.dart';

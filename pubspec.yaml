@@ -18,7 +18,7 @@ dependencies:
     git:
       url: https://github.com/codekeyz/yaroo.git
       path: packages/yaroo
-  yaroorm: ^0.0.1
+  yaroorm: ^0.0.2
   collection: ^1.18.0
 
   logger: ^2.0.2+1
