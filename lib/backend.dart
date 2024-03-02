@@ -54,9 +54,10 @@ class App extends ApplicationFactory {
     ]);
 
   @override
-  FutureOr<Response> onApplicationException(Object error, Request request, Response response) {
-    if (error is RequestValidationError) {
-      return response.json(error.errorBody, statusCode: HttpStatus.badRequest);
+  FutureOr<Response> onApplicationException(PharaohError error, Request request, Response response) {
+    final exception = error.exception;
+    if (exception is RequestValidationError) {
+      return response.json(exception.errorBody, statusCode: HttpStatus.badRequest);
     }
 
     return super.onApplicationException(error, request, response);
