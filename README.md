@@ -17,7 +17,7 @@ $ dart run --enable-asserts bin/tools/migrator.dart migrate
 ### Start Server
 
 ```shell
-$ dart run
+$ dart run --enable-asserts
 ```
 
 ### Tests
