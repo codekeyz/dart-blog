@@ -14,17 +14,17 @@ final publicRoutes = Route.group('api', [
   ]),
 ]);
 
-List<RouteDefinition> authRoutes = [
-  /// Users
+final authRoutes = Route.middleware('api:auth').group('api', [
+  // Users
   Route.group('users', [
     Route.get('/', (UserController, #index)),
     Route.get('/me', (UserController, #currentUser)),
   ]),
 
-  /// Articles
+  // Articles
   Route.group('articles', [
     Route.post('/', (ArticleController, #create)),
     Route.put('/<articleId>', (ArticleController, #update)),
     Route.delete('/<articleId>', (ArticleController, #delete)),
   ]),
-];
+]);
