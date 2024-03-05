@@ -4,7 +4,7 @@ import 'dart:isolate';
 
 import 'package:backend/src/models/dto/article_dto.dart';
 import 'package:backend/src/models/models.dart';
-import 'package:yaroo/yaroo.dart';
+import 'package:pharaoh/next/core.dart';
 import 'package:yaroorm/yaroorm.dart';
 import 'package:http/http.dart' as http;
 

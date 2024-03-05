@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:backend/src/models/models.dart';
 import 'package:collection/collection.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'package:yaroo/http/http.dart';
+import 'package:pharaoh/next/http.dart';
 
 class AuthService {
   final String jwtKey;

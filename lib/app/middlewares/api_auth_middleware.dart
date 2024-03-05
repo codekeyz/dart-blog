@@ -1,7 +1,7 @@
 import 'package:backend/src/services/services.dart';
-import 'package:yaroo/http/http.dart';
+import 'package:pharaoh/next/http.dart';
 
-class ApiAuthMiddleware extends Middleware {
+class ApiAuthMiddleware extends ClassMiddleware {
   final AuthService _authService;
   final UserService _userService;
 

@@ -1,7 +1,7 @@
 import 'package:backend/src/models/models.dart';
 import 'package:backend/src/services/services.dart';
-import 'package:yaroo/http/http.dart';
-import 'package:yaroo/http/meta.dart';
+import 'package:pharaoh/next/http.dart';
+import 'package:pharaoh/next/router.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 class UserController extends HTTPController {

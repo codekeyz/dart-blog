@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:backend/backend.dart';
-import 'package:yaroo/yaroo.dart';
+import 'package:spookie/spookie.dart';
 import 'package:yaroorm/yaroorm.dart';
 import '../database/config.dart' as orm;
 
