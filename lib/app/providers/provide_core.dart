@@ -1,7 +1,6 @@
 import 'package:backend/src/services/services.dart';
 import 'package:logger/logger.dart';
 import 'package:pharaoh/next/http.dart';
-import 'package:pharaoh/pharaoh.dart';
 
 class CoreProvider extends ServiceProvider {
   @override

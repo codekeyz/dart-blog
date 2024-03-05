@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:pharaoh/next/http.dart';
 import 'package:pharaoh/next/router.dart';
-import 'package:pharaoh/pharaoh.dart';
 
 import 'package:yaroorm/yaroorm.dart';
 import 'package:backend/src/models/dto/dto.dart';

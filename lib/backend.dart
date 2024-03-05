@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:pharaoh/next/core.dart';
 import 'package:pharaoh/next/http.dart';
 import 'package:pharaoh/next/router.dart';
-import 'package:pharaoh/pharaoh.dart';
 import 'package:uuid/v4.dart';
 
 import 'app/middlewares/core_middleware.dart';

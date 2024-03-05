@@ -1,6 +1,5 @@
 import 'package:logger/logger.dart';
 import 'package:pharaoh/next/http.dart';
-import 'package:pharaoh/pharaoh.dart';
 
 class CoreMiddleware extends ClassMiddleware {
   late Middleware _webMdw;
