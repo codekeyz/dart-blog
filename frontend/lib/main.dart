@@ -1,5 +1,4 @@
 import 'package:fast_cached_network_image/fast_cached_network_image.dart';
-import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:frontend/blog/widgets/article_form.dart';
 import 'package:frontend/blog/blog_detail.dart';
