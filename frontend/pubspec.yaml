@@ -5,26 +5,26 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.2.2
+  sdk: ^3.0.0
 
 dependencies:
   flutter:
     sdk: flutter
   go_router: ^13.0.1
   fluent_ui: ^4.8.3
-  url_launcher: ^6.2.2
+  url_launcher:
   cherry_toast: ^1.6.4
 
-  http: ^1.1.2
+  http:
   json_annotation: ^4.8.1
   provider: ^6.1.1
-  meta: ^1.10.0
+  meta:
   get_it: ^7.6.4
-  collection: ^1.18.0
+  collection:
   timeago: ^3.6.0
   fast_cached_network_image: ^1.2.0
   markdown_widget:
-  appflowy_editor: ^2.2.0
+  appflowy_editor:
   localstorage: ^4.0.1+4
 
 dev_dependencies:
