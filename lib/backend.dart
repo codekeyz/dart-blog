@@ -12,7 +12,7 @@ import 'app/providers/providers.dart';
 
 export 'src/controllers/controllers.dart';
 export 'src/models/models.dart';
-export 'src/models/dto/dto.dart';
+export 'src/dto/dto.dart';
 
 bool get isDebugMode {
   var isDebug = false;

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:backend/src/models/dto/article_dto.dart';
+import 'package:backend/src/dto/article_dto.dart';
 import 'package:backend/src/models/models.dart';
 import 'package:yaroo/yaroo.dart';
 import 'package:yaroorm/yaroorm.dart';

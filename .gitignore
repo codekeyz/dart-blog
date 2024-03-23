@@ -1,6 +1,7 @@
 .dart_tool/
 *.g.dart
 *.sqlite
+*.entity.dart
 
 
 _yoorm_tool/
