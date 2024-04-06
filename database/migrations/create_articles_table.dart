@@ -8,7 +8,10 @@ class CreateArticlesTable extends Migration {
     final arc = ArticleSchema
       ..foreign<User>(
         column: 'ownerId',
-        onKey: (fkey) => fkey.actions(onDelete: ForeignKeyAction.cascade, onUpdate: ForeignKeyAction.cascade),
+        onKey: (fkey) => fkey.actions(
+          onDelete: ForeignKeyAction.cascade,
+          onUpdate: ForeignKeyAction.cascade,
+        ),
       );
 
     schemas.add(arc);

@@ -9,19 +9,10 @@ import 'package:yaroo/yaroo.dart';
 import 'app/middlewares/core_middleware.dart';
 import 'app/middlewares/api_auth_middleware.dart';
 import 'app/providers/providers.dart';
+import 'src/utils/utils.dart';
 
 export 'src/controllers/controllers.dart';
-export 'src/models/models.dart';
 export 'src/dto/dto.dart';
-
-bool get isDebugMode {
-  var isDebug = false;
-  assert(() {
-    isDebug = true;
-    return true;
-  }());
-  return isDebug;
-}
 
 final blogApp = App(AppConfig(
   name: 'Dart Blog',

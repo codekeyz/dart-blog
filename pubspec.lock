@@ -106,7 +106,7 @@ packages:
     source: hosted
     version: "2.4.2"
   build_runner:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: build_runner
       sha256: "581bacf68f89ec8792f5e5a0b2c4decd1c948e97ce659dc783688c8a88fbec21"
@@ -217,6 +217,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  copy_with_extension:
+    dependency: transitive
+    description:
+      name: copy_with_extension
+      sha256: fbcf890b0c34aedf0894f91a11a579994b61b4e04080204656b582708b5b1125
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.4"
+  copy_with_extension_gen:
+    dependency: "direct dev"
+    description:
+      name: copy_with_extension_gen
+      sha256: "51cd11094096d40824c8da629ca7f16f3b7cea5fc44132b679617483d43346b0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.4"
   coverage:
     dependency: transitive
     description:
@@ -977,5 +993,12 @@ packages:
       relative: true
     source: path
     version: "0.0.2"
+  yaroorm_builder:
+    dependency: "direct dev"
+    description:
+      path: "../yaroorm/packages/generator"
+      relative: true
+    source: path
+    version: "1.0.0"
 sdks:
   dart: ">=3.3.0 <4.0.0"

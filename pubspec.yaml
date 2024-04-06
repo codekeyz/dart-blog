@@ -38,3 +38,7 @@ dev_dependencies:
   test: ^1.24.0
   json_serializable: ^6.7.1
   melos: ^3.2.0
+  build_runner:
+  yaroorm_builder:
+    path: ../yaroorm/packages/generator
+  copy_with_extension_gen: ^5.0.4

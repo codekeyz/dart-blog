@@ -1,10 +1,9 @@
-import 'package:yaroorm/migration.dart';
 import 'package:yaroorm/yaroorm.dart';
 
-part 'article.entity.dart';
+part 'article.g.dart';
 
-@Table('articles')
-class Article extends _$ArticleEntity {
+@Table('articles', converters: [dateTimeConverter, booleanConverter])
+class Article extends Entity {
   @primaryKey
   final int id;
 

@@ -1,12 +1,10 @@
-import 'package:backend/src/models/article/article.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:yaroorm/migration.dart';
 import 'package:yaroorm/yaroorm.dart';
 
-part 'user.entity.dart';
+part 'user.g.dart';
 
 @Table('users')
-class User extends _$UserEntity {
+class User extends Entity {
   @primaryKey
   final int id;
 
@@ -32,7 +30,7 @@ class User extends _$UserEntity {
     required this.updatedAt,
   });
 
-  HasMany<Article> get articles => hasMany<Article>();
+  // HasMany<Article> get articles => hasMany<Article>();
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,

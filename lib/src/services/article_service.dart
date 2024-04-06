@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:backend/src/dto/article_dto.dart';
+import 'package:backend/src/models/article/article.dart';
 import 'package:backend/src/models/models.dart';
 import 'package:yaroo/yaroo.dart';
 import 'package:yaroorm/yaroorm.dart';
@@ -20,7 +21,14 @@ class ArticleService {
 
   Future<Article> createArticle(User user, CreateArticleDTO data, {String? imageUrl}) async {
     imageUrl ??= await getRandomImage(data.title);
-    return Article(user.id!, data.title, data.description, imageUrl: imageUrl).save();
+
+    return await ArticleQuery.create(
+      title: data.title,
+      description: data.description,
+      ownerId: user.id,
+      updatedAt: DateTime.now(),
+      imageUrl: imageUrl,
+    );
   }
 
   Future<Article?> updateArticle(User user, int articleId, CreateArticleDTO dto) async {

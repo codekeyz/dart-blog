@@ -1,4 +1,4 @@
-import 'package:backend/backend.dart';
+import 'package:backend/src/utils/utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:yaroo/yaroo.dart';
 import 'package:yaroorm/yaroorm.dart';
@@ -7,7 +7,7 @@ import './migrations/create_articles_table.dart';
 import './migrations/create_users_table.dart';
 
 final config = YaroormConfig(
-  isDebugMode ? 'test_db' : 'mysql',
+  'test_db',
   connections: [
     DatabaseConnection('test_db', DatabaseDriverType.sqlite, database: path.absolute('database', 'db.sqlite')),
     DatabaseConnection(
