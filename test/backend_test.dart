@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:backend/backend.dart';
+import 'package:backend/src/models/article/article.dart';
+import 'package:backend/src/models/user/user.dart';
 import 'package:yaroo/yaroo.dart';
 import 'package:yaroorm/yaroorm.dart';
 import '../database/config.dart' as orm;
@@ -92,7 +94,7 @@ void main() {
         });
 
         test('should error on existing email', () async {
-          final randomUser = await DB.query<User>().get();
+          final randomUser = await UserQuery.get();
           expect(randomUser, isA<User>());
 
           await testAgent
@@ -181,7 +183,7 @@ void main() {
         authCookie = result.headers[HttpHeaders.setCookieHeader];
         expect(authCookie, isNotNull);
 
-        await DB.query<Article>().whereEqual('ownerId', currentUser!.id).delete();
+        await ArticleQuery.equal('ownerId', currentUser!.id).delete();
       });
 
       group('Users', () {
@@ -201,11 +203,7 @@ void main() {
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
               .expectBodyCustom(
                 (body) => User.fromJson(jsonDecode(body)['user']),
-                isA<User>().having(
-                  (user) => [user.id, user.createdAt, user.updatedAt].every((e) => e != null),
-                  'user with properties',
-                  isTrue,
-                ),
+                isA<User>(),
               )
               .test();
         });
@@ -215,7 +213,7 @@ void main() {
           expect(randomUser, isA<User>());
 
           await testAgent
-              .get('$usersApiPath/${randomUser!.id!}')
+              .get('$usersApiPath/${randomUser!.id}')
               .expectStatus(HttpStatus.ok)
               .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
               .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toJson())
@@ -323,7 +321,7 @@ void main() {
           });
 
           test('should update article', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+            final article = await ArticleQuery.equal('ownerId', currentUser!.id).findOne();
             expect(article, isA<Article>());
 
             expect(article!.title, isNot('Honey'));
@@ -367,7 +365,7 @@ void main() {
           });
 
           test('should delete article', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+            final article = await ArticleQuery.equal('ownerId', currentUser!.id).findOne();
             expect(article, isA<Article>());
 
             await testAgent
@@ -376,7 +374,7 @@ void main() {
                 .expectJsonBody({'message': 'Article deleted'})
                 .test();
 
-            expect(await DB.query<Article>().get(article.id!), isNull);
+            expect(await DB.query<Article>().get(article.id), isNull);
           });
         });
 
@@ -401,7 +399,7 @@ void main() {
           });
 
           test('should show article without auth', () async {
-            final article = await DB.query<Article>().whereEqual('ownerId', currentUser!.id!).findOne();
+            final article = await ArticleQuery.equal('ownerId', currentUser!.id).findOne();
             expect(article, isA<Article>());
 
             await testAgent

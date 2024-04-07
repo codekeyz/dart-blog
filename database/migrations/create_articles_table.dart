@@ -1,6 +1,6 @@
 import 'package:backend/src/models/article/article.dart';
 import 'package:backend/src/models/user/user.dart';
-import 'package:yaroorm/migration.dart';
+import 'package:yaroorm/yaroorm.dart';
 
 class CreateArticlesTable extends Migration {
   @override

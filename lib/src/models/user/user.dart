@@ -1,4 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 part 'user.g.dart';
@@ -12,7 +11,6 @@ class User extends Entity {
 
   final String email;
 
-  @JsonKey(includeToJson: false, defaultValue: '')
   final String password;
 
   @createdAtCol

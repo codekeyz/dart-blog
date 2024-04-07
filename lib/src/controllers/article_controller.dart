@@ -3,7 +3,8 @@ import 'package:backend/src/services/services.dart';
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
 
-import '../models/models.dart';
+import '../models/article/article.dart';
+import '../models/user/user.dart';
 
 class ArticleController extends HTTPController {
   final ArticleService _articleService;
@@ -38,7 +39,7 @@ class ArticleController extends HTTPController {
   }
 
   Future<Response> delete(@param int articleId) async {
-    await _articleService.deleteArticle(user.id!, articleId);
+    await _articleService.deleteArticle(user.id, articleId);
     return response.json({'message': 'Article deleted'});
   }
 

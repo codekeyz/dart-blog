@@ -1,5 +1,5 @@
 import 'package:backend/src/models/user/user.dart';
-import 'package:yaroorm/migration.dart';
+import 'package:yaroorm/yaroorm.dart';
 
 class CreateUsersTable extends Migration {
   @override
