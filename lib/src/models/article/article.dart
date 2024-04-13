@@ -1,5 +1,7 @@
 import 'package:yaroorm/yaroorm.dart';
 
+import '../user/user.dart';
+
 part 'article.g.dart';
 
 @Table('articles', converters: [dateTimeConverter, booleanConverter])
@@ -12,6 +14,7 @@ class Article extends Entity {
 
   final String? imageUrl;
 
+  @reference(User, name: 'owner_id', onDelete: ForeignKeyAction.cascade)
   final int ownerId;
 
   @createdAtCol

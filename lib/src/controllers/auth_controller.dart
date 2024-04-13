@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
-import 'package:backend/src/dto/dto.dart';
-import 'package:backend/src/services/services.dart';
+
 import 'package:bcrypt/bcrypt.dart';
 
+import '../dto/dto.dart';
 import '../models/user/user.dart';
+import '../services/services.dart';
 
 class AuthController extends HTTPController {
   final AuthService _authService;
@@ -14,7 +15,7 @@ class AuthController extends HTTPController {
   AuthController(this._authService);
 
   Future<Response> login(@body LoginUserDTO data) async {
-    final user = await UserQuery.equal('email', data.email).findOne();
+    final user = await UserQuery.findByEmail(data.email);
     if (user == null) return invalidLogin;
 
     final match = BCrypt.checkpw(data.password, user.password);
@@ -27,7 +28,7 @@ class AuthController extends HTTPController {
   }
 
   Future<Response> register(@body CreateUserDTO data) async {
-    final existing = await UserQuery.equal('email', data.email).findOne();
+    final existing = await UserQuery.findByEmail(data.email);
     if (existing != null) {
       return response.json(_makeError(['Email already taken']), statusCode: HttpStatus.badRequest);
     }
