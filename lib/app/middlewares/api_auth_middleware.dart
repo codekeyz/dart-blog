@@ -13,7 +13,7 @@ class ApiAuthMiddleware extends Middleware {
     final userId = _authService.validateRequest(req);
     if (userId == null) return next(res.unauthorized());
 
-    final user = await UserQuery.get(userId);
+    final user = await UserQuery.findById(userId);
     if (user == null) return next(res.unauthorized());
 
     return next(req..auth = user);
