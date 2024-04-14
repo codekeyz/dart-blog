@@ -28,9 +28,12 @@ class AuthController extends HTTPController {
   }
 
   Future<Response> register(@body CreateUserDTO data) async {
-    final existing = await UserQuery.findByEmail(data.email);
-    if (existing != null) {
-      return response.json(_makeError(['Email already taken']), statusCode: HttpStatus.badRequest);
+    final userExists = await UserQuery.where((user) => user.email(data.email)).exists();
+    if (userExists) {
+      return response.json(
+        _makeError(['Email already taken']),
+        statusCode: HttpStatus.badRequest,
+      );
     }
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());

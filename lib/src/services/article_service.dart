@@ -14,7 +14,10 @@ class ArticleService {
   Future<List<Article>> getArticles({int? ownerId}) async {
     if (ownerId == null) {
       return ArticleQuery.findMany(
-        orderBy: [OrderArticleBy.updatedAt(OrderDirection.desc)],
+        orderBy: [
+          OrderArticleBy.title(OrderDirection.asc),
+          OrderArticleBy.updatedAt(OrderDirection.desc),
+        ],
       );
     }
 
@@ -25,7 +28,7 @@ class ArticleService {
     );
   }
 
-  Future<Article?> getArticle(int articleId) => DB.query<Article>().findById(articleId);
+  Future<Article?> getArticle(int articleId) => ArticleQuery.findById(articleId);
 
   Future<Article> createArticle(User user, CreateArticleDTO data, {String? imageUrl}) async {
     imageUrl ??= await getRandomImage(data.title);
@@ -44,8 +47,7 @@ class ArticleService {
           article.ownerId(user.id),
         ]));
 
-    final article = await query.findOne();
-    if (article == null) return null;
+    if (!(await query.exists())) return null;
 
     await query.update(
       title: value(dto.title),
@@ -57,7 +59,10 @@ class ArticleService {
   }
 
   Future<void> deleteArticle(int userId, int articleId) {
-    return DB.query<Article>().where((article) => article.id(articleId)).delete();
+    return ArticleQuery.where((article) => article.and([
+          article.id(articleId),
+          article.ownerId(userId),
+        ])).delete();
   }
 
   Future<String?> getRandomImage(String searchText) async {
