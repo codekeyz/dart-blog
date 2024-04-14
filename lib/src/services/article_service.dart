@@ -11,14 +11,14 @@ import 'package:http/http.dart' as http;
 import '../models/user/user.dart';
 
 class ArticleService {
-  Future<List<Article>> getArticles({String? ownerId}) async {
+  Future<List<Article>> getArticles({int? ownerId}) async {
     if (ownerId == null) {
-      return DB.query<Article>().findMany(
+      return ArticleQuery.findMany(
         orderBy: [OrderArticleBy.updatedAt(OrderDirection.desc)],
       );
     }
 
-    return DB.query<Article>().where((article) => article.ownerId(int.parse(ownerId))).findMany(
+    return ArticleQuery.where((article) => article.ownerId(ownerId)).findMany(
       orderBy: [
         OrderArticleBy.updatedAt(OrderDirection.desc),
       ],
@@ -39,7 +39,7 @@ class ArticleService {
   }
 
   Future<Article?> updateArticle(User user, int articleId, CreateArticleDTO dto) async {
-    final query = DB.query<Article>().where((article) => article.and([
+    final query = ArticleQuery.where((article) => article.and([
           article.id(articleId),
           article.ownerId(user.id),
         ]));
