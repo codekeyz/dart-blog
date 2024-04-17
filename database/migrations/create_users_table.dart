@@ -1,22 +1,14 @@
-import 'package:yaroorm/migration.dart';
+import 'package:backend/src/models/user/user.dart';
+import 'package:yaroorm/yaroorm.dart';
 
 class CreateUsersTable extends Migration {
   @override
   void up(List schemas) {
-    final userSchema = Schema.create('users', (table) {
-      return table
-        ..id()
-        ..string('name')
-        ..string('email')
-        ..string('password')
-        ..timestamps();
-    });
-
-    schemas.add(userSchema);
+    schemas.add(UserSchema);
   }
 
   @override
   void down(List schemas) {
-    schemas.add(Schema.dropIfExists('users'));
+    schemas.add(Schema.dropIfExists(UserSchema));
   }
 }

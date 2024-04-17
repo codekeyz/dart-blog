@@ -2,20 +2,20 @@ import 'dart:io';
 
 import 'package:yaroo/http/http.dart';
 import 'package:yaroo/http/meta.dart';
-import 'package:yaroorm/yaroorm.dart';
-import 'package:backend/src/models/dto/dto.dart';
-import 'package:backend/src/models/models.dart';
-import 'package:backend/src/services/services.dart';
+
 import 'package:bcrypt/bcrypt.dart';
+
+import '../dto/dto.dart';
+import '../models/user/user.dart';
+import '../services/services.dart';
 
 class AuthController extends HTTPController {
   final AuthService _authService;
-  final UserService _userService;
 
-  AuthController(this._authService, this._userService);
+  AuthController(this._authService);
 
   Future<Response> login(@body LoginUserDTO data) async {
-    final user = await DB.query<User>().whereEqual('email', data.email).findOne();
+    final user = await UserQuery.findByEmail(data.email);
     if (user == null) return invalidLogin;
 
     final match = BCrypt.checkpw(data.password, user.password);
@@ -28,13 +28,16 @@ class AuthController extends HTTPController {
   }
 
   Future<Response> register(@body CreateUserDTO data) async {
-    final existing = await DB.query<User>().whereEqual('email', data.email).findOne();
-    if (existing != null) {
-      return response.json(_makeError(['Email already taken']), statusCode: HttpStatus.badRequest);
+    final userExists = await UserQuery.where((user) => user.email(data.email)).exists();
+    if (userExists) {
+      return response.json(
+        _makeError(['Email already taken']),
+        statusCode: HttpStatus.badRequest,
+      );
     }
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());
-    final newUser = await _userService.newUser(data.name, data.email, hashedPass);
+    final newUser = await UserQuery.create(name: data.name, email: data.email, password: hashedPass);
 
     return response.json(_userResponse(newUser));
   }

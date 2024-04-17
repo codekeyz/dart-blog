@@ -18,7 +18,8 @@ dependencies:
     git:
       url: https://github.com/codekeyz/yaroo.git
       path: packages/yaroo
-  yaroorm: ^0.0.2
+  yaroorm:
+    path: ../yaroorm/packages/orm
   collection: ^1.18.0
 
   logger: ^2.0.2+1
@@ -27,13 +28,16 @@ dependencies:
 
 dependency_overrides:
   reflectable:
+  yaroo_cli:
+    path: ../yaroorm/packages/orm_cli
+  yaroorm:
+    path: ../yaroorm/packages/orm
 
 dev_dependencies:
   lints: ^3.0.0
   test: ^1.24.0
   json_serializable: ^6.7.1
   melos: ^3.2.0
-  yaroo_cli:
-    git:
-      url: https://github.com/codekeyz/yaroo.git
-      path: packages/yaroo_cli
+  build_runner:
+  yaroorm_builder:
+    path: ../yaroorm/packages/generator
