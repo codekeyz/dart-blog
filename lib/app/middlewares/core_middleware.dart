@@ -1,8 +1,8 @@
 import 'package:logger/logger.dart';
-import 'package:yaroo/http/http.dart';
+import 'package:pharaoh/next/http.dart';
 
-class CoreMiddleware extends Middleware {
-  late HandlerFunc _webMdw;
+class CoreMiddleware extends ClassMiddleware {
+  late Middleware _webMdw;
   final Logger _logger;
 
   CoreMiddleware(this._logger) {
@@ -24,5 +24,5 @@ class CoreMiddleware extends Middleware {
   }
 
   @override
-  HandlerFunc get handler => _webMdw;
+  Middleware get handler => _webMdw;
 }

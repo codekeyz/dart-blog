@@ -1,7 +1,7 @@
 import 'package:backend/src/dto/article_dto.dart';
 import 'package:backend/src/services/services.dart';
-import 'package:yaroo/http/http.dart';
-import 'package:yaroo/http/meta.dart';
+import 'package:pharaoh/next/http.dart';
+import 'package:pharaoh/next/router.dart';
 
 import '../models/article/article.dart';
 import '../models/user/user.dart';

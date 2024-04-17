@@ -1,6 +1,6 @@
 import 'package:backend/src/utils/utils.dart';
 import 'package:path/path.dart' as path;
-import 'package:yaroo/yaroo.dart';
+import 'package:pharaoh/next/core.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 import './migrations/create_articles_table.dart';

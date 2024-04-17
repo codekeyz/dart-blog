@@ -1,4 +1,4 @@
-import 'package:yaroo/foundation/validation.dart';
+import 'package:pharaoh/next/validation.dart';
 
 class CreateArticleDTO extends BaseDTO {
   @ezMinLength(5)

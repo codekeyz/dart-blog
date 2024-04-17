@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:backend/backend.dart';
 import 'package:backend/src/models/article/article.dart';
 import 'package:backend/src/models/user/user.dart';
-import 'package:yaroo/yaroo.dart';
+import 'package:spookie/spookie.dart';
 import 'package:yaroorm/yaroorm.dart';
 import '../database/config.dart' as orm;
 

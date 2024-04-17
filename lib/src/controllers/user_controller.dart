@@ -1,5 +1,5 @@
-import 'package:yaroo/http/http.dart';
-import 'package:yaroo/http/meta.dart';
+import 'package:pharaoh/next/http.dart';
+import 'package:pharaoh/next/router.dart';
 
 import '../models/user/user.dart';
 
