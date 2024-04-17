@@ -22,7 +22,6 @@ include: package:lints/recommended.yaml
 analyzer:
   exclude:
     - "**.reflectable.dart"
-    # - "**.g.dart"
 # For more information about the core and recommended set of lints, see
 # https://dart.dev/go/core-lints
 
