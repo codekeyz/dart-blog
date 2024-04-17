@@ -5,7 +5,7 @@ import '../user/user.dart';
 part 'article.g.dart';
 
 @Table('articles', converters: [dateTimeConverter, booleanConverter])
-class Article extends Entity {
+class Article extends Entity<Article> {
   @primaryKey
   final int id;
 
@@ -32,6 +32,8 @@ class Article extends Entity {
     required this.createdAt,
     required this.updatedAt,
   });
+
+  BelongsTo<Article, User> get owner => belongsTo<User>();
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,

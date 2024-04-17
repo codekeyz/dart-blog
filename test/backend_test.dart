@@ -15,6 +15,9 @@ void main() {
 
   DB.init(orm.config);
 
+  Query.addTypeDef<User>(userTypeData);
+  Query.addTypeDef<Article>(articleTypeData);
+
   late Spookie testAgent;
 
   setUpAll(() async {
@@ -183,7 +186,7 @@ void main() {
         authCookie = result.headers[HttpHeaders.setCookieHeader];
         expect(authCookie, isNotNull);
 
-        await ArticleQuery.where((article) => article.ownerId(currentUser!.id)).delete();
+        await currentUser!.articles.delete();
       });
 
       group('Users', () {

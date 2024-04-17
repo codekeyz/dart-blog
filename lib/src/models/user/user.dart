@@ -1,9 +1,11 @@
 import 'package:yaroorm/yaroorm.dart';
 
+import '../article/article.dart';
+
 part 'user.g.dart';
 
 @Table('users')
-class User extends Entity {
+class User extends Entity<User> {
   @primaryKey
   final int id;
 
@@ -28,7 +30,7 @@ class User extends Entity {
     required this.updatedAt,
   });
 
-  // HasMany<Article> get articles => hasMany<Article>();
+  HasMany<User, Article> get articles => hasMany<Article>();
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
