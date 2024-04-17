@@ -4,7 +4,9 @@ import 'dart:isolate';
 
 import 'package:pharaoh/next/core.dart';
 import 'package:http/http.dart' as http;
+import 'package:yaroorm/yaroorm.dart';
 
+import '../dto/article_dto.dart';
 import '../models/article/article.dart';
 import '../models/user/user.dart';
 
