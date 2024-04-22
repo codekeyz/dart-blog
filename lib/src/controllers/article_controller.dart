@@ -24,8 +24,11 @@ class ArticleController extends HTTPController {
 
   Future<Response> create(@body CreateArticleDTO data) async {
     var imageUrl = data.imageUrl;
+
     if (app.config.isDebug) {
       imageUrl ??= 'https://dart.dev/assets/shared/dart-logo-for-shares.png';
+    } else {
+      imageUrl ??= await getRandomImage(data.title);
     }
 
     final article = await user.articles.insert(NewArticleForUser(
