@@ -1,13 +1,13 @@
-import 'package:backend/src/utils/utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:pharaoh/next/core.dart';
 import 'package:yaroorm/yaroorm.dart';
 
-import './migrations/create_articles_table.dart';
-import './migrations/create_users_table.dart';
-
+@DB.useConfig
 final config = YaroormConfig(
-  isDebugMode ? 'test_db' : 'mysql',
+  // isDebugMode ?
+  'test_db'
+  //  : 'mysql'
+  ,
   connections: [
     DatabaseConnection('test_db', DatabaseDriverType.sqlite, database: path.absolute('database', 'db.sqlite')),
     DatabaseConnection(
@@ -21,5 +21,4 @@ final config = YaroormConfig(
       secure: true,
     ),
   ],
-  migrations: [CreateUsersTable(), CreateArticlesTable()],
 );

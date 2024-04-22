@@ -3,12 +3,12 @@ import 'package:yaroorm/yaroorm.dart';
 
 class CreateUsersTable extends Migration {
   @override
-  void up(List schemas) {
+  void up(List<Schema> schemas) {
     schemas.add(UserSchema);
   }
 
   @override
-  void down(List schemas) {
+  void down(List<Schema> schemas) {
     schemas.add(Schema.dropIfExists(UserSchema));
   }
 }

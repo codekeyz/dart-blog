@@ -19,7 +19,7 @@ dependencies:
       url: https://github.com/codekeyz/pharaoh.git
       path: packages/pharaoh
   yaroorm:
-    path: ../yaroorm/packages/orm
+    path: ../yaroorm
   collection: ^1.18.0
 
   logger: ^2.0.2+1
@@ -28,10 +28,6 @@ dependencies:
 
 dependency_overrides:
   reflectable:
-  yaroo_cli:
-    path: ../yaroorm/packages/orm_cli
-  yaroorm:
-    path: ../yaroorm/packages/orm
 
 dev_dependencies:
   lints: ^3.0.0
@@ -40,5 +36,3 @@ dev_dependencies:
   melos: ^3.2.0
   build_runner:
   spookie: 
-  yaroorm_builder:
-    path: ../yaroorm/packages/generator

@@ -6,14 +6,13 @@ import 'package:backend/src/models/article/article.dart';
 import 'package:backend/src/models/user/user.dart';
 import 'package:spookie/spookie.dart';
 import 'package:yaroorm/yaroorm.dart';
-import '../database/config.dart' as orm;
+import '../database/database.dart' as database;
 
 import 'backend_test.reflectable.dart';
 
 void main() {
   initializeReflectable();
-
-  DB.init(orm.config);
+  database.initializeORM();
 
   Query.addTypeDef<User>(userTypeData);
   Query.addTypeDef<Article>(articleTypeData);

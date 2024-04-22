@@ -33,7 +33,7 @@ class Article extends Entity<Article> {
     required this.updatedAt,
   });
 
-  BelongsTo<Article, User> get owner => belongsTo<User>();
+  // BelongsTo<Article, User> get owner => belongsTo<User>();
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,

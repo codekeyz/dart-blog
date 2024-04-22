@@ -8,7 +8,7 @@ class CreateArticlesTable extends Migration {
   }
 
   @override
-  void down(List actions) {
-    actions.add(Schema.dropIfExists(ArticleSchema));
+  void down(List<Schema> schemas) {
+    schemas.add(Schema.dropIfExists(ArticleSchema));
   }
 }
