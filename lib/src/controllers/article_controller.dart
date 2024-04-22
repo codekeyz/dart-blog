@@ -28,7 +28,12 @@ class ArticleController extends HTTPController {
       imageUrl ??= 'https://dart.dev/assets/shared/dart-logo-for-shares.png';
     }
 
-    final article = await _articleService.createArticle(user, data, imageUrl: imageUrl);
+    final article = await user.articles.create(
+      title: data.title,
+      description: data.description,
+      imageUrl: imageUrl,
+    );
+
     return response.json(_articleResponse(article));
   }
 
