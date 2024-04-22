@@ -1,6 +1,7 @@
 import 'package:backend/src/dto/article_dto.dart';
 import 'package:backend/src/services/services.dart';
 import 'package:pharaoh/pharaoh_next.dart';
+import 'package:yaroorm/yaroorm.dart';
 
 import '../models/article.dart';
 import '../models/user.dart';
@@ -27,8 +28,13 @@ class ArticleController extends HTTPController {
       imageUrl ??= 'https://dart.dev/assets/shared/dart-logo-for-shares.png';
     }
 
-    final article = await _articleService.createArticle(user, data, imageUrl: imageUrl);
-    return jsonResponse(_articleResponse(article));
+    final article = await user.articles.insert(NewArticleForUser(
+      title: data.title,
+      description: data.description,
+      imageUrl: Value(imageUrl),
+    ));
+
+    return response.json(_articleResponse(article));
   }
 
   Future<Response> update(@param int articleId, @body CreateArticleDTO data) async {
