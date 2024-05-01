@@ -1,7 +1,6 @@
+import 'package:backend/src/models/user/user.dart';
+import 'package:backend/src/services/services.dart';
 import 'package:pharaoh/next/http.dart';
-
-import '../../src/models/user/user.dart';
-import '../../src/services/auth_service.dart';
 
 class ApiAuthMiddleware extends ClassMiddleware {
   final AuthService _authService;

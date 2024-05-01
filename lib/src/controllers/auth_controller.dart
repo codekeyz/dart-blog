@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:pharaoh/next/http.dart';
 import 'package:pharaoh/next/router.dart';
 
+import 'package:backend/src/services/services.dart';
 import 'package:bcrypt/bcrypt.dart';
 
 import '../dto/dto.dart';
 import '../models/user/user.dart';
-import '../services/services.dart';
 
 class AuthController extends HTTPController {
   final AuthService _authService;

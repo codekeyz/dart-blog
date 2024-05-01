@@ -4,11 +4,14 @@ import 'package:yaroorm/yaroorm.dart';
 class CreateArticlesTable extends Migration {
   @override
   void up(List<Schema> schemas) {
-    schemas.add(ArticleSchema);
+    schemas.addAll([ArticleSchema, ArticleCommentSchema]);
   }
 
   @override
   void down(List<Schema> schemas) {
-    schemas.add(Schema.dropIfExists(ArticleSchema));
+    schemas.addAll([
+      Schema.dropIfExists(ArticleCommentSchema),
+      Schema.dropIfExists(ArticleSchema),
+    ]);
   }
 }

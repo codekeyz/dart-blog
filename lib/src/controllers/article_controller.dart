@@ -5,6 +5,7 @@ import 'package:pharaoh/next/router.dart';
 
 import '../models/article/article.dart';
 import '../models/user/user.dart';
+import '../utils/utils.dart';
 
 class ArticleController extends HTTPController {
   final ArticleService _articleService;
@@ -24,11 +25,19 @@ class ArticleController extends HTTPController {
 
   Future<Response> create(@body CreateArticleDTO data) async {
     var imageUrl = data.imageUrl;
+
     if (app.config.isDebug) {
       imageUrl ??= 'https://dart.dev/assets/shared/dart-logo-for-shares.png';
+    } else {
+      imageUrl ??= await getRandomImage(data.title);
     }
 
-    final article = await _articleService.createArticle(user, data, imageUrl: imageUrl);
+    final article = await user.articles.add(
+      title: data.title,
+      description: data.description,
+      imageUrl: imageUrl,
+    );
+
     return response.json(_articleResponse(article));
   }
 
