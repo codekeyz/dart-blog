@@ -33,7 +33,9 @@ class Article extends Entity<Article> {
     required this.updatedAt,
   });
 
-  // BelongsTo<Article, User> get owner => belongsTo<User>();
+  BelongsTo<Article, User> get owner => belongsTo<User>();
+
+  HasMany<Article, ArticleComment> get comments => hasMany<ArticleComment>();
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
@@ -54,4 +56,20 @@ class Article extends Entity<Article> {
         createdAt: DateTime.parse(json['createdAt'] as String),
         updatedAt: DateTime.parse(json['updatedAt'] as String),
       );
+}
+
+@Table('article_comments')
+class ArticleComment extends Entity<ArticleComment> {
+  @primaryKey
+  final String id;
+
+  @reference(User)
+  final int userId;
+
+  @reference(Article)
+  final int articleId;
+
+  final String message;
+
+  ArticleComment(this.id, this.message, {required this.userId, required this.articleId});
 }

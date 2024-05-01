@@ -13,6 +13,7 @@ void initializeORM() {
   /// Add Type Definitions to Query Runner
   Query.addTypeDef<User>(userTypeData);
   Query.addTypeDef<Article>(articleTypeData);
+  Query.addTypeDef<ArticleComment>(article_commentTypeData);
 
   /// Configure Migrations Order
   DB.migrations.addAll([
