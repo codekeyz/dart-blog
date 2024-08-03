@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:pharaoh/next/http.dart';
-import 'package:pharaoh/next/router.dart';
-
 import 'package:bcrypt/bcrypt.dart';
+import 'package:pharaoh/pharaoh.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 
 import '../dto/dto.dart';
 import '../models/user/user.dart';
@@ -37,7 +36,11 @@ class AuthController extends HTTPController {
     }
 
     final hashedPass = BCrypt.hashpw(data.password, BCrypt.gensalt());
-    final newUser = await UserQuery.create(name: data.name, email: data.email, password: hashedPass);
+    final newUser = await UserQuery.insert(NewUser(
+      name: data.name,
+      email: data.email,
+      password: hashedPass,
+    ));
 
     return response.json(_userResponse(newUser));
   }

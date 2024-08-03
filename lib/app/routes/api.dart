@@ -1,5 +1,5 @@
 import 'package:backend/src/controllers/controllers.dart';
-import 'package:pharaoh/next/router.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 
 List<RouteDefinition> routes = [
   /// Users

@@ -4,7 +4,7 @@ import '../article/article.dart';
 
 part 'user.g.dart';
 
-@Table('users')
+@table
 class User extends Entity<User> {
   @primaryKey
   final int id;
@@ -30,7 +30,7 @@ class User extends Entity<User> {
     required this.updatedAt,
   });
 
-  HasMany<User, Article> get articles => hasMany<Article>();
+  HasMany<User, Article> get articles => hasMany<Article>(#articles);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,

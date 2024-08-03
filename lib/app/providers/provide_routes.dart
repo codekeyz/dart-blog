@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:backend/backend.dart';
-import 'package:pharaoh/next/http.dart';
-import 'package:pharaoh/next/router.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 
 import '../routes/api.dart' as api;
 import '../routes/web.dart' as web;

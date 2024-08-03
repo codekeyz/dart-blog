@@ -1,4 +1,4 @@
-import 'package:pharaoh/next/http.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 class DatabaseServiceProvider extends ServiceProvider {

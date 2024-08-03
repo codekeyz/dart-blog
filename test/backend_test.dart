@@ -5,17 +5,14 @@ import 'package:backend/backend.dart';
 import 'package:backend/src/models/article/article.dart';
 import 'package:backend/src/models/user/user.dart';
 import 'package:spookie/spookie.dart';
-import 'package:yaroorm/yaroorm.dart';
 import '../database/database.dart' as database;
 
 import 'backend_test.reflectable.dart';
 
 void main() {
   initializeReflectable();
-  database.initializeORM();
 
-  Query.addTypeDef<User>(userTypeData);
-  Query.addTypeDef<Article>(articleTypeData);
+  database.initializeORM();
 
   late Spookie testAgent;
 

@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:backend/src/dto/article_dto.dart';
-import 'package:backend/src/models/article/article.dart';
-import 'package:pharaoh/next/core.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 import 'package:yaroorm/yaroorm.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:backend/src/dto/article_dto.dart';
+import 'package:backend/src/models/article/article.dart';
 
 import '../models/user/user.dart';
 
@@ -15,15 +16,15 @@ class ArticleService {
     if (ownerId == null) {
       return ArticleQuery.findMany(
         orderBy: [
-          OrderArticleBy.title(OrderDirection.asc),
-          OrderArticleBy.updatedAt(OrderDirection.desc),
+          OrderArticleBy.title(),
+          OrderArticleBy.updatedAt(order: OrderDirection.desc),
         ],
       );
     }
 
     return ArticleQuery.where((article) => article.ownerId(ownerId)).findMany(
       orderBy: [
-        OrderArticleBy.updatedAt(OrderDirection.desc),
+        OrderArticleBy.updatedAt(order: OrderDirection.desc),
       ],
     );
   }
@@ -31,35 +32,35 @@ class ArticleService {
   Future<Article?> getArticle(int articleId) => ArticleQuery.findById(articleId);
 
   Future<Article> createArticle(User user, CreateArticleDTO data, {String? imageUrl}) async {
-    imageUrl ??= await getRandomImage(data.title);
+    imageUrl ??= await Isolate.run(() => getRandomImage(data.title));
 
-    return await ArticleQuery.create(
+    return await ArticleQuery.insert(NewArticle(
       title: data.title,
       description: data.description,
-      ownerId: user.id,
       imageUrl: imageUrl,
-    );
+      ownerId: user.id,
+    ));
   }
 
   Future<Article?> updateArticle(User user, int articleId, CreateArticleDTO dto) async {
-    final query = ArticleQuery.where((article) => article.and([
+    final query = ArticleQuery.where((article) => and([
           article.id(articleId),
           article.ownerId(user.id),
         ]));
 
     if (!(await query.exists())) return null;
 
-    await query.update(
+    await query.update(UpdateArticle(
       title: value(dto.title),
       description: value(dto.description),
       imageUrl: value(dto.imageUrl),
-    );
+    ));
 
     return query.findOne();
   }
 
   Future<void> deleteArticle(int userId, int articleId) {
-    return ArticleQuery.where((article) => article.and([
+    return ArticleQuery.where((article) => and([
           article.id(articleId),
           article.ownerId(userId),
         ])).delete();

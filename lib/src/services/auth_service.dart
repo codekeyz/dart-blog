@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'package:pharaoh/next/http.dart';
+import 'package:collection/collection.dart';
+import 'package:pharaoh/pharaoh.dart';
 
 import '../models/user/user.dart';
 

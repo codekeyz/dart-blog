@@ -1,4 +1,4 @@
-import 'package:pharaoh/next/validation.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 
 class CreateUserDTO extends BaseDTO {
   @ezMinLength(3)

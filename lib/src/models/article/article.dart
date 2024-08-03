@@ -1,10 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 import '../user/user.dart';
 
 part 'article.g.dart';
 
-@Table('articles', converters: [dateTimeConverter, booleanConverter])
+@table
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Article extends Entity<Article> {
   @primaryKey
   final int id;
@@ -14,7 +16,7 @@ class Article extends Entity<Article> {
 
   final String? imageUrl;
 
-  @reference(User, name: 'owner_id', onDelete: ForeignKeyAction.cascade)
+  @bindTo(User, onDelete: ForeignKeyAction.cascade)
   final int ownerId;
 
   @createdAtCol
@@ -33,25 +35,9 @@ class Article extends Entity<Article> {
     required this.updatedAt,
   });
 
-  // BelongsTo<Article, User> get owner => belongsTo<User>();
+  BelongsTo<Article, User> get owner => belongsTo<User>(#owner);
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': id,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-        'title': title,
-        'description': description,
-        'imageUrl': imageUrl,
-        'ownerId': ownerId,
-      };
+  Map<String, dynamic> toJson() => _$ArticleToJson(this);
 
-  factory Article.fromJson(Map<String, dynamic> json) => Article(
-        json['id'] as int,
-        json['title'] as String,
-        json['ownerId'] as int,
-        json['description'] as String,
-        imageUrl: json['imageUrl'] as String?,
-        createdAt: DateTime.parse(json['createdAt'] as String),
-        updatedAt: DateTime.parse(json['updatedAt'] as String),
-      );
+  factory Article.fromJson(Map<String, dynamic> json) => _$ArticleFromJson(json);
 }

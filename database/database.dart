@@ -11,8 +11,8 @@ import 'migrations/2024_04_20_003614_create_articles_table.dart' as _m1;
 
 void initializeORM() {
   /// Add Type Definitions to Query Runner
-  Query.addTypeDef<User>(userTypeData);
-  Query.addTypeDef<Article>(articleTypeData);
+  Query.addTypeDef<User>(userTypeDef);
+  Query.addTypeDef<Article>(articleTypeDef);
 
   /// Configure Migrations Order
   DB.migrations.addAll([

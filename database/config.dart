@@ -1,5 +1,5 @@
 import 'package:path/path.dart' as path;
-import 'package:pharaoh/next/core.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 @DB.useConfig

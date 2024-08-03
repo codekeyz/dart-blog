@@ -26,8 +26,6 @@ dependencies:
   dart_jsonwebtoken: ^2.12.2
   json_annotation: ^4.8.1
 
-dependency_overrides:
-  reflectable:
 
 dev_dependencies:
   lints: ^3.0.0

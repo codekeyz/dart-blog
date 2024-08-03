@@ -1,5 +1,4 @@
-import 'package:pharaoh/next/http.dart';
-import 'package:pharaoh/next/router.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 
 import '../models/user/user.dart';
 
