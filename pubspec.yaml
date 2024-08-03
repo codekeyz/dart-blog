@@ -14,12 +14,10 @@ dependencies:
   path: ^1.9.0
   bcrypt: ^1.1.3
   http: ^1.1.2
-  pharaoh:
-    git:
-      url: https://github.com/codekeyz/pharaoh.git
-      path: packages/pharaoh
+  pharaoh: ^0.0.8
   yaroorm:
-    path: ../yaroorm
+    git:
+      url: https://github.com/codekeyz/yaroorm.git
   collection: ^1.18.0
 
   logger: ^2.0.2+1
