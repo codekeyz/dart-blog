@@ -1,3 +1,4 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 import '../article/article.dart';
@@ -5,6 +6,7 @@ import '../article/article.dart';
 part 'user.g.dart';
 
 @table
+@JsonSerializable(fieldRename: FieldRename.snake)
 class User extends Entity<User> {
   @primaryKey
   final int id;
@@ -13,6 +15,7 @@ class User extends Entity<User> {
 
   final String email;
 
+  @JsonKey(includeToJson: false)
   final String password;
 
   @createdAtCol
@@ -32,20 +35,7 @@ class User extends Entity<User> {
 
   HasMany<User, Article> get articles => hasMany<Article>(#articles);
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'id': id,
-        'name': name,
-        'email': email,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-      };
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        json['id'] as int,
-        json['name'] as String,
-        json['email'] as String,
-        password: json['password'] as String? ?? '',
-        createdAt: DateTime.parse(json['createdAt'] as String),
-        updatedAt: DateTime.parse(json['updatedAt'] as String),
-      );
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

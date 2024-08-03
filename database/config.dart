@@ -1,13 +1,11 @@
+import 'package:backend/src/utils/utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:pharaoh/pharaoh_next.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 @DB.useConfig
 final config = YaroormConfig(
-  // isDebugMode ?
-  'test_db'
-  //  : 'mysql'
-  ,
+  isDebugMode ? 'test_db' : 'mysql',
   connections: [
     DatabaseConnection('test_db', DatabaseDriverType.sqlite, database: path.absolute('database', 'db.sqlite')),
     DatabaseConnection(

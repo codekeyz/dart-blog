@@ -11,7 +11,17 @@ $ dart pub get && dart run build_runner build --delete-conflicting-outputs
 ### Migrate Database
 
 ```shell
-$ dart run --enable-asserts bin/tools/migrator.dart migrate
+$ dart run yaroorm migrate
+```
+
+```shell
+┌──────────────────────────────┬──────────────────────────────┐
+│ Migration                    │ Status                       │
+├──────────────────────────────┼──────────────────────────────┤
+│ create_users_table           │ ✅ migrated                  │
+├──────────────────────────────┼──────────────────────────────┤
+│ create_articles_table        │ ✅ migrated                  │
+└──────────────────────────────┴──────────────────────────────┘
 ```
 
 ### Start Server
