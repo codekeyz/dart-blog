@@ -6,8 +6,7 @@ import 'package:backend/src/models/user/user.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 import './config.dart' as config;
-import 'migrations/2024_04_20_003612_create_users_table.dart' as _m0;
-import 'migrations/2024_04_20_003614_create_articles_table.dart' as _m1;
+import 'migrations/2024_04_20_003612_initial_setup.dart' as _m0;
 
 void initializeORM() {
   /// Add Type Definitions to Query Runner
@@ -16,8 +15,7 @@ void initializeORM() {
 
   /// Configure Migrations Order
   DB.migrations.addAll([
-    _m0.CreateUsersTable(),
-    _m1.CreateArticlesTable(),
+    _m0.InitialTableSetup(),
   ]);
 
   DB.init(config.config);

@@ -15,7 +15,7 @@ class User extends Entity<User> {
 
   final String email;
 
-  @JsonKey(includeToJson: false)
+  @JsonKey(defaultValue: '', includeToJson: false)
   final String password;
 
   @createdAtCol

@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:backend/backend.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 
 import '../routes/api.dart' as api;
+import '../routes/api.dart';
 import '../routes/web.dart' as web;
 
 class RouteServiceProvider extends ServiceProvider {
@@ -14,19 +14,11 @@ class RouteServiceProvider extends ServiceProvider {
         /*|--------------------------------------------------------------------------
           | API Routes
           |--------------------------------------------------------------------------*/
-        Route.group('api', [
-          Route.post('/auth/login', (AuthController, #login)),
-          Route.post('/auth/register', (AuthController, #register)),
 
-          Route.get('/users/<userId>', (UserController, #show)),
+        publicRoutes,
 
-          /// get articles and detail without auth
-          Route.group('articles', [
-            Route.get('/', (ArticleController, #index)),
-            Route.get('/<articleId>', (ArticleController, #show)),
-          ]),
-        ]),
-        Route.middleware('api:auth').group('api', api.routes),
+        //
+        Route.middleware('api:auth').group('api', api.authRoutes),
 
         /*|--------------------------------------------------------------------------
           | Web Routes

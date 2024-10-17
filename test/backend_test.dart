@@ -336,7 +336,7 @@ void main() {
             final updatedArticle = Article.fromJson(jsonDecode(result.body)['article']);
             expect(updatedArticle.title, 'Honey');
             expect(updatedArticle.description, 'Hold my beer lets talk');
-            expect(updatedArticle.toJson(), allOf(contains('id'), contains('createdAt'), contains('updatedAt')));
+            expect(updatedArticle.toJson(), allOf(contains('id'), contains('created_at'), contains('updated_at')));
           });
         });
 

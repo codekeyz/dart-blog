@@ -36,9 +36,9 @@ class ArticleService {
 
     return await ArticleQuery.insert(NewArticle(
       title: data.title,
-      description: data.description,
-      imageUrl: imageUrl,
       ownerId: user.id,
+      description: data.description,
+      imageUrl: Value.absentIfNull(imageUrl),
     ));
   }
 
@@ -51,9 +51,9 @@ class ArticleService {
     if (!(await query.exists())) return null;
 
     await query.update(UpdateArticle(
-      title: value(dto.title),
-      description: value(dto.description),
-      imageUrl: value(dto.imageUrl),
+      title: Value.absentIfNull(dto.title),
+      description: Value.absentIfNull(dto.description),
+      imageUrl: Value.absentIfNull(dto.imageUrl),
     ));
 
     return query.findOne();
