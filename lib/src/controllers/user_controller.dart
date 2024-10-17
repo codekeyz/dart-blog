@@ -1,6 +1,6 @@
 import 'package:pharaoh/pharaoh_next.dart';
 
-import '../models/user/user.dart';
+import '../models/user.dart';
 
 class UserController extends HTTPController {
   UserController();

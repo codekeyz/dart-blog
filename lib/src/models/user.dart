@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:yaroorm/yaroorm.dart';
 
-import '../article/article.dart';
+import 'article.dart';
 
 part 'user.g.dart';
 

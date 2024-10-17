@@ -7,9 +7,9 @@ import 'package:yaroorm/yaroorm.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:backend/src/dto/article_dto.dart';
-import 'package:backend/src/models/article/article.dart';
+import 'package:backend/src/models/article.dart';
 
-import '../models/user/user.dart';
+import '../models/user.dart';
 
 class ArticleService {
   Future<List<Article>> getArticles({int? ownerId}) async {

@@ -5,7 +5,7 @@ import 'package:pharaoh/pharaoh.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 
 import '../dto/dto.dart';
-import '../models/user/user.dart';
+import '../models/user.dart';
 import '../services/services.dart';
 
 class AuthController extends HTTPController {

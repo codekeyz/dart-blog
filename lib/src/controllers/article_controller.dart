@@ -2,8 +2,8 @@ import 'package:backend/src/dto/article_dto.dart';
 import 'package:backend/src/services/services.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 
-import '../models/article/article.dart';
-import '../models/user/user.dart';
+import '../models/article.dart';
+import '../models/user.dart';
 
 class ArticleController extends HTTPController {
   final ArticleService _articleService;

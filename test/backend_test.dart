@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:backend/backend.dart';
-import 'package:backend/src/models/article/article.dart';
-import 'package:backend/src/models/user/user.dart';
+import 'package:backend/src/models/article.dart';
+import 'package:backend/src/models/user.dart';
 import 'package:spookie/spookie.dart';
 import '../database/database.dart' as database;
 

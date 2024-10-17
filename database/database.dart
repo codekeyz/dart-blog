@@ -1,8 +1,8 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:backend/src/models/article/article.dart';
-import 'package:backend/src/models/user/user.dart';
+import 'package:backend/src/models/article.dart';
+import 'package:backend/src/models/user.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 import './config.dart' as config;
