@@ -3,8 +3,6 @@ import 'package:pharaoh/pharaoh_next.dart';
 import '../models/user.dart';
 
 class UserController extends HTTPController {
-  UserController();
-
   Future<Response> currentUser() async {
     final user = request.auth as User;
     return jsonResponse({'user': user.toJson()});

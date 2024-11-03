@@ -25,22 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
-  ansi_regex:
-    dependency: transitive
-    description:
-      name: ansi_regex
-      sha256: ca4f2b24a85e797a1512e1d3fe34d5f8429648f78e2268b6a8b5628c8430e643
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
-  ansi_strip:
-    dependency: transitive
-    description:
-      name: ansi_strip
-      sha256: "9bb54e10962ac1de86b9b64a278a5b8965a28a2f741975eac7fe9fb0ebe1aaac"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1+1"
   ansi_styles:
     dependency: transitive
     description:
@@ -153,22 +137,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.9.2"
-  chalkdart:
-    dependency: transitive
-    description:
-      name: chalkdart
-      sha256: "0b7ec5c6a6bafd1445500632c00c573722bd7736e491675d4ac3fe560bbd9cfe"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.1"
-  characters:
-    dependency: transitive
-    description:
-      name: characters
-      sha256: "81269c8d3f45541082bfbb117bbc962cfc68b5197eb4c705a00db4ddf394e1c1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.1"
   charcode:
     dependency: transitive
     description:
@@ -185,14 +153,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  cli_completion:
-    dependency: transitive
-    description:
-      name: cli_completion
-      sha256: "158deec74a75cdc69bce061645fea08f94190dd6833f988f517c2dfcb45e9117"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
   cli_launcher:
     dependency: transitive
     description:
@@ -201,14 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
-  cli_table:
-    dependency: transitive
-    description:
-      name: cli_table
-      sha256: "61b61c6dbfa248d8ec9c65b1d97d1ec1952482765563533087ec550405def016"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   cli_util:
     dependency: transitive
     description:
@@ -297,14 +249,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
-  east_asian_width:
-    dependency: transitive
-    description:
-      name: east_asian_width
-      sha256: a13c5487dab7ddbad48875789819f0ea38a61cbaaa3024ebe7b199521e6f5788
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   ed25519_edwards:
     dependency: transitive
     description:
@@ -313,22 +257,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
-  emoji_regex:
-    dependency: transitive
-    description:
-      name: emoji_regex
-      sha256: "3a25dd4d16f98b6f76dc37cc9ae49b8511891ac4b87beac9443a1e9f4634b6c7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.5"
-  equatable:
-    dependency: transitive
-    description:
-      name: equatable
-      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
   ez_validator_dart:
     dependency: transitive
     description:
@@ -489,14 +417,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  mason_logger:
-    dependency: transitive
-    description:
-      name: mason_logger
-      sha256: "1fdf5c76870eb6fc3611ed6fbae1973a3794abe581ea5e22e68af2f73c688b93"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.16"
   matcher:
     dependency: transitive
     description:
@@ -857,14 +777,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  string_width:
-    dependency: transitive
-    description:
-      name: string_width
-      sha256: "0ea481fbb6d5e2d70937fea303d8cc9296048da107dffeecf2acb675c8b47e7f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.5"
   synchronized:
     dependency: transitive
     description:
@@ -969,14 +881,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  wcwidth:
-    dependency: transitive
-    description:
-      name: wcwidth
-      sha256: "4e68ce25701e56647cb305ab6d8c75fce5e5196227bcb6ba6886513ac36474c2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.4"
   web:
     dependency: transitive
     description:
@@ -1009,14 +913,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
-  win32:
-    dependency: transitive
-    description:
-      name: win32
-      sha256: e5c39a90447e7c81cfec14b041cdbd0d0916bd9ebbc7fe02ab69568be703b9bd
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.6.0"
   yaml:
     dependency: transitive
     description:
@@ -1036,11 +932,10 @@ packages:
   yaroorm:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: fec564dcbca6feee6ef8ae23a3bc4633c9b10b48
-      url: "https://github.com/codekeyz/yaroorm.git"
-    source: git
-    version: "0.0.2"
+      name: yaroorm
+      sha256: "72bdeab359fe63e11e90dbe5eb355ef6655a0777bf376e3c7d0e3ab1fc5d6fe6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
 sdks:
   dart: ">=3.5.0 <4.0.0"
