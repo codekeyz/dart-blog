@@ -5,7 +5,7 @@ import 'package:backend/src/models/article.dart';
 import 'package:backend/src/models/user.dart';
 import 'package:yaroorm/yaroorm.dart';
 
-import './config.dart' as config;
+import 'config.dart' as config;
 import 'migrations/2024_04_20_003612_initial_setup.dart' as _m0;
 
 void initializeORM() {

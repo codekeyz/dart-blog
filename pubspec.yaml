@@ -30,3 +30,7 @@ dev_dependencies:
   melos: ^6.2.0
   build_runner: 2.4.13
   spookie: 1.0.2+3
+  yaroorm_cli:
+    git: 
+      url: 'https://github.com/codekeyz/yaroorm.git'
+      path: 'packages/yaroorm_cli'
