@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:backend/src/dto/article_dto.dart';
 import 'package:backend/src/services/services.dart';
 import 'package:pharaoh/pharaoh_next.dart';
@@ -5,6 +7,7 @@ import 'package:yaroorm/yaroorm.dart';
 
 import '../models/article.dart';
 import '../models/user.dart';
+import '../utils/utils.dart';
 
 class ArticleController extends HTTPController {
   final ArticleService _articleService;
@@ -28,7 +31,7 @@ class ArticleController extends HTTPController {
     if (app.config.isDebug) {
       imageUrl ??= 'https://dart.dev/assets/shared/dart-logo-for-shares.png';
     } else {
-      imageUrl ??= await getRandomImage(data.title);
+      imageUrl ??= await Isolate.run(() => getRandomImage(data.title));
     }
 
     final article = await user.articles.insert(NewArticleForUser(

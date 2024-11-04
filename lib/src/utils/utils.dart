@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:http/http.dart' as http;
-import 'package:pharaoh/next/core.dart';
+import 'package:pharaoh/pharaoh_next.dart';
 
 bool get isDebugMode {
   var isDebug = false;
