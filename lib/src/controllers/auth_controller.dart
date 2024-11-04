@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:pharaoh/pharaoh.dart';
 import 'package:pharaoh/pharaoh_next.dart';
+import 'package:shared/models.dart';
 
 import '../dto/dto.dart';
-import '../models/user.dart';
 import '../services/services.dart';
 
 class AuthController extends HTTPController {

@@ -1,9 +1,9 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:backend/src/models/article.dart';
-import 'package:backend/src/models/user.dart';
 import 'package:backend/src/utils/config.dart' as config;
+import 'package:shared/src/models/article.dart';
+import 'package:shared/src/models/user.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 import 'migrations/2024_04_20_003612_initial_setup.dart' as _m0;

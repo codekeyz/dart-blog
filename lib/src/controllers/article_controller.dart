@@ -3,10 +3,9 @@ import 'dart:isolate';
 import 'package:backend/src/dto/article_dto.dart';
 import 'package:backend/src/services/services.dart';
 import 'package:pharaoh/pharaoh_next.dart';
+import 'package:shared/models.dart';
 import 'package:yaroorm/yaroorm.dart';
 
-import '../models/article.dart';
-import '../models/user.dart';
 import '../utils/utils.dart';
 
 class ArticleController extends HTTPController {

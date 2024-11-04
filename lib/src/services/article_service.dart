@@ -1,11 +1,10 @@
 import 'dart:isolate';
 
+import 'package:shared/models.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 import 'package:backend/src/dto/article_dto.dart';
-import 'package:backend/src/models/article.dart';
 
-import '../models/user.dart';
 import '../utils/utils.dart';
 
 class ArticleService {

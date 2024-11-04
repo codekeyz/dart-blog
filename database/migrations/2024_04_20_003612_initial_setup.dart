@@ -1,5 +1,4 @@
-import 'package:backend/src/models/article.dart';
-import 'package:backend/src/models/user.dart';
+import 'package:shared/models.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 class InitialTableSetup extends Migration {

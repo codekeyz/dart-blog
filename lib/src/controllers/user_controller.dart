@@ -1,6 +1,5 @@
 import 'package:pharaoh/pharaoh_next.dart';
-
-import '../models/user.dart';
+import 'package:shared/models.dart';
 
 class UserController extends HTTPController {
   Future<Response> currentUser() async {
