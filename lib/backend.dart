@@ -1,25 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:backend/src/utils/config.dart';
 import 'package:pharaoh/pharaoh_next.dart';
-import 'package:uuid/v4.dart';
 
 import 'app/middlewares/core_middleware.dart';
 import 'app/middlewares/api_auth_middleware.dart';
 import 'app/providers/providers.dart';
-import 'src/utils/utils.dart';
 
 export 'src/controllers/controllers.dart';
 export 'src/dto/dto.dart';
 
-final blogApp = App(AppConfig(
-  name: 'Dart Blog',
-  environment: env<String>('APP_ENV', isDebugMode ? 'test' : 'development'),
-  isDebug: env<bool>('APP_DEBUG', true),
-  url: env<String>('APP_URL', 'http://localhost'),
-  port: env<int>('PORT', 80),
-  key: env('APP_KEY', UuidV4().generate()),
-));
+final blogApp = App(appConfig);
 
 class App extends ApplicationFactory {
   App(super.appConfig);
