@@ -10,24 +10,30 @@ $ dart pub get && dart run build_runner build --delete-conflicting-outputs
 
 ### Migrate Database
 
+- For local dev, execute migrations on sqlite database using the command below
+
+```shell
+dart run yaroorm_cli migrate --connection=local
+```
+
+- For production database, you can run this.
+
 ```shell
 $ dart run yaroorm migrate
 ```
 
 ```shell
 ┌──────────────────────────────┬──────────────────────────────┐
-│ Migration                    │ Status                       │
+│ Migration                       │ Status                          │
 ├──────────────────────────────┼──────────────────────────────┤
-│ create_users_table           │ ✅ migrated                  │
-├──────────────────────────────┼──────────────────────────────┤
-│ create_articles_table        │ ✅ migrated                  │
+│ initial_table_setup             │ ✅ migrated                     │
 └──────────────────────────────┴──────────────────────────────┘
 ```
 
 ### Start Server
 
 ```shell
-$ dart run --enable-asserts
+$ dart run
 ```
 
 ### Tests
