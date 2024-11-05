@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:backend/src/dto/article_dto.dart';
+import 'package:backend/src/models.dart';
 import 'package:backend/src/services/services.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 import 'package:shared/models.dart';
@@ -33,7 +34,7 @@ class ArticleController extends HTTPController {
       imageUrl ??= await Isolate.run(() => getRandomImage(data.title));
     }
 
-    final article = await user.articles.insert(NewArticleForUser(
+    final article = await user.articles.insert(NewServerArticleForServerUser(
       title: data.title,
       description: data.description,
       imageUrl: Value(imageUrl),
@@ -55,5 +56,5 @@ class ArticleController extends HTTPController {
 
   Map<String, dynamic> _articleResponse(Article article) => {'article': article.toJson()};
 
-  User get user => request.auth as User;
+  ServerUser get user => request.auth as ServerUser;
 }

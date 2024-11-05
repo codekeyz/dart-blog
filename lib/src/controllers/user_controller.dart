@@ -1,3 +1,4 @@
+import 'package:backend/src/models.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 import 'package:shared/models.dart';
 
@@ -8,12 +9,12 @@ class UserController extends HTTPController {
   }
 
   Future<Response> index() async {
-    final result = await UserQuery.findMany();
+    final result = await ServerUserQuery.findMany();
     return jsonResponse(result);
   }
 
   Future<Response> show(@param int userId) async {
-    final user = await UserQuery.findById(userId);
+    final user = await ServerUserQuery.findById(userId);
     if (user == null) return notFound('User not found');
     return jsonResponse({'user': user.toJson()});
   }

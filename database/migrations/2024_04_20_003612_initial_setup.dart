@@ -1,17 +1,17 @@
-import 'package:shared/models.dart';
+import 'package:backend/src/models.dart';
 import 'package:yaroorm/yaroorm.dart';
 
 class InitialTableSetup extends Migration {
   @override
   void up(List<Schema> schemas) {
-    schemas.addAll([UserSchema, ArticleSchema]);
+    schemas.addAll([ServerUserSchema, ServerArticleSchema]);
   }
 
   @override
   void down(List<Schema> schemas) {
     schemas.addAll([
-      Schema.dropIfExists(UserSchema),
-      Schema.dropIfExists(ArticleSchema),
+      Schema.dropIfExists(ServerUserSchema),
+      Schema.dropIfExists(ServerArticleSchema),
     ]);
   }
 }
