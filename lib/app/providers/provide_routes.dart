@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:pharaoh/pharaoh_next.dart';
 
 import '../routes/api.dart' as api;
-import '../routes/api.dart';
 import '../routes/web.dart' as web;
 
 class RouteServiceProvider extends ServiceProvider {
@@ -14,11 +13,8 @@ class RouteServiceProvider extends ServiceProvider {
         /*|--------------------------------------------------------------------------
           | API Routes
           |--------------------------------------------------------------------------*/
-
-        publicRoutes,
-
-        //
-        Route.middleware('api:auth').group('api', api.authRoutes),
+        api.publicRoutes,
+        api.authRoutes,
 
         /*|--------------------------------------------------------------------------
           | Web Routes

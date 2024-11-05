@@ -1,0 +1,6 @@
+name: 'dart_blog'
+
+packages:
+  - 'packages/shared'
+  - 'packages/frontend'
+  - '.'

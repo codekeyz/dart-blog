@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:backend/src/utils/config.dart';
+import 'package:logging/logging.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 
 import 'app/middlewares/core_middleware.dart';
@@ -13,7 +14,7 @@ export 'src/dto/dto.dart';
 
 final blogApp = App(appConfig);
 
-class App extends ApplicationFactory {
+class App extends ApplicationFactory with AppInstance {
   App(super.appConfig);
 
   @override
@@ -40,6 +41,8 @@ class App extends ApplicationFactory {
     if (exception is RequestValidationError) {
       return response.json(exception.errorBody, statusCode: HttpStatus.badRequest);
     }
+
+    app.instanceOf<Logger>().severe(exception, null, error.trace);
 
     return super.onApplicationException(error, request, response);
   }

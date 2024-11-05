@@ -1,6 +1,6 @@
+import 'package:backend/src/models.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 
-import '../../src/models/user.dart';
 import '../../src/services/auth_service.dart';
 
 class ApiAuthMiddleware extends ClassMiddleware {
@@ -13,7 +13,7 @@ class ApiAuthMiddleware extends ClassMiddleware {
     final userId = _authService.validateRequest(req);
     if (userId == null) return next(res.unauthorized());
 
-    final user = await UserQuery.findById(userId);
+    final user = await ServerUserQuery.findById(userId);
     if (user == null) return next(res.unauthorized());
 
     return next(req..auth = user);

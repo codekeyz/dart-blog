@@ -1,6 +1,7 @@
-import 'package:logger/logger.dart';
+import 'package:logging/logging.dart';
 import 'package:pharaoh/pharaoh.dart';
 import 'package:pharaoh/pharaoh_next.dart';
+import 'package:shared/shared.dart';
 
 class CoreMiddleware extends ClassMiddleware {
   late Middleware _webMdw;
@@ -11,17 +12,27 @@ class CoreMiddleware extends ClassMiddleware {
     final cookieConfig = app.instanceOf<CookieOpts>();
     final cookieParserMdw = cookieParser(opts: cookieConfig);
 
-    /// setup logger
-    loggerMdw(Request req, Response res, NextFunction next) {
-      _logger.i('Req: ${req.method.name}:${req.path}');
-      next();
+    corsMiddleware(Request req, Response res, NextFunction next) {
+      res = res
+        ..header('Access-Control-Allow-Origin', appEnv.frontendURL.toString())
+        ..header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+        ..header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        ..header('Access-Control-Allow-Credentials', 'true')
+        ..header('Access-Control-Max-Age', '3600');
+
+      if (req.method == HTTPMethod.OPTIONS) {
+        return next(res.status(200).end());
+      }
+
+      return next(res);
     }
 
-    if (app.config.environment == 'development') {
-      _webMdw = loggerMdw.chain(cookieParserMdw);
-    } else {
-      _webMdw = cookieParserMdw;
-    }
+    _webMdw = corsMiddleware.chain(cookieParserMdw).chain((req, res, next) {
+      if (isTestMode) return next();
+
+      _logger.fine('${req.method.name}:${req.path}');
+      next();
+    });
   }
 
   @override

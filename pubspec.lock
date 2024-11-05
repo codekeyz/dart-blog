@@ -478,16 +478,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  logger:
-    dependency: "direct main"
-    description:
-      name: logger
-      sha256: "697d067c60c20999686a0add96cf6aba723b3aa1f83ecf806a8097231529ec32"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
   logging:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logging
       sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
@@ -586,10 +578,10 @@ packages:
     dependency: "direct main"
     description:
       name: pharaoh
-      sha256: "6d7f19377feb93ab42f790be32c450a90662a6ed26ae4e10900519cb8549c757"
+      sha256: b5614cef80b341bac6ffb15407c1eb446eb509a7f2d86ea7b9676ed98208adcc
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.8+1"
+    version: "0.0.8+2"
   platform:
     dependency: transitive
     description:
@@ -626,10 +618,10 @@ packages:
     dependency: transitive
     description:
       name: process
-      sha256: "21e54fd2faf1b5bdd5102afd25012184a6793927648ea81eea80552ac9405b32"
+      sha256: "107d8be718f120bbba9dcd1e95e3bd325b1b4a4f07db64154635ba03f2567a0d"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.2"
+    version: "5.0.3"
   prompts:
     dependency: transitive
     description:
@@ -710,6 +702,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  shared:
+    dependency: "direct main"
+    description:
+      path: "packages/shared"
+      relative: true
+    source: path
+    version: "1.0.0"
   shelf:
     dependency: transitive
     description:
@@ -786,10 +785,10 @@ packages:
     dependency: transitive
     description:
       name: spanner
-      sha256: "1eee0f4fcb606f09db52b8f5ecd1036f8b6270363c052f98605bc5d964b13ee0"
+      sha256: "52768be5029fb1d408e2e762cb282214b79b52c4702e1efb144df139ba40d6cd"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   spookie:
     dependency: "direct dev"
     description:
@@ -1050,18 +1049,18 @@ packages:
     dependency: "direct main"
     description:
       name: yaroorm
-      sha256: "72bdeab359fe63e11e90dbe5eb355ef6655a0777bf376e3c7d0e3ab1fc5d6fe6"
+      sha256: d676e8786a2f332d47f7817680176281c31352cdf3d60c96b19613c1edd90812
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.0.4"
   yaroorm_cli:
     dependency: "direct dev"
     description:
       path: "packages/yaroorm_cli"
       ref: HEAD
-      resolved-ref: "04c58d9468b101e35e20949ecb367daaf5c4166e"
+      resolved-ref: "04546ad61c86d669c475e11d819a50021ea43355"
       url: "https://github.com/codekeyz/yaroorm.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.3+1"
 sdks:
   dart: ">=3.5.0 <4.0.0"

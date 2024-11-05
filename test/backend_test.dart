@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:backend/backend.dart';
-import 'package:backend/src/models/article.dart';
-import 'package:backend/src/models/user.dart';
+import 'package:backend/src/models.dart';
+import 'package:shared/models.dart';
+
 import 'package:spookie/spookie.dart';
 import '../database/database.dart' as database;
 
@@ -93,8 +94,8 @@ void main() {
         });
 
         test('should error on existing email', () async {
-          final randomUser = await UserQuery.findOne();
-          expect(randomUser, isA<User>());
+          final randomUser = await ServerUserQuery.findOne();
+          expect(randomUser, isA<ServerUser>());
 
           await testAgent
               .post(path, {'email': randomUser!.email, 'name': 'Foo Bar', 'password': 'moooasdfmdf'})
@@ -126,7 +127,7 @@ void main() {
         });
 
         test('should error on in-valid credentials', () async {
-          final randomUser = await UserQuery.findOne();
+          final randomUser = await ServerUserQuery.findOne();
           expect(randomUser, isA<User>());
 
           final email = randomUser!.email;
@@ -149,7 +150,7 @@ void main() {
         });
 
         test('should success on valid credentials', () async {
-          final randomUser = await UserQuery.findOne();
+          final randomUser = await ServerUserQuery.findOne();
           expect(randomUser, isA<User>());
 
           final baseTest = testAgent.post(path, {
@@ -168,11 +169,11 @@ void main() {
 
     group('', () {
       String? authCookie;
-      User? currentUser;
+      ServerUser? currentUser;
 
       setUpAll(() async {
-        currentUser = await UserQuery.findOne();
-        expect(currentUser, isA<User>());
+        currentUser = await ServerUserQuery.findOne();
+        expect(currentUser, isA<ServerUser>());
 
         final result = await testAgent.post('$baseAPIPath/auth/login', {
           'email': currentUser!.email,
@@ -208,7 +209,7 @@ void main() {
         });
 
         test('should get user `/users/<userId>` without auth', () async {
-          final randomUser = await UserQuery.findOne();
+          final randomUser = await ServerUserQuery.findOne();
           expect(randomUser, isA<User>());
 
           await testAgent
@@ -320,7 +321,7 @@ void main() {
           });
 
           test('should update article', () async {
-            final article = await ArticleQuery.where((article) => article.ownerId(currentUser!.id)).findOne();
+            final article = await ServerArticleQuery.where((article) => article.ownerId(currentUser!.id)).findOne();
             expect(article, isA<Article>());
 
             expect(article!.title, isNot('Honey'));
@@ -353,7 +354,7 @@ void main() {
                 .test();
 
             const fakeId = 234239389239;
-            final article = await ArticleQuery.findById(fakeId);
+            final article = await ServerArticleQuery.findById(fakeId);
             expect(article, isNull);
 
             await testAgent
@@ -364,7 +365,7 @@ void main() {
           });
 
           test('should delete article', () async {
-            final article = await ArticleQuery.findByOwnerId(currentUser!.id);
+            final article = await ServerArticleQuery.findByOwnerId(currentUser!.id);
             expect(article, isA<Article>());
 
             await testAgent
@@ -373,7 +374,7 @@ void main() {
                 .expectJsonBody({'message': 'Article deleted'})
                 .test();
 
-            expect(await ArticleQuery.findById(article.id), isNull);
+            expect(await ServerArticleQuery.findById(article.id), isNull);
           });
         });
 
@@ -398,7 +399,7 @@ void main() {
           });
 
           test('should show article without auth', () async {
-            final article = await ArticleQuery.findByOwnerId(currentUser!.id);
+            final article = await ServerArticleQuery.findByOwnerId(currentUser!.id);
             expect(article, isA<Article>());
 
             await testAgent
@@ -409,7 +410,7 @@ void main() {
         });
 
         test('should get Articles without auth', () async {
-          final articles = await ArticleQuery.findMany();
+          final articles = await ServerArticleQuery.findMany();
           expect(articles, isNotEmpty);
 
           await testAgent

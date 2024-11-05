@@ -1,9 +1,13 @@
+import 'dart:isolate';
+
 import 'package:backend/src/dto/article_dto.dart';
+import 'package:backend/src/models.dart';
 import 'package:backend/src/services/services.dart';
 import 'package:pharaoh/pharaoh_next.dart';
+import 'package:shared/models.dart';
+import 'package:yaroorm/yaroorm.dart';
 
-import '../models/article.dart';
-import '../models/user.dart';
+import '../utils/utils.dart';
 
 class ArticleController extends HTTPController {
   final ArticleService _articleService;
@@ -22,13 +26,15 @@ class ArticleController extends HTTPController {
   }
 
   Future<Response> create(@body CreateArticleDTO data) async {
-    var imageUrl = data.imageUrl;
-    if (app.config.isDebug) {
-      imageUrl ??= 'https://dart.dev/assets/shared/dart-logo-for-shares.png';
-    }
+    final imageUrl = data.imageUrl ?? await Isolate.run(() => getRandomImage(data.title));
 
-    final article = await _articleService.createArticle(user, data, imageUrl: imageUrl);
-    return jsonResponse(_articleResponse(article));
+    final article = await user.articles.insert(NewServerArticleForServerUser(
+      title: data.title,
+      description: data.description,
+      imageUrl: Value(imageUrl),
+    ));
+
+    return response.json(_articleResponse(article));
   }
 
   Future<Response> update(@param int articleId, @body CreateArticleDTO data) async {
@@ -44,5 +50,5 @@ class ArticleController extends HTTPController {
 
   Map<String, dynamic> _articleResponse(Article article) => {'article': article.toJson()};
 
-  User get user => request.auth as User;
+  ServerUser get user => request.auth as ServerUser;
 }
