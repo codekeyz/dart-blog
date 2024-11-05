@@ -16,7 +16,7 @@ class ApiException extends HttpException {
 typedef HttpResponseCb = Future<Response> Function();
 
 class ApiService {
-  final String baseUrl;
+  final Uri baseUrl;
   final BrowserClient client;
 
   ApiService(this.baseUrl) : client = BrowserClient()..withCredentials = true;
@@ -28,11 +28,13 @@ class ApiService {
 
   Map<String, String> get _headers => {HttpHeaders.contentTypeHeader: 'application/json'};
 
-  Uri getUri(String path) => Uri.parse('$baseUrl/api$path');
+  Uri getUri(String path) => baseUrl.replace(path: '/api$path');
 
   void clearAuthCookie() => html.document.cookie = 'auth=' '';
 
   Future<User> getUser() async {
+    print(baseUrl);
+
     final result = await _runCatching(() => client.get(getUri('/users/me'), headers: _headers));
 
     final data = jsonDecode(result.body)['user'];

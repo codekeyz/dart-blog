@@ -1,16 +1,19 @@
-import 'package:backend/src/utils/utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:pharaoh/pharaoh_next.dart';
+import 'package:shared/shared.dart';
 import 'package:uuid/v4.dart';
 import 'package:yaroorm/yaroorm.dart';
 
-enum AppEnvironment {
-  local(),
-  staging(),
-  prod();
+final appConfig = AppConfig(
+  name: 'Dart Blog',
+  environment: env<String>('APP_ENV', appEnv.name),
+  isDebug: appEnv == AppEnvironment.local,
+  url: env<String>('APP_URL', 'http://localhost'),
+  port: env<int>('PORT', 80),
+  key: env('APP_KEY', UuidV4().generate()),
+);
 
-  const AppEnvironment();
-
+extension on AppEnvironment {
   DatabaseConnection get dbCon => switch (this) {
         AppEnvironment.prod => DatabaseConnection(
             AppEnvironment.prod.name,
@@ -30,19 +33,8 @@ enum AppEnvironment {
       };
 }
 
-final currentEnv = isDebugMode ? AppEnvironment.local : AppEnvironment.prod;
-
-final appConfig = AppConfig(
-  name: 'Dart Blog',
-  environment: env<String>('APP_ENV', currentEnv.name),
-  isDebug: env<bool>('APP_DEBUG', currentEnv == AppEnvironment.local),
-  url: env<String>('APP_URL', 'http://localhost'),
-  port: env<int>('PORT', 80),
-  key: env('APP_KEY', UuidV4().generate()),
-);
-
 @DB.useConfig
 final config = YaroormConfig(
-  currentEnv.name,
+  appEnv.name,
   connections: AppEnvironment.values.map((e) => e.dbCon).toList(),
 );

@@ -3,13 +3,15 @@ import 'package:fluent_ui/fluent_ui.dart' hide Colors;
 import 'package:flutter/material.dart' show Colors;
 import 'package:frontend/blog/widgets/article_form.dart';
 import 'package:frontend/blog/blog_detail.dart';
-import 'package:frontend/data/services.dart';
 import 'package:frontend/blog/blog.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'auth/auth.dart';
+import 'data/api_service.dart';
 import 'utils/misc.dart';
 
 import 'data/providers/auth_provider.dart';
@@ -34,8 +36,10 @@ final router = GoRouter(
   ],
 );
 
+final getIt = GetIt.instance;
+
 void main() async {
-  setupServices();
+  getIt.registerSingleton<ApiService>(ApiService(appEnv.apiURL));
 
   await FastCachedImageConfig.init(clearCacheAfter: const Duration(hours: 1));
 

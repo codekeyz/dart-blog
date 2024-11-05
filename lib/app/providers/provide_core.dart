@@ -1,5 +1,5 @@
 import 'package:backend/src/services/services.dart';
-import 'package:logger/logger.dart';
+import 'package:logging/logging.dart';
 import 'package:pharaoh/pharaoh.dart';
 import 'package:pharaoh/pharaoh_next.dart';
 
@@ -12,15 +12,12 @@ class CoreProvider extends ServiceProvider {
 
     app.singleton<AuthService>(AuthService(app.config.key, app.config.url));
 
-    app.singleton<Logger>(Logger(printer: PrettyPrinter(), filter: _CustomLogFilter(app.config.isDebug)));
+    Logger.root
+      ..level = Level.ALL
+      ..onRecord.listen((record) {
+        print('${record.level.name}: ${record.time}: ${record.message}');
+      });
+
+    app.singleton<Logger>(Logger(config.environment));
   }
-}
-
-class _CustomLogFilter extends LogFilter {
-  final bool loggingEnabled;
-
-  _CustomLogFilter(this.loggingEnabled);
-
-  @override
-  bool shouldLog(LogEvent event) => loggingEnabled;
 }

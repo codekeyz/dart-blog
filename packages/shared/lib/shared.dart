@@ -2,9 +2,18 @@ enum AppEnvironment {
   local,
   staging,
   prod;
+
+  const AppEnvironment();
+
+  Uri get apiURL => switch (this) {
+        AppEnvironment.prod => Uri.https('blog-backend.globeapp.dev'),
+        _ => Uri.http('localhost:3000'),
+      };
 }
 
-bool get isDebugMode {
+final isDebugMode = const bool.fromEnvironment("dart.vm.product") == false;
+
+bool get isTestMode {
   var isDebug = false;
   assert(() {
     isDebug = true;
@@ -13,4 +22,4 @@ bool get isDebugMode {
   return isDebug;
 }
 
-final appEnv = isDebugMode ? AppEnvironment.local : AppEnvironment.prod;
+final appEnv = isTestMode || isDebugMode ? AppEnvironment.local : AppEnvironment.prod;

@@ -5,15 +5,6 @@ import 'dart:isolate';
 import 'package:http/http.dart' as http;
 import 'package:pharaoh/pharaoh_next.dart';
 
-bool get isDebugMode {
-  var isDebug = false;
-  assert(() {
-    isDebug = true;
-    return true;
-  }());
-  return isDebug;
-}
-
 Future<String?> getRandomImage(String searchText) async {
   try {
     final response = await http.get(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import '../data/services.dart';
+import '../data/api_service.dart';
 
 enum ProviderState { idle, loading, success, error }
 
@@ -79,11 +79,11 @@ abstract class BaseProvider<T> extends ChangeNotifier with DataStreamMixin<Provi
     addEvent(const ProviderEvent.idle());
   }
 
-  Future<Result?> safeRun<Result>(FutureOr<Result> Function() apiCall) async {
+  Future<Result?> safeRun<Result>(FutureOr<Result> Function() func) async {
     addEvent(const ProviderEvent.loading());
 
     try {
-      return await apiCall.call();
+      return await func.call();
     } on ApiException catch (e) {
       addEvent(ProviderEvent.error(errorMessage: e.errors.join('\n')));
       return null;

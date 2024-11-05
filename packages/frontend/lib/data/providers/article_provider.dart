@@ -1,4 +1,5 @@
-import 'package:frontend/data/services.dart';
+import 'package:frontend/data/api_service.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/utils/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:shared/models.dart';
