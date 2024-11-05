@@ -5,7 +5,7 @@
 ### Setup
 
 ```shell
-$ dart pub get && dart run build_runner build --delete-conflicting-outputs
+dart pub get && dart run build_runner build --delete-conflicting-outputs
 ```
 
 ### Migrate Database
@@ -19,27 +19,27 @@ dart run yaroorm_cli migrate --connection=local
 - For production database, you can run this.
 
 ```shell
-$ dart run yaroorm migrate
+dart run yaroorm migrate
 ```
 
 ```shell
-┌──────────────────────────────┬──────────────────────────────┐
-│ Migration                       │ Status                          │
-├──────────────────────────────┼──────────────────────────────┤
-│ initial_table_setup             │ ✅ migrated                     │
-└──────────────────────────────┴──────────────────────────────┘
+┌───────────────────────────────┬──────────────────────────────┐
+│ Migration                     │ Status                       │
+├───────────────────────────────┼──────────────────────────────┤
+│ initial_table_setup           │ ✅ migrated                  │
+└───────────────────────────────┴──────────────────────────────┘
 ```
 
 ### Start Server
 
 ```shell
-$ dart run
+dart run
 ```
 
 ### Tests
 
 ```shell
-$ dart test
+dart test
 ```
 
 ### Contribution & Workflow
@@ -48,5 +48,5 @@ We rely heavily on code-generation. Things like adding a new `Entity`, `Middlewa
 require you to re-run the command below.
 
 ```shell
-$ dart pub run build_runner build --delete-conflicting-outputs
+dart pub run build_runner build --delete-conflicting-outputs
 ```
