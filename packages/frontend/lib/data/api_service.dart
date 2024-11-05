@@ -33,8 +33,6 @@ class ApiService {
   void clearAuthCookie() => html.document.cookie = 'auth=' '';
 
   Future<User> getUser() async {
-    print(baseUrl);
-
     final result = await _runCatching(() => client.get(getUri('/users/me'), headers: _headers));
 
     final data = jsonDecode(result.body)['user'];

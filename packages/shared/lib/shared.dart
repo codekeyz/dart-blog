@@ -6,8 +6,13 @@ enum AppEnvironment {
   const AppEnvironment();
 
   Uri get apiURL => switch (this) {
-        AppEnvironment.prod => Uri.https('blog-backend.globeapp.dev'),
+        AppEnvironment.prod => Uri.https('blog-backend-369d.globeapp.dev'),
         _ => Uri.http('localhost:3000'),
+      };
+
+  Uri get frontendURL => switch (this) {
+        AppEnvironment.prod => Uri.https('blog-frontend.globeapp.dev'),
+        _ => Uri.http('localhost:60964'),
       };
 }
 
