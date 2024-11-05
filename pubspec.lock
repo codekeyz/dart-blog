@@ -455,13 +455,21 @@ packages:
     source: hosted
     version: "0.7.1"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
+  json_serializable:
+    dependency: "direct dev"
+    description:
+      name: json_serializable
+      sha256: ea1432d167339ea9b5bb153f0571d0039607a873d6e04e0117af043f14a1fd4b
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.8.0"
   lints:
     dependency: "direct dev"
     description:
@@ -470,16 +478,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  logger:
-    dependency: "direct main"
-    description:
-      name: logger
-      sha256: "697d067c60c20999686a0add96cf6aba723b3aa1f83ecf806a8097231529ec32"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
   logging:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logging
       sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
@@ -578,10 +578,10 @@ packages:
     dependency: "direct main"
     description:
       name: pharaoh
-      sha256: "6d7f19377feb93ab42f790be32c450a90662a6ed26ae4e10900519cb8549c757"
+      sha256: b5614cef80b341bac6ffb15407c1eb446eb509a7f2d86ea7b9676ed98208adcc
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.8+1"
+    version: "0.0.8+2"
   platform:
     dependency: transitive
     description:
@@ -618,10 +618,10 @@ packages:
     dependency: transitive
     description:
       name: process
-      sha256: "21e54fd2faf1b5bdd5102afd25012184a6793927648ea81eea80552ac9405b32"
+      sha256: "107d8be718f120bbba9dcd1e95e3bd325b1b4a4f07db64154635ba03f2567a0d"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.2"
+    version: "5.0.3"
   prompts:
     dependency: transitive
     description:
@@ -749,6 +749,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  source_helper:
+    dependency: transitive
+    description:
+      name: source_helper
+      sha256: "6adebc0006c37dd63fe05bca0a929b99f06402fc95aa35bf36d67f5c06de01fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.4"
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -777,10 +785,10 @@ packages:
     dependency: transitive
     description:
       name: spanner
-      sha256: "1eee0f4fcb606f09db52b8f5ecd1036f8b6270363c052f98605bc5d964b13ee0"
+      sha256: "52768be5029fb1d408e2e762cb282214b79b52c4702e1efb144df139ba40d6cd"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   spookie:
     dependency: "direct dev"
     description:
@@ -1041,18 +1049,18 @@ packages:
     dependency: "direct main"
     description:
       name: yaroorm
-      sha256: "72bdeab359fe63e11e90dbe5eb355ef6655a0777bf376e3c7d0e3ab1fc5d6fe6"
+      sha256: "26b6d9544351e6a1fcd2ede3929450cd096a0cf8cd55509da0fb7d3665310643"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.0.3+2"
   yaroorm_cli:
     dependency: "direct dev"
     description:
       path: "packages/yaroorm_cli"
       ref: HEAD
-      resolved-ref: "04c58d9468b101e35e20949ecb367daaf5c4166e"
+      resolved-ref: bd66e52f79549a5a968cc698e6d0469eaf271a2c
       url: "https://github.com/codekeyz/yaroorm.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.3+1"
 sdks:
   dart: ">=3.5.0 <4.0.0"
