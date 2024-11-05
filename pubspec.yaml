@@ -31,7 +31,7 @@ dev_dependencies:
   build_runner: ^2.4.13
   spookie: 1.0.2+3
   json_serializable: ^6.8.0
-  # yaroorm_cli:
-  #   git: 
-  #     url: 'https://github.com/codekeyz/yaroorm.git'
-  #     path: 'packages/yaroorm_cli'
+  yaroorm_cli:
+    git: 
+      url: 'https://github.com/codekeyz/yaroorm.git'
+      path: 'packages/yaroorm_cli'
