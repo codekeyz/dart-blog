@@ -32,6 +32,7 @@ jobs:
       - name: Check linting
         run: |
           dart run build_runner build
+          cd packages/shared && dart run build_runner build --delete-conflicting-outputs
           dart analyze . --fatal-infos
 
   test:
