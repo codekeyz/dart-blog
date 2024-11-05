@@ -1,6 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:pharaoh/pharaoh.dart';
 import 'package:pharaoh/pharaoh_next.dart';
+import 'package:shared/shared.dart';
 
 class CoreMiddleware extends ClassMiddleware {
   late Middleware _webMdw;
@@ -27,6 +28,8 @@ class CoreMiddleware extends ClassMiddleware {
     }
 
     _webMdw = corsMiddleware.chain(cookieParserMdw).chain((req, res, next) {
+      if (isTestMode) return next();
+
       _logger.fine('${req.method.name}:${req.path}');
       next();
     });
