@@ -20,7 +20,11 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: dart-lang/setup-dart@v1.3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
       - uses: bluefireteam/melos-action@v3
+      
 
       - name: Check formatting
         run: dart format . --line-length=120 --set-exit-if-changed
@@ -38,6 +42,9 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: dart-lang/setup-dart@v1.3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
       - uses: bluefireteam/melos-action@v3
 
       - name: Bootstrap
