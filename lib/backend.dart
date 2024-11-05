@@ -38,12 +38,11 @@ class App extends ApplicationFactory with AppInstance {
   @override
   FutureOr<Response> onApplicationException(PharaohError error, Request request, Response response) {
     final exception = error.exception;
-
-    app.instanceOf<Logger>().severe(exception, null, error.trace);
-
     if (exception is RequestValidationError) {
       return response.json(exception.errorBody, statusCode: HttpStatus.badRequest);
     }
+
+    app.instanceOf<Logger>().severe(exception, null, error.trace);
 
     return super.onApplicationException(error, request, response);
   }
