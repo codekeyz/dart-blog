@@ -14,7 +14,7 @@ class User {
 
   final DateTime updatedAt;
 
-  User(
+  const User(
     this.id,
     this.name,
     this.email, {

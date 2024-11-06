@@ -19,7 +19,8 @@ class ArticleService {
         .findMany(orderBy: [OrderServerArticleBy.updatedAt(order: OrderDirection.desc)]);
   }
 
-  Future<Article?> getArticle(int articleId) => ServerArticleQuery.findById(articleId);
+  Future<Article?> getArticle(int articleId) =>
+      ServerArticleQuery.withRelations((article) => [article.owner]).findById(articleId);
 
   Future<Article?> updateArticle(User user, int articleId, CreateArticleDTO dto) async {
     final query = ServerArticleQuery.where((article) => and([

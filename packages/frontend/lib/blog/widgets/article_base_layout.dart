@@ -35,7 +35,7 @@ class ArticleBaseLayoutState extends State<ArticleBaseLayout> {
   @override
   Widget build(BuildContext context) {
     return WebConstrainedLayout(
-      child: StreamBuilder<ProviderEvent<Article>>(
+      child: StreamBuilder<ProviderEvent<ArticleWithAuthor>>(
         stream: _detailProvider.stream,
         initialData: _detailProvider.lastEvent,
         builder: (_, __) => ScaffoldPage.scrollable(
@@ -65,28 +65,17 @@ class ArticleBaseLayoutState extends State<ArticleBaseLayout> {
   }
 }
 
-class ArticleDetailLoader extends BaseProvider<Article> {
+class ArticleDetailLoader extends BaseProvider<ArticleWithAuthor> {
   ApiService get apiSvc => getIt.get<ApiService>();
 
-  Article? get article => lastEvent?.data;
+  Article? get article => lastEvent?.data?.article;
 
-  User? _user;
-
-  User? get owner => _user;
+  User? get owner => lastEvent?.data?.author;
 
   Future<void> fetchArticle(int articleId) async {
     final result = await safeRun(() => apiSvc.getArticle(articleId));
     if (result == null) return;
 
     addEvent(ProviderEvent.success(data: result));
-
-    await _fetchOwner(result.ownerId);
-  }
-
-  Future<void> _fetchOwner(int ownerId) async {
-    try {
-      _user = await apiSvc.getUserById(ownerId);
-      addEvent(ProviderEvent.success(data: article!));
-    } catch (_) {}
   }
 }

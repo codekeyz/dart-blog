@@ -16,7 +16,7 @@ class Article {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Article(
+  const Article(
     this.id,
     this.title,
     this.ownerId,

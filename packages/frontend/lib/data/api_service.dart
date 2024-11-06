@@ -8,6 +8,8 @@ import 'package:http/http.dart' show Response;
 import 'package:http/browser_client.dart';
 import 'package:shared/models.dart';
 
+typedef ArticleWithAuthor = ({Article article, User author});
+
 class ApiException extends HttpException {
   final Iterable<String> errors;
   ApiException(this.errors) : super(errors.join('\n'));
@@ -34,13 +36,6 @@ class ApiService {
     return User.fromJson(data);
   }
 
-  Future<User> getUserById(int userId) async {
-    final result = await _runCatching(() => client.get(getUri('/users/$userId'), headers: _headers));
-
-    final data = jsonDecode(result.body)['user'];
-    return User.fromJson(data);
-  }
-
   Future<User> loginUser(String email, String password) async {
     final requestBody = jsonEncode({'email': email, 'password': password});
     final result = await _runCatching(() => client.post(getUri('/auth/login'), headers: _headers, body: requestBody));
@@ -56,18 +51,23 @@ class ApiService {
     return true;
   }
 
-  Future<List<Article>> getArticles() async {
+  Future<List<ArticleWithAuthor>> getArticles() async {
     final result = await _runCatching(() => client.get(getUri('/articles'), headers: _headers));
-
     final items = jsonDecode(result.body)['articles'] as Iterable;
-    return items.map((e) => Article.fromJson(e)).toList();
+
+    return items.map((e) {
+      return (article: Article.fromJson(e), author: User.fromJson(e['author']));
+    }).toList();
   }
 
-  Future<Article> getArticle(int articleId) async {
+  Future<ArticleWithAuthor> getArticle(int articleId) async {
     final result = await _runCatching(() => client.get(getUri('/articles/$articleId'), headers: _headers));
+    final articleData = jsonDecode(result.body)['article'];
 
-    final data = jsonDecode(result.body)['article'];
-    return Article.fromJson(data);
+    return (
+      article: Article.fromJson(articleData),
+      author: User.fromJson(articleData['author']),
+    );
   }
 
   Future<Article> createArticle(String title, String description, String? imageUrl) async {

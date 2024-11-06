@@ -49,7 +49,7 @@ class ServerArticle extends Article with Entity<ServerArticle> {
   @override
   Map<String, dynamic> toJson() => {
         ..._$ServerArticleToJson(this),
-        if (owner.loaded) 'owner': owner.value!.toJson(),
+        if (owner.loaded) 'author': owner.value!.toJson(),
       };
 
   factory ServerArticle.fromJson(Map<String, dynamic> json) => _$ServerArticleFromJson(json);

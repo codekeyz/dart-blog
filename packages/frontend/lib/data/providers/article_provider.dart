@@ -12,7 +12,7 @@ class ArticleProvider extends BaseProvider<List<Article>> {
     final articles = await safeRun(() => apiSvc.getArticles());
     if (articles == null) return;
 
-    addEvent(ProviderEvent.success(data: articles));
+    addEvent(ProviderEvent.success(data: articles.map((e) => e.article).toList()));
   }
 
   Future<void> addArticle(String title, String description, String? imageUrl) async {

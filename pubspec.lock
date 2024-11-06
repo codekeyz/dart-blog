@@ -1050,7 +1050,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e47cd369a6124d4b85f0c7dfe04b6156311021cc
+      resolved-ref: ad3c951095e7667fbdca76fd0716c06b8e26a2ee
       url: "https://github.com/codekeyz/yaroorm.git"
     source: git
     version: "0.0.4"
@@ -1059,7 +1059,7 @@ packages:
     description:
       path: "packages/yaroorm_cli"
       ref: HEAD
-      resolved-ref: e47cd369a6124d4b85f0c7dfe04b6156311021cc
+      resolved-ref: ad3c951095e7667fbdca76fd0716c06b8e26a2ee
       url: "https://github.com/codekeyz/yaroorm.git"
     source: git
     version: "0.0.3+1"

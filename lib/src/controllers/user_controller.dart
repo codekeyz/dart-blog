@@ -12,10 +12,4 @@ class UserController extends HTTPController {
     final result = await ServerUserQuery.findMany();
     return jsonResponse(result);
   }
-
-  Future<Response> show(@param int userId) async {
-    final user = await ServerUserQuery.findById(userId);
-    if (user == null) return notFound('User not found');
-    return jsonResponse({'user': user.toJson()});
-  }
 }
