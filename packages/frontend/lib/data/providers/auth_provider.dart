@@ -22,8 +22,6 @@ class AuthProvider extends BaseProvider<User> {
   }
 
   Future<void> getUser() async {
-    if (!apiSvc.hasAuthCookie) return;
-
     final user = await safeRun(() => apiSvc.getUser());
     if (user == null) return;
 

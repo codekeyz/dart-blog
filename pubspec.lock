@@ -1048,17 +1048,18 @@ packages:
   yaroorm:
     dependency: "direct main"
     description:
-      name: yaroorm
-      sha256: d676e8786a2f332d47f7817680176281c31352cdf3d60c96b19613c1edd90812
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: e47cd369a6124d4b85f0c7dfe04b6156311021cc
+      url: "https://github.com/codekeyz/yaroorm.git"
+    source: git
     version: "0.0.4"
   yaroorm_cli:
     dependency: "direct dev"
     description:
       path: "packages/yaroorm_cli"
       ref: HEAD
-      resolved-ref: "04546ad61c86d669c475e11d819a50021ea43355"
+      resolved-ref: e47cd369a6124d4b85f0c7dfe04b6156311021cc
       url: "https://github.com/codekeyz/yaroorm.git"
     source: git
     version: "0.0.3+1"

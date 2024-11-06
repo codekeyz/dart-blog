@@ -17,7 +17,7 @@ class AuthHeaderOptions extends StatelessWidget {
       stream: auth.stream,
       initialData: auth.lastEvent,
       builder: (context, snapshot) {
-        final user = auth.lastEvent?.data;
+        final user = auth.user;
         final isLoading = snapshot.data?.state == ProviderState.loading;
 
         return Row(

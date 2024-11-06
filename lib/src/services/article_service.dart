@@ -6,20 +6,17 @@ import 'package:backend/src/dto/article_dto.dart';
 
 class ArticleService {
   Future<List<Article>> getArticles({int? ownerId}) async {
+    final query = ServerArticleQuery.withRelations((article) => [article.owner]);
     if (ownerId == null) {
-      return ServerArticleQuery.findMany(
-        orderBy: [
-          OrderServerArticleBy.title(),
-          OrderServerArticleBy.updatedAt(order: OrderDirection.desc),
-        ],
-      );
+      return query.findMany(orderBy: [
+        OrderServerArticleBy.title(),
+        OrderServerArticleBy.updatedAt(order: OrderDirection.desc),
+      ]);
     }
 
-    return ServerArticleQuery.where((article) => article.ownerId(ownerId)).findMany(
-      orderBy: [
-        OrderServerArticleBy.updatedAt(order: OrderDirection.desc),
-      ],
-    );
+    return query
+        .where((article) => article.ownerId(ownerId))
+        .findMany(orderBy: [OrderServerArticleBy.updatedAt(order: OrderDirection.desc)]);
   }
 
   Future<Article?> getArticle(int articleId) => ServerArticleQuery.findById(articleId);

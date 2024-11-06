@@ -21,16 +21,11 @@ class ApiService {
 
   ApiService(this.baseUrl) : client = BrowserClient()..withCredentials = true;
 
-  bool get hasAuthCookie {
-    final last = html.document.cookie?.split('auth=').last.trim();
-    return last != null && last.length > 10;
-  }
-
   Map<String, String> get _headers => {HttpHeaders.contentTypeHeader: 'application/json'};
 
   Uri getUri(String path) => baseUrl.replace(path: '/api$path');
 
-  void clearAuthCookie() => html.document.cookie = 'auth=' '';
+  void clearAuthCookie() => html.document.cookie = null;
 
   Future<User> getUser() async {
     final result = await _runCatching(() => client.get(getUri('/users/me'), headers: _headers));

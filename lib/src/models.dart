@@ -47,7 +47,10 @@ class ServerArticle extends Article with Entity<ServerArticle> {
   BelongsTo<ServerArticle, ServerUser> get owner => belongsTo<ServerUser>(#owner);
 
   @override
-  Map<String, dynamic> toJson() => _$ServerArticleToJson(this);
+  Map<String, dynamic> toJson() => {
+        ..._$ServerArticleToJson(this),
+        if (owner.loaded) 'owner': owner.value!.toJson(),
+      };
 
   factory ServerArticle.fromJson(Map<String, dynamic> json) => _$ServerArticleFromJson(json);
 }

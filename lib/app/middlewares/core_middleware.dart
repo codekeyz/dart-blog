@@ -30,7 +30,7 @@ class CoreMiddleware extends ClassMiddleware {
     _webMdw = corsMiddleware.chain(cookieParserMdw).chain((req, res, next) {
       if (isTestMode) return next();
 
-      _logger.fine('${req.method.name}:${req.path}');
+      _logger.fine('${req.method.name}: ${req.path}');
       next();
     });
   }
