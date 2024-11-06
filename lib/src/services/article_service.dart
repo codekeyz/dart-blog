@@ -8,15 +8,12 @@ class ArticleService {
   Future<List<Article>> getArticles({int? ownerId}) async {
     final query = ServerArticleQuery.withRelations((article) => [article.owner]);
     if (ownerId == null) {
-      return query.findMany(orderBy: [
-        OrderServerArticleBy.title(),
-        OrderServerArticleBy.updatedAt(order: OrderDirection.desc),
-      ]);
+      return query.findMany(orderBy: [OrderServerArticleBy.createdAt(order: OrderDirection.desc)]);
     }
 
     return query
         .where((article) => article.ownerId(ownerId))
-        .findMany(orderBy: [OrderServerArticleBy.updatedAt(order: OrderDirection.desc)]);
+        .findMany(orderBy: [OrderServerArticleBy.createdAt(order: OrderDirection.desc)]);
   }
 
   Future<Article?> getArticle(int articleId) =>
