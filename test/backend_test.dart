@@ -390,10 +390,12 @@ void main() {
             final article = await ServerArticleQuery.findByOwnerId(currentUser!.id);
             expect(article, isA<Article>());
 
-            await testAgent
-                .get('$articleApiPath/${article!.id}')
-                .expectStatus(HttpStatus.ok)
-                .expectJsonBody({'article': article.toJson()}).test();
+            await testAgent.get('$articleApiPath/${article!.id}').expectStatus(HttpStatus.ok).expectJsonBody({
+              'article': {
+                ...article.toJson(),
+                'author': currentUser!.toJson(),
+              }
+            }).test();
           });
         });
 
