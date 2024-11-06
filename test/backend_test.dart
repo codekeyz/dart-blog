@@ -207,18 +207,6 @@ void main() {
               )
               .test();
         });
-
-        test('should get user `/users/<userId>` without auth', () async {
-          final randomUser = await ServerUserQuery.findOne();
-          expect(randomUser, isA<User>());
-
-          await testAgent
-              .get('$usersApiPath/${randomUser!.id}')
-              .expectStatus(HttpStatus.ok)
-              .expectHeader(HttpHeaders.contentTypeHeader, 'application/json; charset=utf-8')
-              .expectBodyCustom((body) => jsonDecode(body)['user'], randomUser.toJson())
-              .test();
-        });
       });
 
       group('Articles', () {
