@@ -23,7 +23,10 @@ class AuthProvider extends BaseProvider<User> {
 
   Future<void> getUser() async {
     final user = await safeRun(() => apiSvc.getUser());
-    if (user == null) return;
+    if (user == null) {
+      logout();
+      return;
+    }
 
     _setUser(user);
   }

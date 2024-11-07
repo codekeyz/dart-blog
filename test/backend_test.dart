@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:backend/backend.dart';
 import 'package:backend/src/models.dart';
 import 'package:shared/models.dart';
+import 'package:shared/shared.dart';
 
 import 'package:spookie/spookie.dart';
 import '../database/database.dart' as database;
@@ -267,7 +268,7 @@ void main() {
             expect(article.ownerId, currentUser!.id);
             expect(article.title, 'Hurry 🚀');
             expect(article.description, 'Welcome to the jungle');
-            expect(article.imageUrl, 'https://dart.dev/assets/shared/dart-logo-for-shares.png');
+            expect(article.imageUrl, defaultArticleImage);
             expect(article.id, isNotNull);
             expect(article.createdAt, isNotNull);
             expect(article.updatedAt, isNotNull);

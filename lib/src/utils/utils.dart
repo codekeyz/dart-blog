@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:pharaoh/pharaoh_next.dart';
 import 'package:shared/shared.dart';
 
-Future<String?> getRandomImage(String searchText) async {
-  if (isTestMode) {
-    return 'https://dart.dev/assets/shared/dart-logo-for-shares.png';
-  }
+Future<String> getRandomImage(String searchText) async {
+  if (isTestMode) return defaultArticleImage;
+
+  String? resultingImageUrl;
 
   try {
     final response = await http.get(
@@ -17,7 +17,14 @@ Future<String?> getRandomImage(String searchText) async {
       headers: {HttpHeaders.authorizationHeader: env<String>('PEXELS_API_KEY', '')},
     ).timeout(const Duration(seconds: 2));
     final result = await Isolate.run(() => jsonDecode(response.body)) as Map;
-    return result['photos'][0]['src']['medium'];
-  } catch (_) {}
-  return null;
+    resultingImageUrl = result['photos'][0]['src']['medium'];
+  } catch (error, trace) {
+    stderr.writeln('An error occurred while getting image for $searchText');
+    stderr.writeln('Error $error');
+    stderr.writeln('Trace $trace');
+  } finally {
+    resultingImageUrl ??= defaultArticleImage;
+  }
+
+  return resultingImageUrl;
 }

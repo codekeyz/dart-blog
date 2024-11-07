@@ -18,6 +18,8 @@ enum AppEnvironment {
 
 final isDebugMode = const bool.fromEnvironment("dart.vm.product") == false;
 
+const defaultArticleImage = 'https://images.pexels.com/photos/261763/pexels-photo-261763.jpeg';
+
 bool get isTestMode {
   var isDebug = false;
   assert(() {

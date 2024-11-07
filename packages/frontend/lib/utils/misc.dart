@@ -59,6 +59,9 @@ errorView({String? message}) {
 imageView(String imageUrl, {double? width, double? height}) => FastCachedImage(
       url: imageUrl,
       fit: BoxFit.cover,
+      errorBuilder: (_, error, df) => const Center(
+        child: Text('An error occurred while loading image'),
+      ),
       height: height ?? double.maxFinite,
       width: width ?? double.maxFinite,
       fadeInDuration: const Duration(seconds: 1),

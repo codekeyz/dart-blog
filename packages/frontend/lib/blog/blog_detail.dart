@@ -5,6 +5,7 @@ import 'package:frontend/main.dart';
 import 'package:frontend/utils/misc.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:shared/shared.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'widgets/article_base_layout.dart';
@@ -34,8 +35,9 @@ class BlogDetail extends StatelessWidget {
 
         const footerStyle = TextStyle(fontSize: 12, fontWeight: FontWeight.w300);
         final isPostOwner = currentUser != null && owner != null && currentUser.id == owner.id;
+        final imageUri = article.imageUrl ?? defaultArticleImage;
 
-        final imageHost = article.imageUrl == null ? null : Uri.tryParse(article.imageUrl!)?.host;
+        final imageHost = Uri.tryParse(imageUri)?.host;
         const spacing = SizedBox(height: 24);
 
         return Column(
@@ -114,7 +116,7 @@ class BlogDetail extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(child: imageView(article.imageUrl!)),
+                      Expanded(child: imageView(imageUri)),
                       if (imageHost != null) ...[
                         const SizedBox(height: 8),
                         Text(imageHost, style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 12)),
