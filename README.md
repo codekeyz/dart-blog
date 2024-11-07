@@ -19,7 +19,7 @@ dart run yaroorm_cli migrate --connection=local
 - For production database, you can run this.
 
 ```shell
-dart run yaroorm migrate
+dart run yaroorm_cli migrate
 ```
 
 ```shell
