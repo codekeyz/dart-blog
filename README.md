@@ -2,6 +2,8 @@
 
 ![dart](https://github.com/codekeyz/yaroo-example/actions/workflows/test.yml/badge.svg) </a> [![codecov](https://codecov.io/gh/codekeyz/yaroo-example/graph/badge.svg?token=Q3YPK3LRLR)](https://codecov.io/gh/codekeyz/yaroo-example)
 
+![Dart Blog Dashbaord](./screenshot.png)
+
 ### Setup
 
 ```shell
